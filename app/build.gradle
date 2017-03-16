@@ -20,17 +20,24 @@ android {
     }
 }
 
+ext {
+    supportLibraryVersion = '25.3.0'
+    retrofitLibraryVersion = '2.2.0'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
-    compile 'com.android.support:support-vector-drawable:25.2.0'
-    compile 'com.android.support:support-v4:25.2.0'
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:design:$supportLibraryVersion"
+    compile "com.android.support:support-vector-drawable:$supportLibraryVersion"
+    compile "com.android.support:support-v4:$supportLibraryVersion"
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile "com.squareup.retrofit2:retrofit:$retrofitLibraryVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitLibraryVersion"
+    compile "com.github.satyan:sugar:1.4"
+
 }

@@ -2,6 +2,7 @@ package ru.snatcher.hieronymus.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orm.dsl.Table;
 
 import java.util.List;
 
@@ -10,60 +11,69 @@ import java.util.List;
  * @version 1.0
  */
 
+@Table
 public class Translate {
 
-	@SerializedName("code")
-	@Expose
-	private Integer code;
-	@SerializedName("lang")
-	@Expose
-	private String lang;
-	@SerializedName("text")
-	@Expose
-	private List<String> text = null;
+    private Long id;
 
-	/**
-	 * No args constructor for use in serialization
-	 *
-	 */
-	public Translate() {
-	}
+    @SerializedName("code")
+    @Expose
+    private Integer code;
+    @SerializedName("lang")
+    @Expose
+    private String lang;
+    @SerializedName("text")
+    @Expose
+    private List<String> text = null;
 
-	/**
-	 *
-	 * @param text
-	 * @param code
-	 * @param lang
-	 */
-	public Translate(Integer code, String lang, List<String> text) {
-		super();
-		this.code = code;
-		this.lang = lang;
-		this.text = text;
-	}
+    /**
+     * No args constructor for use in serialization
+     */
+    public Translate() {
+    }
 
-	public Integer getCode() {
-		return code;
-	}
+    /**
+     * @param text
+     * @param code
+     * @param lang
+     */
+    public Translate(Integer code, String lang, List<String> text) {
+        super();
+        this.code = code;
+        this.lang = lang;
+        this.text = text;
+    }
 
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getLang() {
-		return lang;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLang(String lang) {
-		this.lang = lang;
-	}
+    public Integer getCode() {
+        return code;
+    }
 
-	public List<String> getText() {
-		return text;
-	}
+    public void setCode(Integer code) {
+        this.code = code;
+    }
 
-	public void setText(List<String> text) {
-		this.text = text;
-	}
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public List<String> getText() {
+        return text;
+    }
+
+    public void setText(List<String> text) {
+        this.text = text;
+    }
 
 }

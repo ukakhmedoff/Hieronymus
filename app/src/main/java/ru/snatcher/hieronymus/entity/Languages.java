@@ -2,8 +2,8 @@ package ru.snatcher.hieronymus.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,44 +11,54 @@ import java.util.List;
  * @version 1.0
  */
 
-public class Languages {
+public class Languages extends SugarRecord {
 
-	@SerializedName("dirs")
-	@Expose
-	private List<String> fDirs;
+    private Long id;
 
-	@SerializedName("langs")
-	@Expose
-	private HashMap<String, String> fLangs;
+    @SerializedName("dirs")
+    @Expose
+    private List<String> fDirs;
 
-	/**
-	 * No args constructor for use in serialization
-	 */
-	public Languages() {
-	}
+    @SerializedName("langs")
+    @Expose
+    private List<Language> fLangs;
 
-	/**
-	 * @param fLangs
-	 * @param fDirs
-	 */
-	public Languages(final List<String> pDirs, final HashMap<String, String> pLangs) {
-		fDirs = pDirs;
-		fLangs = pLangs;
-	}
+    /**
+     * No args constructor for use in serialization
+     */
+    public Languages() {
+    }
 
-	public List<String> getDirs() {
-		return fDirs;
-	}
+    /**
+     * @param fLangs
+     * @param fDirs
+     */
+    public Languages(final List<String> pDirs, final List<Language> pLangs) {
+        fDirs = pDirs;
+        fLangs = pLangs;
+    }
 
-	public void setDirs(List<String> pDirs) {
-		this.fDirs = pDirs;
-	}
+       public Long getId() {
+        return id;
+    }
 
-	public HashMap<String, String> getLangs() {
-		return fLangs;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLangs(final HashMap<String, String> pLangs) {
-		fLangs = pLangs;
-	}
+    public List<String> getDirs() {
+        return fDirs;
+    }
+
+    public void setDirs(List<String> pDirs) {
+        this.fDirs = pDirs;
+    }
+
+    public List<Language> getLangs() {
+        return fLangs;
+    }
+
+    public void setLangs(final List<Language> pLangs) {
+        fLangs = pLangs;
+    }
 }
