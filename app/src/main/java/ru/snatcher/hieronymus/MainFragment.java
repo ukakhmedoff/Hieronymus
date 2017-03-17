@@ -1,10 +1,10 @@
 package ru.snatcher.hieronymus;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.ArrayMap;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,15 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.snatcher.hieronymus.entity.Language;
-import ru.snatcher.hieronymus.entity.Languages;
 import ru.snatcher.hieronymus.entity.Translate;
+
+import static ru.snatcher.hieronymus.App.getTranslateService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +34,9 @@ public class MainFragment extends Fragment implements TextWatcher {
     private Context context;
 
     private Spinner spinnerFromLang, spinnerToLang;
-    private Languages languages;
+    private final Map<String, String> fLangs = new ArrayMap<>();
+
+    private Language fLanguage;
 
     private Button btnReplace;
 
@@ -65,7 +67,7 @@ public class MainFragment extends Fragment implements TextWatcher {
     }
 
     private void initSpinners(View v) {
-        spinnerFromLang = (Spinner) v.findViewById(R.id.language_1);
+        /*spinnerFromLang = (Spinner) v.findViewById(R.id.language_1);
         spinnerToLang = (Spinner) v.findViewById(R.id.language_2);
         //Ставим в наш спиннер адаптер
         spinnerToLang.setAdapter(getLanguageArrayAdapter());
@@ -74,12 +76,11 @@ public class MainFragment extends Fragment implements TextWatcher {
         //Ставим в наш спиннер адаптер
         spinnerFromLang.setAdapter(getLanguageArrayAdapter());
         //Выбираем какой-нибудь язык по-умолчанию
-        spinnerFromLang.setSelection(1);
+        spinnerFromLang.setSelection(1);*/
     }
 
     private void initTranslate(String text, String langFromTranslate, String langToTranslate) {
-        App
-                .getTranslateService()
+        getTranslateService()
                 .translate(context.getResources().getString(R.string.key), text, langFromTranslate + "-" + langToTranslate)
                 .enqueue(new Callback<Translate>() {
                     @Override
@@ -99,29 +100,25 @@ public class MainFragment extends Fragment implements TextWatcher {
 
     private void getLangs() {
 
-        final List<String> lvDirs = new ArrayList<>();
-        final List<Language> lvLangs = new ArrayList<>();
-
         App
                 .getTranslateService()
                 .getLangs(context.getResources().getString(R.string.key), "ru")
                 .enqueue(
-                        new Callback<Languages>() {
+                        new Callback<Language>() {
                             @Override
-                            public void onResponse(Call<Languages> call, Response<Languages> response) {
-                                lvDirs.addAll(response.body().getDirs());
-                                lvLangs.addAll(response.body().getLangs());
-                                Log.d("LANG ", lvLangs.get(1).toString());
+                            public void onResponse(Call<Language> call, Response<Language> response) {
+                                Log.d("LANG ", response.toString());
+                                if (response.isSuccessful()) {
+                                    fLangs.putAll(response.body().getLangs());
+                                    Log.d("TAG", "onResponse: " + fLangs.toString());
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<Languages> call, Throwable t) {
+                            public void onFailure(Call<Language> call, Throwable t) {
 
                             }
                         });
-        languages = new Languages(lvDirs, lvLangs);
-        languages.save();
-
     }
 
     @Override
@@ -141,22 +138,17 @@ public class MainFragment extends Fragment implements TextWatcher {
 
     @NonNull
     private ArrayAdapter<String> getLanguageArrayAdapter() {
-        List<String> lvListLang = new ArrayList<>();
-
-        for (Language lang : languages.listAll(Language.class)) {
-            lvListLang.add(lang.getfLang());
-        }
 
         // Настраиваем адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item,
-                lvListLang);
+        ArrayAdapter adapter = new ArrayAdapter(context,
+                android.R.layout.simple_spinner_item, fLangs.values().toArray()
+        );
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
 
     private String spinnerLang(Spinner spinnerLang) {
-        return languages.findById(Language.class, spinnerLang.getSelectedItemId()).getfShortLang();
+        return "English";
     }
 }

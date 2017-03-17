@@ -1,52 +1,44 @@
 package ru.snatcher.hieronymus.entity;
 
-import com.orm.dsl.Table;
+import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by akhme on 15.03.2017.
+ * @author Usman Akhmedoff.
+ * @version 1.0
  */
 
-@Table
-public class Language {
+public class Language extends SugarRecord {
 
-    private Long id;
+    @SerializedName("dirs")
+    private List<String> fDirs;
 
-    private String fShortLang;
-    private String fLang;
+    @SerializedName("langs")
+    private Map<String, String> fLangs;
 
-    public Language() {
+    private Language(final Map<String, String> pLangs) {
+        fLangs = pLangs;
     }
 
-    public Language(String fShortLang) {
-        this.fShortLang = fShortLang;
+    /**
+     * @param fLangs
+     * @param fDirs
+     */
+/*
+    public Language(final List<String> pDirs, final Map<String, String> pLangs) {
+        fDirs = pDirs;
+        fLangs = pLangs;
+    }
+*/
+
+    public Map<String, String> getLangs() {
+        return fLangs;
     }
 
-    public Language(String fShortLang, String fLang) {
-        this.fShortLang = fShortLang;
-        this.fLang = fLang;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getfShortLang() {
-        return fShortLang;
-    }
-
-    public void setfShortLang(String fShortLang) {
-        this.fShortLang = fShortLang;
-    }
-
-    public String getfLang() {
-        return fLang;
-    }
-
-    public void setfLang(String fLang) {
-        this.fLang = fLang;
+    public void setLangs(final Map<String, String> pLangs) {
+        fLangs = pLangs;
     }
 }

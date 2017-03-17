@@ -3,7 +3,7 @@ package ru.snatcher.hieronymus;
 import android.app.Application;
 
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import ru.snatcher.hieronymus.api.TranslateService;
 
 /**
@@ -20,8 +20,8 @@ public class App extends Application {
 		super.onCreate();
 
 		Retrofit retrofit = new Retrofit.Builder()
-				.baseUrl("https://translate.yandex.net/")
-				.addConverterFactory(GsonConverterFactory.create())
+				.baseUrl("https://translate.yandex.net/api/v1.5/")
+				.addConverterFactory(SimpleXmlConverterFactory.create())
 				.build();
 
 		fTranslateService = retrofit.create(TranslateService.class);
