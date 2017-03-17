@@ -15,7 +15,6 @@ import java.util.List;
 public class Translate {
 
     private Long id;
-
     @SerializedName("code")
     @Expose
     private Integer code;
@@ -24,13 +23,7 @@ public class Translate {
     private String lang;
     @SerializedName("text")
     @Expose
-    private List<String> text = null;
-
-    /**
-     * No args constructor for use in serialization
-     */
-    public Translate() {
-    }
+    private List<String> text;
 
     /**
      * @param text

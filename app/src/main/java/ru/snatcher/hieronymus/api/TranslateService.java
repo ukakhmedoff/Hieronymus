@@ -18,7 +18,7 @@ public interface TranslateService {
     Call<Translate> translate(@Query("key") String key, @Query("text") String text, @Query("lang") String lang);
 
     // Получение списка языков
-    @GET("tr/getLangs")
+    @GET("tr.json/getLangs")
     Call<Language> getLangs(@Query("key") String key, @Query("ui") String ui_lang);
 
 }

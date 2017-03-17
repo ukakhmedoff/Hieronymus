@@ -19,20 +19,26 @@ public class Language extends SugarRecord {
     @SerializedName("langs")
     private Map<String, String> fLangs;
 
-    private Language(final Map<String, String> pLangs) {
-        fLangs = pLangs;
-    }
-
     /**
      * @param fLangs
      * @param fDirs
      */
-/*
     public Language(final List<String> pDirs, final Map<String, String> pLangs) {
         fDirs = pDirs;
         fLangs = pLangs;
     }
-*/
+
+    public Language(Map<String, String> fLangs) {
+        this.fLangs = fLangs;
+    }
+
+    public List<String> getfDirs() {
+        return fDirs;
+    }
+
+    public void setfDirs(List<String> fDirs) {
+        this.fDirs = fDirs;
+    }
 
     public Map<String, String> getLangs() {
         return fLangs;
