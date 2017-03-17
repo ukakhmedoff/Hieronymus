@@ -33,6 +33,9 @@ import static ru.snatcher.hieronymus.App.getTranslateService;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
+ * {@link MainFragment} is fragment, where user enters sentences and gets translates
+ *
  */
 public class MainFragment extends Fragment implements TextWatcher {
 
@@ -149,7 +152,7 @@ public class MainFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        initTranslate(editTextToTranslate.getText().toString(), spinnerLang(spinnerFromLang) + "-" + spinnerLang(spinnerToLang));
+	    initTranslate(editTextToTranslate.getText().toString(), getSpinnerLang(spinnerFromLang) + "-" + getSpinnerLang(spinnerToLang));
     }
 
     @NonNull
@@ -170,8 +173,8 @@ public class MainFragment extends Fragment implements TextWatcher {
         return adapter;
     }
 
-    private String spinnerLang(Spinner spinnerLang) {
-        return "English";
+	private String getSpinnerLang(Spinner spinnerLang) {
+		return "English";
     }
 
     public void setAdapterRecyclerView(List<String> adapterRecyclerView) {
