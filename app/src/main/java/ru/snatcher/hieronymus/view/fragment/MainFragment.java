@@ -1,10 +1,11 @@
-package ru.snatcher.hieronymus;
+package ru.snatcher.hieronymus.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,29 +27,29 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.snatcher.hieronymus.R;
 import ru.snatcher.hieronymus.entity.Language;
 import ru.snatcher.hieronymus.entity.Translate;
+import ru.snatcher.hieronymus.presenter.adapter.RecyclerViewAdapter;
 
 import static ru.snatcher.hieronymus.App.getTranslateService;
 
 /**
  * A simple {@link Fragment} subclass.
- *
+ * <p>
  * {@link MainFragment} is fragment, where user enters sentences and gets translates
- *
  */
 public class MainFragment extends Fragment implements TextWatcher {
 
     private Context context;
 
+    private RecyclerViewAdapter lvRecyclerViewAdapter;
+
     private Spinner spinnerFromLang, spinnerToLang;
-    private final Map<String, String> fLangs = new ArrayMap<>();
-
-    private RecyclerView fRecyclerViewTranslates;
-
     private Button btnReplace;
-
     private EditText editTextToTranslate;
+
+    private final Map<String, String> fLangs = new ArrayMap<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +59,9 @@ public class MainFragment extends Fragment implements TextWatcher {
 
         context = v.getContext();
 
-        getLangs();
+        getLangs(v);
+
         initEditText(v);
-        initSpinners(v);
 
         initRecyclerView(v);
         return v;
@@ -76,11 +77,10 @@ public class MainFragment extends Fragment implements TextWatcher {
         spinnerToLang = (Spinner) v.findViewById(R.id.language_2);
         //Ставим в наш спиннер адаптер
         spinnerToLang.setAdapter(getLanguageArrayAdapter());
+        spinnerFromLang.setAdapter(getLanguageArrayAdapter());
+
         //Выбираем какой-нибудь язык по-умолчанию
         spinnerToLang.setSelection(1);
-        //Ставим в наш спиннер адаптер
-        spinnerFromLang.setAdapter(getLanguageArrayAdapter());
-        //Выбираем какой-нибудь язык по-умолчанию
         spinnerFromLang.setSelection(1);
     }
 
@@ -91,7 +91,9 @@ public class MainFragment extends Fragment implements TextWatcher {
                 .enqueue(new Callback<Translate>() {
                     @Override
                     public void onResponse(final Call<Translate> call, final Response<Translate> response) {
-                        lvTranslates.addAll(response.body().getText());
+                        lvTranslates.addAll(response.body().getTexts());
+                        Log.d("TRANSLATE", "onResponse: " + lvTranslates.get(0));
+                        setAdapterRecyclerView(lvTranslates);
 
                     }
 
@@ -103,16 +105,17 @@ public class MainFragment extends Fragment implements TextWatcher {
 
                 });
 
-        setAdapterRecyclerView(lvTranslates);
     }
 
     private void initRecyclerView(View pView) {
 
-        fRecyclerViewTranslates = (RecyclerView) pView.findViewById(R.id.recycler_main_translates);
+        final RecyclerView lvRecyclerViewTranslates = (RecyclerView) pView.findViewById(R.id.recycler_main_translates);
+        lvRecyclerViewAdapter = new RecyclerViewAdapter();
+        lvRecyclerViewTranslates.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        lvRecyclerViewTranslates.setAdapter(lvRecyclerViewAdapter);
     }
 
-    private void getLangs() {
-
+    private boolean getLangs(final View pV) {
         getTranslateService()
                 .getLangs(context.getResources().getString(R.string.key), "ru")
                 .enqueue(
@@ -121,8 +124,8 @@ public class MainFragment extends Fragment implements TextWatcher {
                             public void onResponse(Call<Language> call, Response<Language> response) {
                                 Log.d("LANG ", response.toString());
                                 if (response.isSuccessful()) {
-
                                     fLangs.putAll(response.body().getLangs());
+                                    initSpinners(pV);
                                     Log.d("TAG", "onResponse: " + Arrays.toString(fLangs.values().toArray()));
                                 } else {
                                     Log.d("TAG", "onResponse: " + "error");
@@ -137,6 +140,7 @@ public class MainFragment extends Fragment implements TextWatcher {
 
                             }
                         });
+        return true;
 
     }
 
@@ -152,18 +156,16 @@ public class MainFragment extends Fragment implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-	    initTranslate(editTextToTranslate.getText().toString(), getSpinnerLang(spinnerFromLang) + "-" + getSpinnerLang(spinnerToLang));
+        initTranslate(editTextToTranslate.getText().toString(), getSpinnerLang(spinnerFromLang) + "-" + getSpinnerLang(spinnerToLang));
     }
 
     @NonNull
     private ArrayAdapter<String> getLanguageArrayAdapter() {
 
-        List<String> lvLangs = new ArrayList<>();
-
-        lvLangs.addAll(fLangs.values());
+        List<String> lvLangs = new ArrayList<>(fLangs.values());
 
         Log.d("TAG", "getLanguageArrayAdapter: " + lvLangs.size());
-        
+
         // Настраиваем адаптер
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item, lvLangs
@@ -173,11 +175,23 @@ public class MainFragment extends Fragment implements TextWatcher {
         return adapter;
     }
 
-	private String getSpinnerLang(Spinner spinnerLang) {
-		return "English";
+    private String getSpinnerLang(Spinner spinnerLang) {
+        List<String> lvKeys = new ArrayList<>(fLangs.keySet());
+        String lvSelectedLang = spinnerLang.getSelectedItem().toString();
+        String lvLangKey = null;
+        for (String key : lvKeys) {
+            String lvLangFromKey = fLangs.get(key);
+            if (key != null) {
+                if (lvSelectedLang.equals(lvLangFromKey)) {
+                    lvLangKey = key;
+                }
+            }
+        }
+        return lvLangKey;
     }
 
     public void setAdapterRecyclerView(List<String> adapterRecyclerView) {
 
+        lvRecyclerViewAdapter.setDataChanged(adapterRecyclerView);
     }
 }

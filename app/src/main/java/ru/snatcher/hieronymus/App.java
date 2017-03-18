@@ -4,7 +4,7 @@ import android.app.Application;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.snatcher.hieronymus.api.TranslateService;
+import ru.snatcher.hieronymus.presenter.api.TranslateService;
 
 /**
  * @author Usman Akhmedoff.

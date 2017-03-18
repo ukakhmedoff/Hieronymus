@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus;
+package ru.snatcher.hieronymus.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+
+import ru.snatcher.hieronymus.R;
+import ru.snatcher.hieronymus.view.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 

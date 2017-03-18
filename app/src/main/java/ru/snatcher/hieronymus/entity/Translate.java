@@ -61,7 +61,7 @@ public class Translate {
         this.lang = lang;
     }
 
-    public List<String> getText() {
+    public List<String> getTexts() {
         return text;
     }
 

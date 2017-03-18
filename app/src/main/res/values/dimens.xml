@@ -6,4 +6,5 @@
     <dimen name="margin_top_recycler_item">8dp</dimen>
     <dimen name="margin_right_recycler_item">8dp</dimen>
     <dimen name="margin_bottom_recycler_item">8dp</dimen>
+    <dimen name="toolbar_items_margin">8dp</dimen>
 </resources>
