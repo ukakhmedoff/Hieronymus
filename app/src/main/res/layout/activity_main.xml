@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ru.snatcher.hieronymus.view.activity.MainActivity">
+    tools:context="ru.snatcher.hieronymus.view.MainActivity">
 
     <FrameLayout
         android:id="@+id/content"

@@ -1,197 +1,167 @@
 package ru.snatcher.hieronymus.view.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding2.widget.RxTextView;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.entity.Language;
-import ru.snatcher.hieronymus.entity.Translate;
-import ru.snatcher.hieronymus.presenter.adapter.RecyclerViewAdapter;
-
-import static ru.snatcher.hieronymus.App.getTranslateService;
+import ru.snatcher.hieronymus.other.di.view.DaggerViewComponent;
+import ru.snatcher.hieronymus.other.di.view.ViewComponent;
+import ru.snatcher.hieronymus.other.di.view.ViewDynamicModule;
+import ru.snatcher.hieronymus.presenter.MainPresenterImpl;
+import ru.snatcher.hieronymus.presenter.Presenter;
+import ru.snatcher.hieronymus.view.adapter.RecyclerViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  * <p>
  * {@link MainFragment} is fragment, where user enters sentences and gets translates
  */
-public class MainFragment extends Fragment implements TextWatcher {
+public class MainFragment extends BaseFragment implements MainFragmentView {
 
-    private Context context;
+    @BindView(R.id.spinner_language_from)
+    Spinner fSpinnerFromLang;
+    @BindView(R.id.spinner_language_to)
+    Spinner fSpinnerToLang;
+    @BindView(R.id.textToTranslate)
+    EditText fTextToTranslate;
 
-    private RecyclerViewAdapter lvRecyclerViewAdapter;
+    @Inject
+    MainPresenterImpl fMainPresenter;
 
-    private Spinner spinnerFromLang, spinnerToLang;
-    private Button btnReplace;
-    private EditText editTextToTranslate;
+    private ViewComponent viewComponent;
 
-    private final Map<String, String> fLangs = new ArrayMap<>();
+    private View fView;
+    private Map<String, String> fLangs = new HashMap<>();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        if (viewComponent == null) {
+            viewComponent = DaggerViewComponent.builder()
+                    .viewDynamicModule(new ViewDynamicModule(this))
+                    .build();
+        }
+        viewComponent.inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_main, container, false);
+        fView = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, fView);
+        fMainPresenter.onCreateView(savedInstanceState);
 
-        context = v.getContext();
+        fMainPresenter.getLangs(fView.getResources().getString(R.string.key));
 
-        getLangs(v);
+        final CompositeDisposable lvDisposable = new CompositeDisposable();
 
-        initEditText(v);
-
-        initRecyclerView(v);
-        return v;
+        Disposable inputWatcher = RxTextView.textChanges(fTextToTranslate)
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(charSequence -> prepareAndProcessTranslationRequest());
+        lvDisposable.add(inputWatcher);
+        return fView;
     }
 
-    private void initEditText(View v) {
-        editTextToTranslate = (EditText) v.findViewById(R.id.textToTranslate);
-        editTextToTranslate.addTextChangedListener(this);
+    private void prepareAndProcessTranslationRequest() {
+        String inputText = fTextToTranslate.getText().toString().trim();
+        if (inputText.length() == 0) {
+            return;
+        }
+
+        fMainPresenter.getTranslates(fView.getResources().getString(R.string.key), inputText, getSpinnersLang());
     }
 
-    private void initSpinners(View v) {
-        spinnerFromLang = (Spinner) v.findViewById(R.id.language_1);
-        spinnerToLang = (Spinner) v.findViewById(R.id.language_2);
-        //Ставим в наш спиннер адаптер
-        spinnerToLang.setAdapter(getLanguageArrayAdapter());
-        spinnerFromLang.setAdapter(getLanguageArrayAdapter());
-
-        //Выбираем какой-нибудь язык по-умолчанию
-        spinnerToLang.setSelection(1);
-        spinnerFromLang.setSelection(1);
+    public void setViewComponent(ViewComponent viewComponent) {
+        this.viewComponent = viewComponent;
     }
 
-    private void initTranslate(String text, String langsTranslate) {
-        final List<String> lvTranslates = new ArrayList<>();
-        getTranslateService()
-                .translate(context.getResources().getString(R.string.key), text, langsTranslate)
-                .enqueue(new Callback<Translate>() {
-                    @Override
-                    public void onResponse(final Call<Translate> call, final Response<Translate> response) {
-                        lvTranslates.addAll(response.body().getTexts());
-                        Log.d("TRANSLATE", "onResponse: " + lvTranslates.get(0));
-                        setAdapterRecyclerView(lvTranslates);
-
-                    }
-
-                    @Override
-                    public void onFailure(final Call<Translate> call, final Throwable t) {
-
-
-                    }
-
-                });
-
-    }
-
-    private void initRecyclerView(View pView) {
-
-        final RecyclerView lvRecyclerViewTranslates = (RecyclerView) pView.findViewById(R.id.recycler_main_translates);
-        lvRecyclerViewAdapter = new RecyclerViewAdapter();
-        lvRecyclerViewTranslates.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        lvRecyclerViewTranslates.setAdapter(lvRecyclerViewAdapter);
-    }
-
-    private boolean getLangs(final View pV) {
-        getTranslateService()
-                .getLangs(context.getResources().getString(R.string.key), "ru")
-                .enqueue(
-                        new Callback<Language>() {
-                            @Override
-                            public void onResponse(Call<Language> call, Response<Language> response) {
-                                Log.d("LANG ", response.toString());
-                                if (response.isSuccessful()) {
-                                    fLangs.putAll(response.body().getLangs());
-                                    initSpinners(pV);
-                                    Log.d("TAG", "onResponse: " + Arrays.toString(fLangs.values().toArray()));
-                                } else {
-                                    Log.d("TAG", "onResponse: " + "error");
-                                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Language> call, Throwable t) {
-                                Log.d("TAG", "onResponse: " + t.getMessage());
-                                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-        return true;
-
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        initTranslate(editTextToTranslate.getText().toString(), getSpinnerLang(spinnerFromLang) + "-" + getSpinnerLang(spinnerToLang));
-    }
-
-    @NonNull
     private ArrayAdapter<String> getLanguageArrayAdapter() {
-
         List<String> lvLangs = new ArrayList<>(fLangs.values());
-
-        Log.d("TAG", "getLanguageArrayAdapter: " + lvLangs.size());
+        Collections.sort(lvLangs);
 
         // Настраиваем адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, lvLangs
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                fView.getContext(),
+                android.R.layout.simple_spinner_item,
+                lvLangs
         );
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
 
-    private String getSpinnerLang(Spinner spinnerLang) {
-        List<String> lvKeys = new ArrayList<>(fLangs.keySet());
-        String lvSelectedLang = spinnerLang.getSelectedItem().toString();
-        String lvLangKey = null;
-        for (String key : lvKeys) {
-            String lvLangFromKey = fLangs.get(key);
-            if (key != null) {
-                if (lvSelectedLang.equals(lvLangFromKey)) {
-                    lvLangKey = key;
-                }
-            }
-        }
-        return lvLangKey;
+    private String getSpinnersLang() {
+        return getSpinnerLang(fSpinnerFromLang) + "-" + getSpinnerLang(fSpinnerToLang);
     }
 
-    public void setAdapterRecyclerView(List<String> adapterRecyclerView) {
+    private String getSpinnerLang(Spinner pSpinnerLang) {
+        return fMainPresenter.onLanguageSelected(pSpinnerLang.getSelectedItem().toString(), fLangs);
+    }
 
-        lvRecyclerViewAdapter.setDataChanged(adapterRecyclerView);
+    public void showError(final String error) {
+        Toast.makeText(fView.getContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected Presenter getPresenter() {
+        return fMainPresenter;
+    }
+
+    @Override
+    public void showTranslatesList(final List<String> pTranslates) {
+        final RecyclerView lvRecyclerViewTranslates = (RecyclerView) fView.findViewById(R.id.recycler_main_translates);
+        final RecyclerViewAdapter lvRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fMainPresenter);
+
+        lvRecyclerViewTranslates.
+                setLayoutManager(new LinearLayoutManager(fView.getContext(), LinearLayoutManager.VERTICAL, false));
+        lvRecyclerViewTranslates.setAdapter(lvRecyclerViewAdapter);
+
+    }
+
+    @Override
+    public void showLanguagesList(final Map<String, String> pLanguages) {
+        fLangs = pLanguages;
+        //Ставим в наш спиннер адаптер
+        fSpinnerToLang.setAdapter(getLanguageArrayAdapter());
+        fSpinnerFromLang.setAdapter(getLanguageArrayAdapter());
+
+        //Выбираем какой-нибудь язык по-умолчанию
+        fSpinnerToLang.setSelection(1);
+        fSpinnerFromLang.setSelection(1);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        fMainPresenter.onSaveInstanceState(outState);
     }
 }
