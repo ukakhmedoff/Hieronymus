@@ -1,6 +1,6 @@
 package ru.snatcher.hieronymus.presenter;
 
-import java.util.Map;
+import ru.snatcher.hieronymus.presenter.vo.Language;
 
 /**
  * {@link MainPresenter}
@@ -11,7 +11,7 @@ import java.util.Map;
 
 interface MainPresenter extends Presenter {
 
-    String onLanguageSelected(String pKey, final Map<String, String> pLangs);
+    String onLanguageSelected(Language pLanguage);
 
     void getLangs(String pKey);
 

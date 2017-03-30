@@ -16,10 +16,7 @@ import android.widget.Toast;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -36,6 +33,7 @@ import ru.snatcher.hieronymus.other.di.view.ViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewDynamicModule;
 import ru.snatcher.hieronymus.presenter.MainPresenterImpl;
 import ru.snatcher.hieronymus.presenter.Presenter;
+import ru.snatcher.hieronymus.presenter.vo.Language;
 import ru.snatcher.hieronymus.view.adapter.RecyclerViewAdapter;
 
 /**
@@ -47,8 +45,10 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 
     @BindView(R.id.spinner_language_from)
     Spinner fSpinnerFromLang;
+
     @BindView(R.id.spinner_language_to)
     Spinner fSpinnerToLang;
+
     @BindView(R.id.textToTranslate)
     EditText fTextToTranslate;
 
@@ -58,7 +58,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     private ViewComponent viewComponent;
 
     private View fView;
-    private Map<String, String> fLangs = new HashMap<>();
+    private final List<Language> fLangs = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,8 +105,10 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
     private ArrayAdapter<String> getLanguageArrayAdapter() {
-        List<String> lvLangs = new ArrayList<>(fLangs.values());
-        Collections.sort(lvLangs);
+        List<String> lvLangs = new ArrayList<>();
+
+        for (Language lvLanguage : fLangs) lvLangs.add(lvLanguage.getLangValue());
+        //Collections.sort(lvLangs);
 
         // Настраиваем адаптер
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -124,7 +126,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
     private String getSpinnerLang(Spinner pSpinnerLang) {
-        return fMainPresenter.onLanguageSelected(pSpinnerLang.getSelectedItem().toString(), fLangs);
+        return fMainPresenter.onLanguageSelected(fLangs.get(pSpinnerLang.getSelectedItemPosition()));
     }
 
     public void showError(final String error) {
@@ -148,8 +150,8 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
     @Override
-    public void showLanguagesList(final Map<String, String> pLanguages) {
-        fLangs = pLanguages;
+    public void showLanguagesList(final List<Language> pLanguages) {
+        fLangs.addAll(pLanguages);
         //Ставим в наш спиннер адаптер
         fSpinnerToLang.setAdapter(getLanguageArrayAdapter());
         fSpinnerFromLang.setAdapter(getLanguageArrayAdapter());

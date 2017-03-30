@@ -1,9 +1,5 @@
 package ru.snatcher.hieronymus.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,11 +8,12 @@ import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
+import ru.snatcher.hieronymus.presenter.vo.Language;
 import rx.Observable;
 import rx.Scheduler;
 
 /**
- * {@link ModelImpl}
+ * {@link ModelImpl} is implementation for {@link Model}
  *
  * @author Usman Akhmedoff.
  * @version 1.0
@@ -47,7 +44,6 @@ public class ModelImpl implements Model {
         return fApiInterface
                 .getLangs(pKey, "ru")
                 .compose(applySchedulers());
-
     }
 
     @Override
@@ -58,18 +54,8 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public String getLangKey(final String pLangValue, final Map<String, String> pLangs) {
-        List<String> lvKeys = new ArrayList<>(pLangs.keySet());
-        String lvLangKey = null;
-        for (String key : lvKeys) {
-            String lvLangFromKey = pLangs.get(key);
-            if (key != null) {
-                if (pLangValue.equals(lvLangFromKey)) {
-                    lvLangKey = key;
-                }
-            }
-        }
-        return lvLangKey;
+    public String getLangKey(Language pLanguage) {
+        return pLanguage.getLangKey();
     }
 
     @SuppressWarnings("unchecked")

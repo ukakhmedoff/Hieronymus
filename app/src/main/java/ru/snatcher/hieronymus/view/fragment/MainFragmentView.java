@@ -3,6 +3,8 @@ package ru.snatcher.hieronymus.view.fragment;
 import java.util.List;
 import java.util.Map;
 
+import ru.snatcher.hieronymus.presenter.vo.Language;
+
 /**
  * {@link MainFragmentView}
  *
@@ -14,5 +16,5 @@ public interface MainFragmentView extends BaseView {
 
     void showTranslatesList(List<String> fTranslates);
 
-    void showLanguagesList(final Map<String, String> pLanguages);
+    void showLanguagesList(final List<Language> pLanguages);
 }

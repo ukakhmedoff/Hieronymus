@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.snatcher.hieronymus.other.Constants;
 
 /**
- * {@link ApiTranslateModule}
+ * {@link ApiTranslateModule} is implementation for {@link ApiTranslateInterface}
  *
  * @author Usman Akhmedoff.
  * @version 1.0
@@ -16,26 +16,20 @@ public class ApiTranslateModule {
     private static Retrofit sfRetrofit;
 
     public static ApiTranslateInterface getApiInterfaceInstance() {
-        if (sfApiTranslateInterface == null) {
+        if (sfApiTranslateInterface == null)
             sfApiTranslateInterface = getRetrofitInstance().create(ApiTranslateInterface.class);
-        }
         return sfApiTranslateInterface;
     }
 
     private static Retrofit getRetrofitInstance() {
-        if (sfRetrofit == null) {
-            sfRetrofit = createRetrofit();
-        }
+        if (sfRetrofit == null) sfRetrofit = createRetrofit();
         return sfRetrofit;
     }
 
     private static Retrofit createRetrofit() {
-
-        Retrofit.Builder builder = new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create());
-
-        return builder.build();
+                .addConverterFactory(GsonConverterFactory.create()).build();
     }
 }

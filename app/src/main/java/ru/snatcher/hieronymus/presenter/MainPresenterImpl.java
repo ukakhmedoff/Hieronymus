@@ -3,9 +3,7 @@ package ru.snatcher.hieronymus.presenter;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -25,7 +23,6 @@ import rx.Subscription;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     private static final String BUNDLE_LANGUAGES_LIST_KEY = "BUNDLE_LANGUAGES_LIST_KEY";
@@ -38,7 +35,9 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
     TranslateMapper fTranslateMapper;
 
     private MainFragmentView fMainFragmentView;
-    private Map<String, String> fLanguages;
+
+    private List<Language> fLanguages;
+
     private List<String> fTranslates;
 
     @Inject
@@ -57,17 +56,23 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     public void onCreateView(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            fLanguages = (Map<String, String>) savedInstanceState.getSerializable(BUNDLE_LANGUAGES_LIST_KEY);
+            fLanguages = (List<Language>) savedInstanceState.getSerializable(BUNDLE_LANGUAGES_LIST_KEY);
             fTranslates = (List<String>) savedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY);
         }
-        if (isRepoListNotEmpty()) {
-            fMainFragmentView.showLanguagesList(fLanguages);
+        if (isTranslatesNotEmpty()) {
             fMainFragmentView.showTranslatesList(fTranslates);
+        }
+        if (isLanguagesNotEmpty()) {
+            fMainFragmentView.showLanguagesList(fLanguages);
         }
     }
 
-    private boolean isRepoListNotEmpty() {
+    private boolean isTranslatesNotEmpty() {
         return (fTranslates != null && !fTranslates.isEmpty()) && (fLanguages != null && !fLanguages.isEmpty());
+    }
+
+    private boolean isLanguagesNotEmpty() {
+        return (fLanguages != null && !fLanguages.isEmpty()) && (fLanguages != null && !fLanguages.isEmpty());
     }
 
     @Override
@@ -75,22 +80,21 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
     }
 
-
     public void onSaveInstanceState(Bundle outState) {
-        if (isRepoListNotEmpty()) {
-            outState.putSerializable(BUNDLE_LANGUAGES_LIST_KEY, new HashMap<>(fLanguages));
+        if (isTranslatesNotEmpty()) {
+            outState.putSerializable(BUNDLE_LANGUAGES_LIST_KEY, new ArrayList<>(fLanguages));
             outState.putSerializable(BUNDLE_TRANSLATE_LIST_KEY, new ArrayList<>(fTranslates));
         }
     }
 
     @Override
-    public String onLanguageSelected(final String pValue, final Map<String, String> pLangs) {
-        return fModel.getLangKey(pValue, pLangs);
+    public String onLanguageSelected(Language pLanguage) {
+        return fModel.getLangKey(pLanguage);
     }
 
     @Override
     public void getLangs(String pKey) {
-        Subscription lvSubscription = fModel.getLangs(pKey).map(fLanguageMapper).subscribe(new Observer<Language>() {
+        Subscription lvSubscription = fModel.getLangs(pKey).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
 
             @Override
             public void onCompleted() {
@@ -102,9 +106,9 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
             }
 
             @Override
-            public void onNext(Language pLanguage) {
-                if (pLanguage != null) {
-                    fLanguages = pLanguage.getLangs();
+            public void onNext(List<Language> pLanguages) {
+                if (pLanguages != null) {
+                    fLanguages = pLanguages;
                     fMainFragmentView.showLanguagesList(fLanguages);
                 } else {
                     fMainFragmentView.showError("Check your Internet connection!");

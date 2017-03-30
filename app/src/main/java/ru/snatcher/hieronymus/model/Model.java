@@ -1,9 +1,8 @@
 package ru.snatcher.hieronymus.model;
 
-import java.util.Map;
-
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
+import ru.snatcher.hieronymus.presenter.vo.Language;
 import rx.Observable;
 
 /**
@@ -12,13 +11,11 @@ import rx.Observable;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 public interface Model {
 
     Observable<LanguageDTO> getLangs(String pKey);
 
     Observable<TranslateDTO> getTranslatedText(String pKey, String pTextToTranslate, String pLangs);
 
-    String getLangKey(String pLangValue, Map<String, String> pLangs);
-
+    String getLangKey(Language pLanguage);
 }
