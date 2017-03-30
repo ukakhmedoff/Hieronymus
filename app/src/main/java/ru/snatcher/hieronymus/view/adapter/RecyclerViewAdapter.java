@@ -20,7 +20,6 @@ public class RecyclerViewAdapter extends BaseAdapter<String> {
     @Override
     public void onBindViewHolder(final BaseAdapter.ViewHolder holder, final int position) {
         holder.fTranslateMain.setText(fTList.get(position));
-        holder.fTranslateId.setText(String.valueOf(position + 1));
     }
 
     public void setRepoList(List<String> pTranslateList) {

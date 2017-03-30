@@ -37,7 +37,7 @@ public class ModelImpl implements Model {
 
     public ModelImpl() {
         App.getAppComponent().inject(this);
-        fSchedulersTransformer = o -> o.subscribeOn(fIoThread)
+        fSchedulersTransformer = o -> ((Observable) o).subscribeOn(fIoThread)
                 .observeOn(fUiThread)
                 .unsubscribeOn(fIoThread);
     }

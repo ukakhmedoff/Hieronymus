@@ -35,7 +35,6 @@ abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolde
         return new ViewHolder(v);
     }
 
-
     @Override
     public int getItemCount() {
         return fTList.size();
@@ -43,12 +42,11 @@ abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolde
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView fTranslateMain, fTranslateId;
+        TextView fTranslateMain;
 
         ViewHolder(final View itemView) {
             super(itemView);
             fTranslateMain = (TextView) itemView.findViewById(R.id.translateMain);
-            fTranslateId = (TextView) itemView.findViewById(R.id.translateId);
         }
     }
 

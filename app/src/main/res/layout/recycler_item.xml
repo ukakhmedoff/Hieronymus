@@ -9,43 +9,30 @@
         android:id="@+id/translateMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_recycler_item"
-        android:layout_marginTop="@dimen/margin_top_recycler_item"
-        android:text="Hi!"
+        android:layout_margin="@dimen/margin_left_recycler_item"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintLeft_toRightOf="@+id/translateId"
+        app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/addGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_right_recycler_item"
-        android:layout_marginTop="@dimen/margin_top_recycler_item"
+        android:layout_margin="@dimen/margin_right_recycler_item"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/translateMain"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/translateMain"
-        app:srcCompat="@drawable/ic_favorite_border_grey_600_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/translateMain"
-        android:layout_marginBottom="0dp"/>
+        app:srcCompat="@drawable/ic_favorite_border_grey_600_24dp"/>
 
     <ImageView
         android:id="@+id/addFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_right_recycler_item"
-        android:layout_marginTop="@dimen/margin_top_recycler_item"
+        android:layout_margin="@dimen/margin_right_recycler_item"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/translateMain"
         app:layout_constraintRight_toLeftOf="@+id/addGroup"
         app:layout_constraintTop_toTopOf="@+id/translateMain"
-        app:srcCompat="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="@+id/translateMain"
-        android:layout_marginBottom="0dp"/>
-
-    <TextView
-        android:id="@+id/translateId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_left_recycler_item"
-        android:text="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/translateMain"/>
+        app:srcCompat="@drawable/ic_add"/>
 </android.support.constraint.ConstraintLayout>
