@@ -15,6 +15,6 @@ import ru.snatcher.hieronymus.view.fragment.MainFragment;
 @Component(modules = {ViewDynamicModule.class})
 public interface ViewComponent {
 
-    void inject(MainFragment pMainFragment);
+	void inject(MainFragment pMainFragment);
 
 }

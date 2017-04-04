@@ -12,14 +12,13 @@ import ru.snatcher.hieronymus.presenter.Presenter;
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
 
+	protected abstract Presenter getPresenter();
 
-    protected abstract Presenter getPresenter();
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (getPresenter() != null) {
-            getPresenter().onStop();
-        }
-    }
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (getPresenter() != null) {
+			getPresenter().onStop();
+		}
+	}
 }

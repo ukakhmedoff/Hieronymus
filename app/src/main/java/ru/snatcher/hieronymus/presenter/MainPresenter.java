@@ -8,12 +8,11 @@ import ru.snatcher.hieronymus.presenter.vo.Language;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 interface MainPresenter extends Presenter {
 
-    String onLanguageSelected(Language pLanguage);
+	String onLanguageSelected(Language pLanguage);
 
-    void getLangs(String pKey);
+	void getLangs(String pKey);
 
-    void getTranslates(String pKey, String pToTranslateText, String pLangs);
+	void getTranslates(String pKey, String pToTranslateText, String pLangs);
 }

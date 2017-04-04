@@ -22,24 +22,24 @@ import rx.schedulers.Schedulers;
 @Module
 class ModelModule {
 
-    @Provides
-    @Singleton
-    ApiTranslateInterface provideApiInterface() {
-        return ApiTranslateModule.getApiInterfaceInstance();
-    }
+	@Provides
+	@Singleton
+	ApiTranslateInterface provideApiInterface() {
+		return ApiTranslateModule.getApiInterfaceInstance();
+	}
 
-    @Provides
-    @Singleton
-    @Named(Constants.UI_THREAD)
-    Scheduler provideSchedulerUI() {
-        return AndroidSchedulers.mainThread();
-    }
+	@Provides
+	@Singleton
+	@Named(Constants.UI_THREAD)
+	Scheduler provideSchedulerUI() {
+		return AndroidSchedulers.mainThread();
+	}
 
-    @Provides
-    @Singleton
-    @Named(Constants.IO_THREAD)
-    Scheduler provideSchedulerIO() {
-        return Schedulers.io();
-    }
+	@Provides
+	@Singleton
+	@Named(Constants.IO_THREAD)
+	Scheduler provideSchedulerIO() {
+		return Schedulers.io();
+	}
 
 }

@@ -14,14 +14,14 @@ import ru.snatcher.hieronymus.view.fragment.MainFragmentView;
 @Module
 public class ViewDynamicModule {
 
-    private MainFragmentView view;
+	private MainFragmentView view;
 
-    public ViewDynamicModule(MainFragmentView view) {
-        this.view = view;
-    }
+	public ViewDynamicModule(MainFragmentView view) {
+		this.view = view;
+	}
 
-    @Provides
-    MainPresenterImpl provideMainPresenter() {
-        return new MainPresenterImpl(view);
-    }
+	@Provides
+	MainPresenterImpl provideMainPresenter() {
+		return new MainPresenterImpl(view);
+	}
 }

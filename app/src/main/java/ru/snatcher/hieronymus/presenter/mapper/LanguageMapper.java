@@ -18,24 +18,24 @@ import rx.functions.Func1;
  */
 public class LanguageMapper implements Func1<LanguageDTO, List<Language>> {
 
-    @Inject
-    LanguageMapper() {
-    }
+	@Inject
+	LanguageMapper() {
+	}
 
-    @Override
-    public List<Language> call(LanguageDTO pLanguageDTO) {
-        if (pLanguageDTO == null) {
-            return null;
-        }
+	@Override
+	public List<Language> call(LanguageDTO pLanguageDTO) {
+		if (pLanguageDTO == null) {
+			return null;
+		}
 
-        List<Language> lvLanguages = Observable.from(pLanguageDTO.getLangs().entrySet())
-                .map(languages -> new Language(languages.getKey(), languages.getValue()))
-                .toList()
-                .toBlocking()
-                .first();
+		List<Language> lvLanguages = Observable.from(pLanguageDTO.getLangs().entrySet())
+				.map(languages -> new Language(languages.getKey(), languages.getValue()))
+				.toList()
+				.toBlocking()
+				.first();
 
-        Collections.sort(lvLanguages, (pLanguage1, pLanguage2) -> pLanguage1.getLangValue().compareTo(pLanguage2.getLangValue()));
-        return lvLanguages;
-    }
+		Collections.sort(lvLanguages, (pLanguage1, pLanguage2) -> pLanguage1.getLangValue().compareTo(pLanguage2.getLangValue()));
+		return lvLanguages;
+	}
 
 }

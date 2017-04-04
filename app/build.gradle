@@ -7,7 +7,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "ru.snatcher.hieronymus"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -27,16 +27,20 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+    testOptions {
+        resultsDir = "${project.buildDir}/foo/results"
+        unitTests.returnDefaultValues = true
+
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.guava', module: 'guava'
     })
-    testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:support-vector-drawable:$supportLibraryVersion"
@@ -46,13 +50,64 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofitLibraryVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitLibraryVersion"
 
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+
 
     compile "com.jakewharton:butterknife:$butterKnifeLibraryVersion"
     provided "com.jakewharton:butterknife-compiler:$butterKnifeLibraryVersion"
 
     compile "com.google.dagger:dagger:$daggerLibraryVersion"
     apt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.satyan:sugar:1.4'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.57-beta'
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+}
+
+def coverageSourceDirs = [
+        '../app/src/main/java'
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: '../app/build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$ViewInjector*.*',
+                       '**/*$ViewBinder*.*',   //DI
+                       '**/*_MembersInjector*.*',  //DI
+                       '**/*_Factory*.*',  //DI
+                       '**/testrx/model/dto/*.*', //dto model
+                       '**/testrx/presenter/vo/*.*', //vo model
+                       '**/testrx/other/**',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*',
+                       '**/Lambda$*.class',
+                       '**/Lambda.class',
+                       '**/*Lambda.class',
+                       '**/*Lambda*.class']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('../app/build/jacoco/testDebugUnitTest.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }

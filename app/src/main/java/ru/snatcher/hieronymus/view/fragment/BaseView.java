@@ -9,5 +9,5 @@ package ru.snatcher.hieronymus.view.fragment;
 
 public interface BaseView {
 
-    void showError(String error);
+	void showError(String error);
 }

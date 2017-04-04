@@ -10,17 +10,17 @@ import java.util.Map;
  */
 public class LanguageDTO {
 
-    @SerializedName("langs")
-    private Map<String, String> fLangs;
+	@SerializedName("langs")
+	private Map<String, String> fLangs;
 
-    /**
-     * @param pLangs - languages to translate
-     */
-    public LanguageDTO(final Map<String, String> pLangs) {
-        fLangs = pLangs;
-    }
+	/**
+	 * @param pLangs - languages to translate
+	 */
+	public LanguageDTO(final Map<String, String> pLangs) {
+		fLangs = pLangs;
+	}
 
-    public Map<String, String> getLangs() {
-        return fLangs;
-    }
+	public Map<String, String> getLangs() {
+		return fLangs;
+	}
 }

@@ -11,7 +11,7 @@ buildscript {
 }
 
 ext {
-    supportLibraryVersion = '25.3.0'
+    supportLibraryVersion = '25.3.1'
     retrofitLibraryVersion = '2.2.0'
     rxJavaLibraryVersion = '2.0.1'
     butterKnifeLibraryVersion = '8.4.0'

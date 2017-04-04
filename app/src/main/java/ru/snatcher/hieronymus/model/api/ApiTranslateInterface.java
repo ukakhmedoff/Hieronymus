@@ -13,11 +13,11 @@ import rx.Observable;
 
 public interface ApiTranslateInterface {
 
-    // Перевод текста
-    @GET("tr.json/translate")
-    Observable<TranslateDTO> getTranslatedText(@Query("key") String key, @Query("text") String text, @Query("lang") String lang);
+	// Перевод текста
+	@GET("tr.json/translate")
+	Observable<TranslateDTO> getTranslatedText(@Query("key") String key, @Query("text") String text, @Query("lang") String lang);
 
-    // Получение списка языков
-    @GET("tr.json/getLangs")
-    Observable<LanguageDTO> getLangs(@Query("key") String key, @Query("ui") String ui_lang);
+	// Получение списка языков
+	@GET("tr.json/getLangs")
+	Observable<LanguageDTO> getLangs(@Query("key") String key, @Query("ui") String ui_lang);
 }

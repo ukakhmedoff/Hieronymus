@@ -1,16 +1,17 @@
 package ru.snatcher.hieronymus.view.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -28,142 +29,193 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.snatcher.hieronymus.R;
+import ru.snatcher.hieronymus.other.Constants;
 import ru.snatcher.hieronymus.other.di.view.DaggerViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewDynamicModule;
 import ru.snatcher.hieronymus.presenter.MainPresenterImpl;
 import ru.snatcher.hieronymus.presenter.Presenter;
 import ru.snatcher.hieronymus.presenter.vo.Language;
-import ru.snatcher.hieronymus.view.adapter.RecyclerViewAdapter;
+import ru.snatcher.hieronymus.presenter.vo.Translate;
+import ru.snatcher.hieronymus.view.ActivityCallback;
 
 /**
- * A simple {@link Fragment} subclass.
- * <p>
  * {@link MainFragment} is fragment, where user enters sentences and gets translates
  */
 public class MainFragment extends BaseFragment implements MainFragmentView {
 
-    @BindView(R.id.spinner_language_from)
-    Spinner fSpinnerFromLang;
+	private final List<Language> fLangs = new ArrayList<>();
 
-    @BindView(R.id.spinner_language_to)
-    Spinner fSpinnerToLang;
+	@BindView(R.id.spinner_language_from)
+	Spinner fSpinnerFromLang;
 
-    @BindView(R.id.textToTranslate)
-    EditText fTextToTranslate;
+	@BindView(R.id.spinner_language_to)
+	Spinner fSpinnerToLang;
 
-    @Inject
-    MainPresenterImpl fMainPresenter;
+	@BindView(R.id.textToTranslate)
+	EditText fTextToTranslate;
 
-    private ViewComponent viewComponent;
+	@BindView(R.id.translatedText)
+	TextView fTranslatedText;
 
-    private View fView;
-    private final List<Language> fLangs = new ArrayList<>();
+	@BindView(R.id.addFavorite)
+	ImageView fAddBookmarks;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (viewComponent == null) {
-            viewComponent = DaggerViewComponent.builder()
-                    .viewDynamicModule(new ViewDynamicModule(this))
-                    .build();
-        }
-        viewComponent.inject(this);
-        super.onCreate(savedInstanceState);
-    }
+	@Inject
+	MainPresenterImpl fMainPresenter;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        fView = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, fView);
-        fMainPresenter.onCreateView(savedInstanceState);
+	private ViewComponent viewComponent;
+	private View fView;
 
-        fMainPresenter.getLangs(fView.getResources().getString(R.string.key));
+	private ActivityCallback activityCallback;
+	AdapterView.OnItemSelectedListener fOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+		@Override
+		public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			prepareAndProcessTranslationRequest();
+			setSpinnerLanguagesToPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE, fSpinnerFromLang.getSelectedItemPosition());
+			setSpinnerLanguagesToPreferences(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE, fSpinnerToLang.getSelectedItemPosition());
+		}
 
-        final CompositeDisposable lvDisposable = new CompositeDisposable();
+		@Override
+		public void onNothingSelected(AdapterView<?> parentView) {
+		}
+	};
 
-        Disposable inputWatcher = RxTextView.textChanges(fTextToTranslate)
-                .debounce(400, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(charSequence -> prepareAndProcessTranslationRequest());
-        lvDisposable.add(inputWatcher);
-        return fView;
-    }
+	private void setSpinnerLanguagesToPreferences(String pLanguagesToPreferences, int pLanguagePosition) {
+		activityCallback.setSpinnerLanguagesToPreferences(pLanguagesToPreferences, pLanguagePosition);
+	}
 
-    private void prepareAndProcessTranslationRequest() {
-        String inputText = fTextToTranslate.getText().toString().trim();
-        if (inputText.length() == 0) {
-            return;
-        }
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
 
-        fMainPresenter.getTranslates(fView.getResources().getString(R.string.key), inputText, getSpinnersLang());
-    }
+		try {
+			activityCallback = (ActivityCallback) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement activityCallback");
+		}
+	}
 
-    public void setViewComponent(ViewComponent viewComponent) {
-        this.viewComponent = viewComponent;
-    }
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		if (viewComponent == null) {
+			viewComponent = DaggerViewComponent.builder()
+					.viewDynamicModule(new ViewDynamicModule(this))
+					.build();
+		}
+		viewComponent.inject(this);
+		super.onCreate(savedInstanceState);
+	}
 
-    private ArrayAdapter<String> getLanguageArrayAdapter() {
-        List<String> lvLangs = new ArrayList<>();
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		fView = inflater.inflate(R.layout.fragment_main, container, false);
+		ButterKnife.bind(this, fView);
 
-        for (Language lvLanguage : fLangs) lvLangs.add(lvLanguage.getLangValue());
-        //Collections.sort(lvLangs);
+		fMainPresenter.getLangs(fView.getResources().getString(R.string.key));
 
-        // Настраиваем адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                fView.getContext(),
-                android.R.layout.simple_spinner_item,
-                lvLangs
-        );
+		final CompositeDisposable lvDisposable = new CompositeDisposable();
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
-    }
+		Disposable inputWatcher = RxTextView.textChanges(fTextToTranslate)
+				.debounce(400, TimeUnit.MILLISECONDS)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(charSequence -> prepareAndProcessTranslationRequest());
+		lvDisposable.add(inputWatcher);
 
-    private String getSpinnersLang() {
-        return getSpinnerLang(fSpinnerFromLang) + "-" + getSpinnerLang(fSpinnerToLang);
-    }
+		fMainPresenter.onCreateView(savedInstanceState);
 
-    private String getSpinnerLang(Spinner pSpinnerLang) {
-        return fMainPresenter.onLanguageSelected(fLangs.get(pSpinnerLang.getSelectedItemPosition()));
-    }
+		return fView;
+	}
 
-    public void showError(final String error) {
-        Toast.makeText(fView.getContext(), error, Toast.LENGTH_SHORT).show();
-    }
+	private void prepareAndProcessTranslationRequest() {
+		String inputText = fTextToTranslate.getText().toString().trim();
+		if (inputText.length() == 0) return;
 
-    @Override
-    protected Presenter getPresenter() {
-        return fMainPresenter;
-    }
+		fMainPresenter.getTranslates(fView.getResources().getString(R.string.key), inputText, getSpinnerLangKey());
+	}
 
-    @Override
-    public void showTranslatesList(final List<String> pTranslates) {
-        final RecyclerView lvRecyclerViewTranslates = (RecyclerView) fView.findViewById(R.id.recycler_main_translates);
-        final RecyclerViewAdapter lvRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fMainPresenter);
+	public void setViewComponent(ViewComponent viewComponent) {
+		this.viewComponent = viewComponent;
+	}
 
-        lvRecyclerViewTranslates.
-                setLayoutManager(new LinearLayoutManager(fView.getContext(), LinearLayoutManager.VERTICAL, false));
-        lvRecyclerViewTranslates.setAdapter(lvRecyclerViewAdapter);
+	private ArrayAdapter<String> getLanguageArrayAdapter() {
+		List<String> lvLangs = new ArrayList<>();
+		for (Language lvLanguage : fLangs) lvLangs.add(lvLanguage.getLangValue());
 
-    }
+		// Настраиваем адаптер
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(
+				fView.getContext(),
+				android.R.layout.simple_spinner_item,
+				lvLangs
+		);
 
-    @Override
-    public void showLanguagesList(final List<Language> pLanguages) {
-        fLangs.addAll(pLanguages);
-        //Ставим в наш спиннер адаптер
-        fSpinnerToLang.setAdapter(getLanguageArrayAdapter());
-        fSpinnerFromLang.setAdapter(getLanguageArrayAdapter());
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		return adapter;
+	}
 
-        //Выбираем какой-нибудь язык по-умолчанию
-        fSpinnerToLang.setSelection(1);
-        fSpinnerFromLang.setSelection(1);
-    }
+	private String getSpinnerLangKey() {
+		return fMainPresenter.onLanguageSelected(fLangs.get(fSpinnerFromLang.getSelectedItemPosition()))
+				+ "-"
+				+ fMainPresenter.onLanguageSelected(fLangs.get(fSpinnerToLang.getSelectedItemPosition()));
+	}
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        fMainPresenter.onSaveInstanceState(outState);
-    }
+	public void showError(final String error) {
+		Toast.makeText(fView.getContext(), error, Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	protected Presenter getPresenter() {
+		return fMainPresenter;
+	}
+
+	@Override
+	public void showTranslate(final Translate pTranslate) {
+		fView.findViewById(R.id.include_translated_text).setVisibility(View.VISIBLE);
+		fTranslatedText.setText(pTranslate.getTranslatedText());
+		if (pTranslate.isBookmark())
+			fAddBookmarks.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border, fView.getContext().getApplicationContext().getTheme()));
+	}
+
+	@Override
+	public void showLanguagesList(final List<Language> pLanguages) {
+		fLangs.addAll(pLanguages);
+
+		//Ставим в наш спиннер адаптер
+		fSpinnerToLang.setAdapter(getLanguageArrayAdapter());
+		fSpinnerFromLang.setAdapter(getLanguageArrayAdapter());
+
+		fSpinnerFromLang.setOnItemSelectedListener(fOnItemSelectedListener);
+		fSpinnerToLang.setOnItemSelectedListener(fOnItemSelectedListener);
+
+		//Выбираем какой-нибудь язык по-умолчанию
+		fSpinnerToLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE));
+		fSpinnerFromLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
+	}
+
+	private int getSpinnerSelectedItemFromPreferences(final String pPreferencesLanguageTranslate) {
+		return activityCallback.getSpinnerLanguagesFromPreferences(pPreferencesLanguageTranslate);
+	}
+
+	@Override
+	public void saveTranslate(final Translate pTranslate) {
+		activityCallback.saveTranslate(pTranslate);
+	}
+
+	@Override
+	public void saveLanguage(final Language pLanguage) {
+		activityCallback.saveLanguage(pLanguage);
+	}
+
+	@Override
+	public void saveLanguages(final List<Language> pLanguages) {
+		activityCallback.saveLanguages(pLanguages);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		fMainPresenter.onSaveInstanceState(outState);
+	}
 }

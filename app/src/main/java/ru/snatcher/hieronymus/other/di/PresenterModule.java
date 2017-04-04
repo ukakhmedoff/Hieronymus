@@ -17,15 +17,15 @@ import rx.subscriptions.CompositeSubscription;
 @Module
 class PresenterModule {
 
-    @Provides
-    @Singleton
-    Model provideDataRepository() {
-        return new ModelImpl();
-    }
+	@Provides
+	@Singleton
+	Model provideDataRepository() {
+		return new ModelImpl();
+	}
 
-    @Provides
-    CompositeSubscription provideCompositeSubscription() {
-        return new CompositeSubscription();
-    }
+	@Provides
+	CompositeSubscription provideCompositeSubscription() {
+		return new CompositeSubscription();
+	}
 
 }

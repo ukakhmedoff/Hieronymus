@@ -1,6 +1,6 @@
 package ru.snatcher.hieronymus.presenter.vo;
 
-import java.util.List;
+import com.orm.SugarRecord;
 
 /**
  * {@link Translate}
@@ -8,26 +8,51 @@ import java.util.List;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
+public class Translate extends SugarRecord {
+	private String fLang;
 
-public class Translate {
+	private String fTranslatedText;
 
-    private String fLang;
-    private List<String> fTranslates;
+	private TranslateGroup fTranslateGroup;
 
-    public Translate(final String pLang, final List<String> pTranslates) {
-        fLang = pLang;
-        fTranslates = pTranslates;
-    }
+	private boolean isBookmark;
 
-    public Translate(final List<String> pTranslates) {
-        fTranslates = pTranslates;
-    }
+	public Translate(final String pLang, final String pTranslatedText, final TranslateGroup pTranslateGroup, final boolean pIsBookmark) {
+		fLang = pLang;
+		fTranslatedText = pTranslatedText;
+		fTranslateGroup = pTranslateGroup;
+		isBookmark = pIsBookmark;
+	}
 
-    public String getLang() {
-        return fLang;
-    }
+	public String getLang() {
+		return fLang;
+	}
 
-    public List<String> getTranslates() {
-        return fTranslates;
-    }
+	public void setLang(final String pLang) {
+		fLang = pLang;
+	}
+
+	public String getTranslatedText() {
+		return fTranslatedText;
+	}
+
+	public void setTranslatedText(final String pTranslatedText) {
+		fTranslatedText = pTranslatedText;
+	}
+
+	public TranslateGroup getTranslateGroup() {
+		return fTranslateGroup;
+	}
+
+	public void setTranslateGroup(final TranslateGroup pTranslateGroup) {
+		fTranslateGroup = pTranslateGroup;
+	}
+
+	public boolean isBookmark() {
+		return isBookmark;
+	}
+
+	public void setBookmark(final boolean pBookmark) {
+		isBookmark = pBookmark;
+	}
 }

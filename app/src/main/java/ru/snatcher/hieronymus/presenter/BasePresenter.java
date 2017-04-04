@@ -16,24 +16,24 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BasePresenter implements Presenter {
 
-    @Inject
-    Model fModel;
+	@Inject
+	Model fModel;
 
-    @Inject
-    CompositeSubscription fCompositeSubscription;
+	@Inject
+	CompositeSubscription fCompositeSubscription;
 
-    BasePresenter() {
-        App.getAppComponent().inject(this);
-    }
+	BasePresenter() {
+		App.getAppComponent().inject(this);
+	}
 
-    void addSubscription(Subscription subscription) {
-        fCompositeSubscription.add(subscription);
-    }
+	void addSubscription(Subscription subscription) {
+		fCompositeSubscription.add(subscription);
+	}
 
-    @Override
-    public void onStop() {
-        fCompositeSubscription.clear();
-    }
+	@Override
+	public void onStop() {
+		fCompositeSubscription.clear();
+	}
 
-    protected abstract BaseView getView();
+	protected abstract BaseView getView();
 }

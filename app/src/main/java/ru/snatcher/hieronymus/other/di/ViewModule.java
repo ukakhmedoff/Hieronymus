@@ -14,8 +14,8 @@ import ru.snatcher.hieronymus.presenter.MainPresenterImpl;
 @Module
 class ViewModule {
 
-    @Provides
-    MainPresenterImpl provideLanguagePresenterImpl() {
-        return new MainPresenterImpl();
-    }
+	@Provides
+	MainPresenterImpl provideLanguagePresenterImpl() {
+		return new MainPresenterImpl();
+	}
 }

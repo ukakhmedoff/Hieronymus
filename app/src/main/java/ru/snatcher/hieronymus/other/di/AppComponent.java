@@ -18,11 +18,11 @@ import ru.snatcher.hieronymus.view.fragment.MainFragment;
 @Component(modules = {ModelModule.class, PresenterModule.class, ViewModule.class})
 public interface AppComponent {
 
-    void inject(ModelImpl dataRepository);
+	void inject(ModelImpl dataRepository);
 
-    void inject(BasePresenter basePresenter);
+	void inject(BasePresenter basePresenter);
 
-    void inject(MainPresenterImpl pMainPresenter);
+	void inject(MainPresenterImpl pMainPresenter);
 
-    void inject(MainFragment pMainFragment);
+	void inject(MainFragment pMainFragment);
 }

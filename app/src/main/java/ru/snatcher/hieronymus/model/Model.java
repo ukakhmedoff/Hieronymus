@@ -13,9 +13,9 @@ import rx.Observable;
  */
 public interface Model {
 
-    Observable<LanguageDTO> getLangs(String pKey);
+	Observable<LanguageDTO> getLangs(String pKey);
 
-    Observable<TranslateDTO> getTranslatedText(String pKey, String pTextToTranslate, String pLangs);
+	Observable<TranslateDTO> getTranslatedText(String pKey, String pTextToTranslate, String pLangs);
 
-    String getLangKey(Language pLanguage);
+	String getLangKey(Language pLanguage);
 }

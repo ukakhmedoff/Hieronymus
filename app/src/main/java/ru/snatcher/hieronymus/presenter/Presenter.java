@@ -9,5 +9,5 @@ package ru.snatcher.hieronymus.presenter;
 
 public interface Presenter {
 
-    void onStop();
+	void onStop();
 }
