@@ -3,12 +3,12 @@ package ru.snatcher.hieronymus.model;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import ru.snatcher.hieronymus.db.Language;
 import ru.snatcher.hieronymus.model.api.ApiTranslateInterface;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
-import ru.snatcher.hieronymus.presenter.vo.Language;
 import rx.Observable;
 import rx.Scheduler;
 
@@ -34,7 +34,7 @@ public class ModelImpl implements Model {
 
 	public ModelImpl() {
 		App.getAppComponent().inject(this);
-		fSchedulersTransformer = o -> o.subscribeOn(fIoThread)
+		fSchedulersTransformer = o -> ((Observable) o).subscribeOn(fIoThread)
 				.observeOn(fUiThread)
 				.unsubscribeOn(fIoThread);
 	}

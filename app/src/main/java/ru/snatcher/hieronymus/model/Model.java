@@ -1,8 +1,8 @@
 package ru.snatcher.hieronymus.model;
 
+import ru.snatcher.hieronymus.db.Language;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
-import ru.snatcher.hieronymus.presenter.vo.Language;
 import rx.Observable;
 
 /**

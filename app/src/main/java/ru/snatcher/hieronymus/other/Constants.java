@@ -6,7 +6,6 @@ package ru.snatcher.hieronymus.other;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 public class Constants {
 
 	public static final boolean TRANSLATE_ISNT_BOOKMARKS = false;

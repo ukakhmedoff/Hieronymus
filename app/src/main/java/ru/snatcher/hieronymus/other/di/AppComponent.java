@@ -5,8 +5,9 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.snatcher.hieronymus.model.ModelImpl;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
+import ru.snatcher.hieronymus.presenter.HistoryPresenterImpl;
 import ru.snatcher.hieronymus.presenter.MainPresenterImpl;
-import ru.snatcher.hieronymus.view.fragment.MainFragment;
+import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
 
 /**
  * {@link AppComponent}
@@ -24,5 +25,7 @@ public interface AppComponent {
 
 	void inject(MainPresenterImpl pMainPresenter);
 
-	void inject(MainFragment pMainFragment);
+	void inject(HistoryPresenterImpl pDashboardPresenter);
+
+	void inject(HistoryFragment pHistoryFragment);
 }

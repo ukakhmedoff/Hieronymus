@@ -36,7 +36,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.3-alpha', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.guava', module: 'guava'
     })
@@ -50,16 +50,16 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$retrofitLibraryVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitLibraryVersion"
 
-
-
     compile "com.jakewharton:butterknife:$butterKnifeLibraryVersion"
     provided "com.jakewharton:butterknife-compiler:$butterKnifeLibraryVersion"
+
+    compile "org.greenrobot:greendao:$greenDaoLibraryVersion"
 
     compile "com.google.dagger:dagger:$daggerLibraryVersion"
     apt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
 
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.github.satyan:sugar:1.4'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'

@@ -7,13 +7,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.LanguageDao;
+import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.db.TranslateDao;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
 import ru.snatcher.hieronymus.presenter.mapper.TranslateMapper;
-import ru.snatcher.hieronymus.presenter.vo.Language;
-import ru.snatcher.hieronymus.presenter.vo.Translate;
 import ru.snatcher.hieronymus.view.fragment.BaseView;
-import ru.snatcher.hieronymus.view.fragment.MainFragmentView;
+import ru.snatcher.hieronymus.view.fragment.main.TranslatorFragmentView;
 import rx.Observer;
 import rx.Subscription;
 
@@ -33,7 +35,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 	@Inject
 	TranslateMapper fTranslateMapper;
 
-	private MainFragmentView fMainFragmentView;
+	private TranslatorFragmentView fTranslatorFragmentView;
 
 	private List<Language> fLanguages = new ArrayList<>();
 
@@ -43,14 +45,14 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 	public MainPresenterImpl() {
 	}
 
-	public MainPresenterImpl(final MainFragmentView pMainFragmentView) {
+	public MainPresenterImpl(final TranslatorFragmentView pTranslatorFragmentView) {
 		App.getAppComponent().inject(this);
-		fMainFragmentView = pMainFragmentView;
+		fTranslatorFragmentView = pTranslatorFragmentView;
 	}
 
 	@Override
 	protected BaseView getView() {
-		return fMainFragmentView;
+		return fTranslatorFragmentView;
 	}
 
 	public void onCreateView(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 			if (savedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY) != null)
 				fTranslate = (Translate) savedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY);
 		}
-		if (isTranslatesNotEmpty()) fMainFragmentView.showTranslate(fTranslate);
+		if (isTranslatesNotEmpty()) fTranslatorFragmentView.showTranslate(fTranslate);
 	}
 
 	private boolean isTranslatesNotEmpty() {
@@ -84,16 +86,17 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
 			@Override
 			public void onError(Throwable e) {
-				fMainFragmentView.showError(e.getLocalizedMessage());
+				fTranslatorFragmentView.showError(e.getLocalizedMessage());
 			}
 
 			@Override
 			public void onNext(List<Language> pLanguages) {
 				if (pLanguages != null) {
 					fLanguages = pLanguages;
-					fMainFragmentView.showLanguagesList(fLanguages);
+					fTranslatorFragmentView.showLanguagesList(fLanguages);
+					fTranslatorFragmentView.saveLanguages(fLanguages);
 				} else {
-					fMainFragmentView.showError("Check your Internet connection!");
+					fTranslatorFragmentView.showError("Check your Internet connection!");
 				}
 			}
 		});
@@ -101,7 +104,7 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 	}
 
 	@Override
-	public void getTranslates(final String pKey, final String pToTranslateText, String pLangs) {
+	public void getTranslatesRemote(final String pKey, final String pToTranslateText, String pLangs) {
 		Subscription lvSubscription =
 				fModel
 						.getTranslatedText(pKey, pToTranslateText, pLangs)
@@ -114,20 +117,34 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 
 							@Override
 							public void onError(Throwable e) {
-								fMainFragmentView.showError(e.getLocalizedMessage());
+								fTranslatorFragmentView.showError(e.getLocalizedMessage());
 							}
 
 							@Override
 							public void onNext(Translate pTranslate) {
 								if (pTranslate != null) {
 									fTranslate = pTranslate;
-									fMainFragmentView.showTranslate(fTranslate);
-									fMainFragmentView.saveTranslate(fTranslate);
+									fTranslatorFragmentView.showTranslate(fTranslate);
+									fTranslatorFragmentView.saveTranslate(fTranslate);
 								} else {
-									fMainFragmentView.showError("Что-то пошло не так :(, скорее всего что-то не так с ключом!");
+									fTranslatorFragmentView.showError("Что-то пошло не так :(, скорее всего что-то не так с ключом!");
 								}
 							}
 						});
 		addSubscription(lvSubscription);
+	}
+
+	@Override
+	public void saveTranslate(final Translate pTranslate, App pApp) {
+
+		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
+		lvTranslateDao.insert(pTranslate);
+
+	}
+
+	@Override
+	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
+		LanguageDao lvLanguageDao = pApp.getDaoSession().getLanguageDao();
+		for (Language lvLanguage : pLanguages) lvLanguageDao.insert(lvLanguage);
 	}
 }

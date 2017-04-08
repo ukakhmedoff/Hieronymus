@@ -1,12 +1,12 @@
 package ru.snatcher.hieronymus.other;
 
+import android.app.Application;
 import android.content.res.Configuration;
 
-import com.orm.SchemaGenerator;
-import com.orm.SugarApp;
-import com.orm.SugarContext;
-import com.orm.SugarDb;
+import org.greenrobot.greendao.database.Database;
 
+import ru.snatcher.hieronymus.db.DaoMaster;
+import ru.snatcher.hieronymus.db.DaoSession;
 import ru.snatcher.hieronymus.other.di.AppComponent;
 import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
 
@@ -14,8 +14,9 @@ import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-public class App extends SugarApp {
+public class App extends Application {
 	private static AppComponent sfAppComponent;
+	private DaoSession fDaoSession;
 
 	public static AppComponent getAppComponent() {
 		return sfAppComponent;
@@ -25,10 +26,10 @@ public class App extends SugarApp {
 	public void onCreate() {
 		super.onCreate();
 		sfAppComponent = buildComponent();
-		SugarContext.init(this);
-		// create table if not exists
-		SchemaGenerator schemaGenerator = new SchemaGenerator(this);
-		schemaGenerator.createDatabase(new SugarDb(this).getDB());
+
+		DaoMaster.DevOpenHelper lvDevOpenHelper = new DaoMaster.DevOpenHelper(this, "app_database");
+		Database lvWritableDb = lvDevOpenHelper.getWritableDb();
+		fDaoSession = new DaoMaster(lvWritableDb).newSession();
 	}
 
 	@Override
@@ -41,13 +42,11 @@ public class App extends SugarApp {
 		super.onLowMemory();
 	}
 
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-		SugarContext.terminate();
-	}
-
 	protected AppComponent buildComponent() {
 		return DaggerAppComponent.builder().build();
+	}
+
+	public DaoSession getDaoSession() {
+		return fDaoSession;
 	}
 }

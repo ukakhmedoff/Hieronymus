@@ -7,20 +7,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.List;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
 import ru.snatcher.hieronymus.other.Constants;
-import ru.snatcher.hieronymus.presenter.vo.Language;
-import ru.snatcher.hieronymus.presenter.vo.Translate;
-import ru.snatcher.hieronymus.view.fragment.MainFragment;
+import ru.snatcher.hieronymus.view.fragment.dashboard.DashboardFragment;
+import ru.snatcher.hieronymus.view.fragment.main.TranslatorFragment;
 
 public class MainActivity extends AppCompatActivity implements ActivityCallback {
 
 	private static final String PAGER_POSITION = "PAGER_POSITION";
 
 	private SharedPreferences fSharedPreferences;
-	private BottomNavigationView fNavigation;
+
+	@BindView(R.id.navigation)
+	BottomNavigationView fNavigation;
 
 	private SharedPreferences.Editor fEditor;
 	private BottomNavigationView.OnNavigationItemSelectedListener fOnNavigationItemSelectedListener
@@ -28,13 +29,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 		switch (item.getItemId()) {
 			case R.id.navigation_main:
-				showFragment(new MainFragment());
+				showFragment(new TranslatorFragment());
 				return true;
 			case R.id.navigation_dashboard:
-				showFragment(new MainFragment());
+				showFragment(new DashboardFragment());
 				return true;
 			case R.id.navigation_settings:
-				showFragment(new MainFragment());
+				showFragment(new TranslatorFragment());
 				return true;
 		}
 		return false;
@@ -49,9 +50,16 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ButterKnife.bind(this);
 
-		showFragment(new MainFragment());
+		showFragment(new TranslatorFragment());
 
+		initPreferences();
+		fNavigation.setOnNavigationItemSelectedListener(fOnNavigationItemSelectedListener);
+		fNavigation.setSelected(true);
+	}
+
+	private void initPreferences() {
 		fSharedPreferences = getSharedPreferences(Constants.PREFERENCES_NAME, MODE_PRIVATE);
 
 		fEditor = fSharedPreferences.edit();
@@ -61,9 +69,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 			fEditor.putInt(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE, 0);
 			fEditor.putInt(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE, 1);
 		}
-		fNavigation = (BottomNavigationView) findViewById(R.id.navigation);
-		fNavigation.setOnNavigationItemSelectedListener(fOnNavigationItemSelectedListener);
-		fNavigation.setSelected(true);
 	}
 
 	@Override
@@ -75,36 +80,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		fNavigation.setSelectedItemId(savedInstanceState.getInt(PAGER_POSITION, 0));
-	}
 
-	@Override
-	public void saveTranslate(final Translate pTranslate) {
-		Translate lvTranslate = Translate.findById(Translate.class, pTranslate.getId());
-		if (lvTranslate != null & pTranslate.isBookmark() & pTranslate.getTranslateGroup() != null) {
-			lvTranslate.setBookmark(pTranslate.isBookmark());
-			lvTranslate.setTranslateGroup(pTranslate.getTranslateGroup());
-		} else if (lvTranslate != null & pTranslate.isBookmark()) {
-			lvTranslate.setBookmark(pTranslate.isBookmark());
-			lvTranslate.setTranslateGroup(pTranslate.getTranslateGroup());
-		} else if (lvTranslate != null & pTranslate.getTranslateGroup() != null) {
-			lvTranslate.setTranslateGroup(pTranslate.getTranslateGroup());
-		}
-		assert lvTranslate != null;
-		lvTranslate.save();
-
-	}
-
-	@Override
-	public void saveLanguage(final Language pLanguage) {
-		//pLanguage.save();
-	}
-
-	@Override
-	public void saveLanguages(final List<Language> pLanguages) {
-		/*for (Language lvLanguage : pLanguages) {
-			lvLanguage.save();
-		}*/
+		fNavigation.setSelectedItemId(savedInstanceState.getInt(PAGER_POSITION));
 	}
 
 	@Override

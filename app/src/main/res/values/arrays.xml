@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dashboard_tabs_names">
+        <item>@string/tab_bookmarks</item>
+        <item>@string/tab_history</item>
+    </string-array>
+</resources>

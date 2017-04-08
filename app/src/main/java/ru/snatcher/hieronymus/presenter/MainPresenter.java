@@ -1,6 +1,10 @@
 package ru.snatcher.hieronymus.presenter;
 
-import ru.snatcher.hieronymus.presenter.vo.Language;
+import java.util.List;
+
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.other.App;
 
 /**
  * {@link MainPresenter}
@@ -14,5 +18,9 @@ interface MainPresenter extends Presenter {
 
 	void getLangs(String pKey);
 
-	void getTranslates(String pKey, String pToTranslateText, String pLangs);
+	void getTranslatesRemote(String pKey, String pToTranslateText, String pLangs);
+
+	void saveTranslate(Translate pTranslate, App pApp);
+
+	void saveLanguages(List<Language> pLanguages, App pApp);
 }

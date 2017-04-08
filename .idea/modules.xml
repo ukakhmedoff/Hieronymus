@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Hieronymus.iml" filepath="$PROJECT_DIR$/Hieronymus.iml" />
       <module fileurl="file://$PROJECT_DIR$/Hieronymust.iml" filepath="$PROJECT_DIR$/Hieronymust.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greendao-generator/greendao-generator.iml" filepath="$PROJECT_DIR$/greendao-generator/greendao-generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/st1Hieronymus.iml" filepath="$PROJECT_DIR$/st1Hieronymus.iml" />
     </modules>
   </component>

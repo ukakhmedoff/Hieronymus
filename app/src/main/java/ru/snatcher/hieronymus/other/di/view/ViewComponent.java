@@ -3,7 +3,8 @@ package ru.snatcher.hieronymus.other.di.view;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import ru.snatcher.hieronymus.view.fragment.MainFragment;
+import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
+import ru.snatcher.hieronymus.view.fragment.main.TranslatorFragment;
 
 /**
  * {@link ViewComponent}
@@ -15,6 +16,8 @@ import ru.snatcher.hieronymus.view.fragment.MainFragment;
 @Component(modules = {ViewDynamicModule.class})
 public interface ViewComponent {
 
-	void inject(MainFragment pMainFragment);
+	void inject(TranslatorFragment pTranslatorFragment);
+
+	void inject(HistoryFragment pHistoryFragment);
 
 }

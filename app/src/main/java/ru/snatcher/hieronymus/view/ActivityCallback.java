@@ -1,10 +1,5 @@
 package ru.snatcher.hieronymus.view;
 
-import java.util.List;
-
-import ru.snatcher.hieronymus.presenter.vo.Language;
-import ru.snatcher.hieronymus.presenter.vo.Translate;
-
 /**
  * {@link ActivityCallback}
  *
@@ -13,15 +8,8 @@ import ru.snatcher.hieronymus.presenter.vo.Translate;
  */
 public interface ActivityCallback {
 
-	void saveTranslate(Translate pTranslate);
-
-	//TODO: Сделать сохранение в бд через activitycallback
-	void saveLanguage(Language pLanguage);
-
-	//TODO: Сделать сохранение в бд через activitycallback
-	void saveLanguages(List<Language> pLanguages);
-
 	void setSpinnerLanguagesToPreferences(String pToPreferences, int pLanguagePosition);
 
 	int getSpinnerLanguagesFromPreferences(String pSpinnerLanguages);
+
 }

@@ -12,16 +12,16 @@ import java.util.List;
 import ru.snatcher.hieronymus.R;
 
 /**
- * {@link BaseAdapter}
+ * {@link BaseRecyclerAdapter}
  *
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
+abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAdapter.ViewHolder> {
 
 	List<T> fTList;
 
-	BaseAdapter(List<T> fTList) {
+	BaseRecyclerAdapter(List<T> fTList) {
 		this.fTList = fTList;
 	}
 

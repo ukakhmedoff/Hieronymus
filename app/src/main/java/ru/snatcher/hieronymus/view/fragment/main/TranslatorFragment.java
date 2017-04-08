@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.view.fragment;
+package ru.snatcher.hieronymus.view.fragment.main;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -29,20 +28,22 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.snatcher.hieronymus.R;
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
 import ru.snatcher.hieronymus.other.di.view.DaggerViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewDynamicModule;
 import ru.snatcher.hieronymus.presenter.MainPresenterImpl;
 import ru.snatcher.hieronymus.presenter.Presenter;
-import ru.snatcher.hieronymus.presenter.vo.Language;
-import ru.snatcher.hieronymus.presenter.vo.Translate;
 import ru.snatcher.hieronymus.view.ActivityCallback;
+import ru.snatcher.hieronymus.view.fragment.BaseFragment;
 
 /**
- * {@link MainFragment} is fragment, where user enters sentences and gets translates
+ * {@link TranslatorFragment} is fragment, where user enters sentences and gets translates
  */
-public class MainFragment extends BaseFragment implements MainFragmentView {
+public class TranslatorFragment extends BaseFragment implements TranslatorFragmentView {
 
 	private final List<Language> fLangs = new ArrayList<>();
 
@@ -64,10 +65,10 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 	@Inject
 	MainPresenterImpl fMainPresenter;
 
-	private ViewComponent viewComponent;
+	private ViewComponent fViewComponent;
 	private View fView;
 
-	private ActivityCallback activityCallback;
+	private ActivityCallback fActivityCallback;
 	AdapterView.OnItemSelectedListener fOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
 		@Override
 		public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -81,36 +82,32 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 		}
 	};
 
-	private void setSpinnerLanguagesToPreferences(String pLanguagesToPreferences, int pLanguagePosition) {
-		activityCallback.setSpinnerLanguagesToPreferences(pLanguagesToPreferences, pLanguagePosition);
-	}
-
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 
 		try {
-			activityCallback = (ActivityCallback) activity;
+			fActivityCallback = (ActivityCallback) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
-					+ " must implement activityCallback");
+					+ " must implement fActivityCallback");
 		}
 	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
-		if (viewComponent == null) {
-			viewComponent = DaggerViewComponent.builder()
+		if (fViewComponent == null) {
+			fViewComponent = DaggerViewComponent.builder()
 					.viewDynamicModule(new ViewDynamicModule(this))
 					.build();
 		}
-		viewComponent.inject(this);
+		fViewComponent.inject(this);
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		fView = inflater.inflate(R.layout.fragment_main, container, false);
+		fView = inflater.inflate(R.layout.fragment_translator, container, false);
 		ButterKnife.bind(this, fView);
 
 		fMainPresenter.getLangs(fView.getResources().getString(R.string.key));
@@ -118,7 +115,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 		final CompositeDisposable lvDisposable = new CompositeDisposable();
 
 		Disposable inputWatcher = RxTextView.textChanges(fTextToTranslate)
-				.debounce(400, TimeUnit.MILLISECONDS)
+				.debounce(700, TimeUnit.MILLISECONDS)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(charSequence -> prepareAndProcessTranslationRequest());
@@ -133,11 +130,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 		String inputText = fTextToTranslate.getText().toString().trim();
 		if (inputText.length() == 0) return;
 
-		fMainPresenter.getTranslates(fView.getResources().getString(R.string.key), inputText, getSpinnerLangKey());
-	}
-
-	public void setViewComponent(ViewComponent viewComponent) {
-		this.viewComponent = viewComponent;
+		fMainPresenter.getTranslatesRemote(getActivity().getResources().getString(R.string.key), inputText, getSpinnerLangKey());
 	}
 
 	private ArrayAdapter<String> getLanguageArrayAdapter() {
@@ -146,7 +139,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 
 		// Настраиваем адаптер
 		ArrayAdapter<String> adapter = new ArrayAdapter<>(
-				fView.getContext(),
+				getActivity(),
 				android.R.layout.simple_spinner_item,
 				lvLangs
 		);
@@ -161,21 +154,25 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 				+ fMainPresenter.onLanguageSelected(fLangs.get(fSpinnerToLang.getSelectedItemPosition()));
 	}
 
-	public void showError(final String error) {
-		Toast.makeText(fView.getContext(), error, Toast.LENGTH_LONG).show();
-	}
-
 	@Override
 	protected Presenter getPresenter() {
 		return fMainPresenter;
+	}
+
+	private void setSpinnerLanguagesToPreferences(String pLanguagesToPreferences, int pLanguagePosition) {
+		fActivityCallback.setSpinnerLanguagesToPreferences(pLanguagesToPreferences, pLanguagePosition);
+	}
+
+	private int getSpinnerSelectedItemFromPreferences(final String pPreferencesLanguageTranslate) {
+		return fActivityCallback.getSpinnerLanguagesFromPreferences(pPreferencesLanguageTranslate);
 	}
 
 	@Override
 	public void showTranslate(final Translate pTranslate) {
 		fView.findViewById(R.id.include_translated_text).setVisibility(View.VISIBLE);
 		fTranslatedText.setText(pTranslate.getTranslatedText());
-		if (pTranslate.isBookmark())
-			fAddBookmarks.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border, fView.getContext().getApplicationContext().getTheme()));
+		if (pTranslate.getIsBookmark())
+			fAddBookmarks.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border, getActivity().getApplicationContext().getTheme()));
 	}
 
 	@Override
@@ -194,28 +191,18 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 		fSpinnerFromLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
 	}
 
-	private int getSpinnerSelectedItemFromPreferences(final String pPreferencesLanguageTranslate) {
-		return activityCallback.getSpinnerLanguagesFromPreferences(pPreferencesLanguageTranslate);
-	}
-
 	@Override
 	public void saveTranslate(final Translate pTranslate) {
-		activityCallback.saveTranslate(pTranslate);
-	}
-
-	@Override
-	public void saveLanguage(final Language pLanguage) {
-		activityCallback.saveLanguage(pLanguage);
+		fMainPresenter.saveTranslate(pTranslate, (App) getActivity().getApplication());
 	}
 
 	@Override
 	public void saveLanguages(final List<Language> pLanguages) {
-		activityCallback.saveLanguages(pLanguages);
+		fMainPresenter.saveLanguages(pLanguages, (App) getActivity().getApplication());
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		fMainPresenter.onSaveInstanceState(outState);
 	}
 }
