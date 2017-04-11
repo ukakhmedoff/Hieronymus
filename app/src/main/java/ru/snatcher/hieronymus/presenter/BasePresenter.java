@@ -16,24 +16,21 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BasePresenter implements Presenter {
 
+	protected static final String BUNDLE_TRANSLATE_LIST_KEY = "BUNDLE_TRANSLATE_LIST_KEY";
+
 	@Inject
-	Model fModel;
+	protected Model fModel;
 
 	@Inject
 	CompositeSubscription fCompositeSubscription;
 
-	BasePresenter() {
+	protected BasePresenter() {
 		App.getAppComponent().inject(this);
 	}
 
-	void addSubscription(Subscription subscription) {
+	protected void addSubscription(Subscription subscription) {
 		fCompositeSubscription.add(subscription);
 	}
 
-	@Override
-	public void onStop() {
-		fCompositeSubscription.clear();
-	}
-
-	protected abstract BaseView getView();
+	public abstract BaseView getView();
 }

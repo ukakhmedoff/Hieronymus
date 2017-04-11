@@ -8,7 +8,7 @@ public class GreenDaoGenerator {
 
 	private static final int VERSION = 1;
 	private static final String PACKAGE_DESTINATION = "ru.snatcher.hieronymus.db";
-	private static final String DESTINATION_FOLDER = "./app/src/main/java";
+	private static final String DESTINATION_FOLDER = "./app/src/translator/java";
 
 	public static void main(String[] args) throws Exception {
 		Schema schema = new Schema(VERSION, PACKAGE_DESTINATION);

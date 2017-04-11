@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.presenter;
+package ru.snatcher.hieronymus.presenter.translator;
 
 import android.os.Bundle;
 
@@ -7,27 +7,29 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
 import ru.snatcher.hieronymus.db.Language;
 import ru.snatcher.hieronymus.db.LanguageDao;
 import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.db.TranslateDao;
 import ru.snatcher.hieronymus.other.App;
+import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
 import ru.snatcher.hieronymus.presenter.mapper.TranslateMapper;
 import ru.snatcher.hieronymus.view.fragment.BaseView;
-import ru.snatcher.hieronymus.view.fragment.main.TranslatorFragmentView;
+import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 import rx.Observer;
 import rx.Subscription;
 
 /**
- * {@link MainPresenterImpl} is implementation for {@link MainPresenter}
+ * {@link TranslatorPresenterImpl} is presenter for {@link TranslatorFragmentView}
+ * <p>
+ * Here we get view, langs, translates. Map these. Save translate, langs. And check network connection change.
  *
  * @author Usman Akhmedoff.
- * @version 1.0
+ * @version 1.2
  */
-public class MainPresenterImpl extends BasePresenter implements MainPresenter {
-
-	private static final String BUNDLE_TRANSLATE_LIST_KEY = "BUNDLE_TRANSLATE_LIST_KEY";
+public class TranslatorPresenterImpl extends BasePresenter implements NetworkChangeReceiver.ConnectionReceiverListener {
 
 	@Inject
 	LanguageMapper fLanguageMapper;
@@ -42,23 +44,23 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 	private Translate fTranslate;
 
 	@Inject
-	public MainPresenterImpl() {
+	public TranslatorPresenterImpl() {
 	}
 
-	public MainPresenterImpl(final TranslatorFragmentView pTranslatorFragmentView) {
+	public TranslatorPresenterImpl(final TranslatorFragmentView pTranslatorFragmentView) {
 		App.getAppComponent().inject(this);
 		fTranslatorFragmentView = pTranslatorFragmentView;
 	}
 
 	@Override
-	protected BaseView getView() {
+	public BaseView getView() {
 		return fTranslatorFragmentView;
 	}
 
-	public void onCreateView(Bundle savedInstanceState) {
-		if (savedInstanceState != null) {
-			if (savedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY) != null)
-				fTranslate = (Translate) savedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY);
+	public void onCreateView(Bundle pSavedInstanceState) {
+		if (pSavedInstanceState != null) {
+			if (pSavedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY) != null)
+				fTranslate = (Translate) pSavedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY);
 		}
 		if (isTranslatesNotEmpty()) fTranslatorFragmentView.showTranslate(fTranslate);
 	}
@@ -67,16 +69,10 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 		return fTranslate != null && fLanguages != null && !fLanguages.isEmpty();
 	}
 
-	@Override
-	public void onStop() {
-	}
-
-	@Override
 	public String onLanguageSelected(Language pLanguage) {
 		return fModel.getLangKey(pLanguage);
 	}
 
-	@Override
 	public void getLangs(String pKey) {
 		Subscription lvSubscription = fModel.getLangs(pKey).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
 
@@ -103,7 +99,6 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 		addSubscription(lvSubscription);
 	}
 
-	@Override
 	public void getTranslatesRemote(final String pKey, final String pToTranslateText, String pLangs) {
 		Subscription lvSubscription =
 				fModel
@@ -134,17 +129,22 @@ public class MainPresenterImpl extends BasePresenter implements MainPresenter {
 		addSubscription(lvSubscription);
 	}
 
-	@Override
 	public void saveTranslate(final Translate pTranslate, App pApp) {
-
 		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
 		lvTranslateDao.insert(pTranslate);
-
 	}
 
-	@Override
 	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
 		LanguageDao lvLanguageDao = pApp.getDaoSession().getLanguageDao();
 		for (Language lvLanguage : pLanguages) lvLanguageDao.insert(lvLanguage);
+	}
+
+	public void onNetworkConnectionChanged(final boolean isConnected) {
+		if (isConnected) fTranslatorFragmentView.getLangs();
+	}
+
+	@Override
+	public void onStop() {
+
 	}
 }

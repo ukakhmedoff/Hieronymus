@@ -1,6 +1,6 @@
 package ru.snatcher.hieronymus.view.fragment;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.widget.Toast;
 
 import ru.snatcher.hieronymus.presenter.Presenter;
@@ -22,8 +22,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 	@Override
 	public void onStop() {
 		super.onStop();
-		if (getPresenter() != null) {
-			getPresenter().onStop();
-		}
+		if (getPresenter() != null) getPresenter().onStop();
 	}
 }

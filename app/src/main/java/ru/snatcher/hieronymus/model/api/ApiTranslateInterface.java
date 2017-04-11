@@ -10,7 +10,6 @@ import rx.Observable;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 public interface ApiTranslateInterface {
 
 	// Перевод текста

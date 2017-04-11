@@ -27,7 +27,6 @@
         android:gravity="top"
         android:inputType="textCapSentences|textMultiLine"
         android:lines="5"
-        android:minLines="5"
         android:padding="@dimen/toolbar_items_margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,6 +42,5 @@
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textToTranslate"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textToTranslate"/>
 </android.support.constraint.ConstraintLayout>

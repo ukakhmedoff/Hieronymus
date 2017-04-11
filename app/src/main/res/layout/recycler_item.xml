@@ -12,26 +12,24 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_left_recycler_item"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
-    <ImageView
-        android:id="@+id/addGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_right_recycler_item"
-        app:layout_constraintBottom_toBottomOf="@+id/translatedText"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/translatedText"
-        app:srcCompat="@drawable/ic_add"/>
 
     <ImageView
         android:id="@+id/addFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_right_recycler_item"
-        app:layout_constraintBottom_toBottomOf="@+id/translatedText"
-        app:layout_constraintRight_toLeftOf="@+id/addGroup"
-        app:layout_constraintTop_toTopOf="@+id/translatedText"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/translatedText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_favorite_border"/>
 </android.support.constraint.ConstraintLayout>

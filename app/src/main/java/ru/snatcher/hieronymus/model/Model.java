@@ -7,6 +7,7 @@ import rx.Observable;
 
 /**
  * {@link Model}
+ * Here we'll get translates and langs
  *
  * @author Usman Akhmedoff.
  * @version 1.0

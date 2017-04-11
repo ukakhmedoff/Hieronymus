@@ -25,10 +25,6 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 		this.fTList = fTList;
 	}
 
-	public List<T> getTList() {
-		return fTList;
-	}
-
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item, viewGroup, false);
@@ -51,7 +47,6 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 			fTranslateMain = (TextView) itemView.findViewById(R.id.translatedText);
 
 			fAddToBookmarks = (ImageView) itemView.findViewById(R.id.addFavorite);
-			fAddToGroup = (ImageView) itemView.findViewById(R.id.addGroup);
 		}
 	}
 

@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
 
 /**
  * {@link PagerAdapter}
@@ -21,13 +20,12 @@ public class PagerAdapter extends FragmentPagerAdapter {
 	public PagerAdapter(Context pContext, final FragmentManager pFragmentManager) {
 		super(pFragmentManager);
 		fTabTitles = pContext.getResources().getStringArray(R.array.dashboard_tabs_names);
-
 	}
 
 	@Override
 	public Fragment getItem(final int pPosition) {
-		if (pPosition == 0) return new HistoryFragment();
-		else return new HistoryFragment();
+		//return HistoryFragment.newInstance(pPosition);
+		return null;
 	}
 
 	@Override
