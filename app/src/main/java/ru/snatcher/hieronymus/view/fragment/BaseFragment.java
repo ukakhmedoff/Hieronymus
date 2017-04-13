@@ -3,7 +3,7 @@ package ru.snatcher.hieronymus.view.fragment;
 import android.app.Fragment;
 import android.widget.Toast;
 
-import ru.snatcher.hieronymus.presenter.Presenter;
+import ru.snatcher.hieronymus.presenter.BasePresenter;
 
 /**
  * {@link BaseFragment}
@@ -13,7 +13,7 @@ import ru.snatcher.hieronymus.presenter.Presenter;
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
 
-	protected abstract Presenter getPresenter();
+	protected abstract BasePresenter getPresenter();
 
 	public void showError(final String error) {
 		Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();

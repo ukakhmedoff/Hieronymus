@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ru.snatcher.hieronymus.presenter.Presenter;
+import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.view.fragment.BaseFragment;
 
 /**
@@ -28,7 +28,7 @@ public class DashboardFragment extends BaseFragment {
 	}
 
 	@Override
-	protected Presenter getPresenter() {
+	protected BasePresenter getPresenter() {
 		return null;
 	}
 }

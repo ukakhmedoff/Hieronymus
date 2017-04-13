@@ -15,7 +15,7 @@ import rx.subscriptions.CompositeSubscription;
  * @version 1.0
  */
 @Module
-class PresenterModule {
+public class PresenterModule {
 
 	@Provides
 	@Singleton

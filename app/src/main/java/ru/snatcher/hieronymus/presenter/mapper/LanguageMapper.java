@@ -29,7 +29,7 @@ public class LanguageMapper implements Func1<LanguageDTO, List<Language>> {
 		}
 
 		List<Language> lvLanguages = Observable.from(pLanguageDTO.getLangs().entrySet())
-				.map(languages -> new Language(null, languages.getKey(), languages.getValue()))
+				.map(languages -> new Language(languages.getKey(), languages.getValue()))
 				.toList()
 				.toBlocking()
 				.first();

@@ -23,7 +23,7 @@ public class TranslateMapper implements Func1<TranslateDTO, Translate> {
 	public Translate call(TranslateDTO pTranslateDTO) {
 		if (pTranslateDTO == null) return null;
 
-		return new Translate(null, pTranslateDTO.getLang(), pTranslateDTO.getText().get(0), Constants.TRANSLATE_ISNT_BOOKMARKS);
+		return new Translate(pTranslateDTO.getLang(), pTranslateDTO.getText().get(0), Constants.TRANSLATE_ISNT_FAVOURITE);
 	}
 
 }

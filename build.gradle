@@ -13,7 +13,7 @@ buildscript {
 ext {
     supportLibraryVersion = '25.3.1'
     retrofitLibraryVersion = '2.2.0'
-    greenDaoLibraryVersion = '3.1.0'
+    greenDaoLibraryVersion = '3.2.2'
     rxJavaLibraryVersion = '2.0.1'
     butterKnifeLibraryVersion = '8.5.1'
     daggerLibraryVersion = '2.10'

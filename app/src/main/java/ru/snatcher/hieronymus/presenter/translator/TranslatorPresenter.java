@@ -22,14 +22,14 @@ import rx.Observer;
 import rx.Subscription;
 
 /**
- * {@link TranslatorPresenterImpl} is presenter for {@link TranslatorFragmentView}
+ * {@link TranslatorPresenter} is presenter for {@link TranslatorFragmentView}
  * <p>
  * Here we get view, langs, translates. Map these. Save translate, langs. And check network connection change.
  *
  * @author Usman Akhmedoff.
  * @version 1.2
  */
-public class TranslatorPresenterImpl extends BasePresenter implements NetworkChangeReceiver.ConnectionReceiverListener {
+public class TranslatorPresenter extends BasePresenter implements NetworkChangeReceiver.ConnectionReceiverListener {
 
 	@Inject
 	LanguageMapper fLanguageMapper;
@@ -44,11 +44,11 @@ public class TranslatorPresenterImpl extends BasePresenter implements NetworkCha
 	private Translate fTranslate;
 
 	@Inject
-	public TranslatorPresenterImpl() {
+	public TranslatorPresenter() {
 	}
 
-	public TranslatorPresenterImpl(final TranslatorFragmentView pTranslatorFragmentView) {
-		App.getAppComponent().inject(this);
+	public TranslatorPresenter(final TranslatorFragmentView pTranslatorFragmentView) {
+		App.getComponent().inject(this);
 		fTranslatorFragmentView = pTranslatorFragmentView;
 	}
 
@@ -89,7 +89,7 @@ public class TranslatorPresenterImpl extends BasePresenter implements NetworkCha
 			public void onNext(List<Language> pLanguages) {
 				if (pLanguages != null) {
 					fLanguages = pLanguages;
-					fTranslatorFragmentView.showLanguagesList(fLanguages);
+					fTranslatorFragmentView.showLanguageList(fLanguages);
 					fTranslatorFragmentView.saveLanguages(fLanguages);
 				} else {
 					fTranslatorFragmentView.showError("Check your Internet connection!");
@@ -141,10 +141,5 @@ public class TranslatorPresenterImpl extends BasePresenter implements NetworkCha
 
 	public void onNetworkConnectionChanged(final boolean isConnected) {
 		if (isConnected) fTranslatorFragmentView.getLangs();
-	}
-
-	@Override
-	public void onStop() {
-
 	}
 }

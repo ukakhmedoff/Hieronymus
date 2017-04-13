@@ -2,7 +2,7 @@ package ru.snatcher.hieronymus.other.di;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenterImpl;
+import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 
 /**
  * {@link ViewModule}
@@ -10,12 +10,11 @@ import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenterImpl;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 @Module
-class ViewModule {
+public class ViewModule {
 
 	@Provides
-	TranslatorPresenterImpl provideLanguagePresenterImpl() {
-		return new TranslatorPresenterImpl();
+	TranslatorPresenter provideLanguagePresenterImpl() {
+		return new TranslatorPresenter();
 	}
 }

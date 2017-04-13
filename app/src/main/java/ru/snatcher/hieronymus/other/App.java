@@ -23,7 +23,7 @@ public class App extends Application {
 	/**
 	 * @return {@link AppComponent}
 	 */
-	public static AppComponent getAppComponent() {
+	public static AppComponent getComponent() {
 		return sfAppComponent;
 	}
 

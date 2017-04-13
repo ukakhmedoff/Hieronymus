@@ -12,61 +12,50 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity
 public class Translate {
+    private String Lang;
 
-	@Id(autoincrement = true)
-	private Long id;
-	private String fLang;
+    @Id
+    @Unique
+    private String TranslatedText;
+    private Boolean isBookmark;
 
-	@Unique
-	private String fTranslatedText;
-	private Boolean isBookmark;
+    @Generated
+    public Translate() {
+    }
 
-	@Generated
-	public Translate() {
-	}
+    public Translate(String TranslatedText) {
+        this.TranslatedText = TranslatedText;
+    }
 
-	public Translate(Long id) {
-		this.id = id;
-	}
+    @Generated
+    public Translate(String Lang, String TranslatedText, Boolean isBookmark) {
+        this.Lang = Lang;
+        this.TranslatedText = TranslatedText;
+        this.isBookmark = isBookmark;
+    }
 
-	@Generated
-	public Translate(Long id, String fLang, String fTranslatedText, Boolean isBookmark) {
-		this.id = id;
-		this.fLang = fLang;
-		this.fTranslatedText = fTranslatedText;
-		this.isBookmark = isBookmark;
-	}
+    public String getLang() {
+        return Lang;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setLang(String Lang) {
+        this.Lang = Lang;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getTranslatedText() {
+        return TranslatedText;
+    }
 
-	public String getLang() {
-		return fLang;
-	}
+    public void setTranslatedText(String TranslatedText) {
+        this.TranslatedText = TranslatedText;
+    }
 
-	public void setLang(String fLang) {
-		this.fLang = fLang;
-	}
+    public Boolean getIsBookmark() {
+        return isBookmark;
+    }
 
-	public String getTranslatedText() {
-		return fTranslatedText;
-	}
-
-	public void setTranslatedText(String fTranslatedText) {
-		this.fTranslatedText = fTranslatedText;
-	}
-
-	public Boolean getIsBookmark() {
-		return isBookmark;
-	}
-
-	public void setIsBookmark(Boolean isBookmark) {
-		this.isBookmark = isBookmark;
-	}
+    public void setIsBookmark(Boolean isBookmark) {
+        this.isBookmark = isBookmark;
+    }
 
 }

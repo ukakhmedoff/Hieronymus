@@ -5,7 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.snatcher.hieronymus.model.ModelImpl;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenterImpl;
+import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 
 /**
  * {@link AppComponent}
@@ -21,5 +21,5 @@ public interface AppComponent {
 
 	void inject(BasePresenter basePresenter);
 
-	void inject(TranslatorPresenterImpl pMainPresenter);
+	void inject(TranslatorPresenter pMainPresenter);
 }

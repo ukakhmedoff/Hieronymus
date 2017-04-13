@@ -20,9 +20,6 @@ public class RecyclerViewAdapter extends BaseRecyclerAdapter<Translate> {
 		holder.fAddToBookmarks.setOnClickListener(v -> {
 
 		});
-		holder.fAddToGroup.setOnClickListener(v -> {
-
-		});
 	}
 
 	public void setTranslateList(List<Translate> pTranslateList) {

@@ -11,7 +11,8 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "ru.snatcher.hieronymus.tools.MockTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -36,10 +37,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.3-alpha', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.guava', module: 'guava'
-    })
 
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
@@ -58,20 +55,38 @@ dependencies {
     compile "com.google.dagger:dagger:$daggerLibraryVersion"
     apt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
 
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    compile 'com.android.support:support-v4:25.3.1'
+
+    testApt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.57-beta'
+    testCompile "org.robolectric:robolectric:3.3.2"
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
+
+    androidTestApt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.3-alpha', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.guava', module: 'guava'
+    })
+    androidTestCompile "com.android.support:support-annotations:$supportLibraryVersion"
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
+    androidTestCompile 'org.mockito:mockito-core:2.7.22'
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+    androidTestCompile 'com.google.truth:truth:0.32'
+
 }
 
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.7.1.201405082137"
+    toolVersion = "0.7.9"
 }
 
 def coverageSourceDirs = [

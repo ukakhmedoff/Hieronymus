@@ -26,7 +26,7 @@ public interface TranslatorFragmentView extends BaseView {
 	 *
 	 * @param pLanguages - list to show in spinners
 	 */
-	void showLanguagesList(final List<Language> pLanguages);
+	void showLanguageList(final List<Language> pLanguages);
 
 	/**
 	 * Save translate to DB

@@ -20,7 +20,7 @@ import rx.schedulers.Schedulers;
  */
 
 @Module
-class ModelModule {
+public class ModelModule {
 
 	@Provides
 	@Singleton

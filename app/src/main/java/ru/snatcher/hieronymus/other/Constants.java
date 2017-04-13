@@ -4,17 +4,16 @@ package ru.snatcher.hieronymus.other;
  * {@link Constants}
  *
  * @author Usman Akhmedoff.
- * @version 1.0
+ * @version 1.2
  */
 public class Constants {
 
 	/**
-	 * @value TRANSLATE_ISNT_BOOKMARKS - if user don't set translate how favourite
-	 * @value TRANSLATE_IS_BOOKMARKS - if user set translate how favourite
+	 * @value TRANSLATE_ISNT_FAVOURITE - if user don't set translate how favourite
+	 * @value TRANSLATE_IS_FAVOURITE - if user set translate how favourite
 	 */
-	public static final boolean TRANSLATE_ISNT_BOOKMARKS = false;
-	public static final boolean TRANSLATE_IS_BOOKMARKS = true;
-
+	public static final boolean TRANSLATE_ISNT_FAVOURITE = false;
+	public static final boolean TRANSLATE_IS_FAVOURITE = true;
 
 	/**
 	 * {@value BASE_URL} - is base url to get data from API

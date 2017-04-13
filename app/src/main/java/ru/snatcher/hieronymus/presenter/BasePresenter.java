@@ -25,7 +25,7 @@ public abstract class BasePresenter implements Presenter {
 	CompositeSubscription fCompositeSubscription;
 
 	protected BasePresenter() {
-		App.getAppComponent().inject(this);
+		App.getComponent().inject(this);
 	}
 
 	protected void addSubscription(Subscription subscription) {
@@ -33,4 +33,10 @@ public abstract class BasePresenter implements Presenter {
 	}
 
 	public abstract BaseView getView();
+
+	@Override
+	public void onStop() {
+		fCompositeSubscription.clear();
+
+	}
 }

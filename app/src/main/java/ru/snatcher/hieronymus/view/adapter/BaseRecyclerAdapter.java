@@ -9,13 +9,15 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
 
 /**
  * {@link BaseRecyclerAdapter}
  *
  * @author Usman Akhmedoff.
- * @version 1.0
+ * @version 1.1
  */
 abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerAdapter.ViewHolder> {
 
@@ -38,15 +40,15 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 
 	class ViewHolder extends RecyclerView.ViewHolder {
 
+		@BindView(R.id.translatedText)
 		TextView fTranslateMain;
 
-		ImageView fAddToGroup, fAddToBookmarks;
+		@BindView(R.id.addFavorite)
+		ImageView fAddToBookmarks;
 
 		ViewHolder(final View itemView) {
 			super(itemView);
-			fTranslateMain = (TextView) itemView.findViewById(R.id.translatedText);
-
-			fAddToBookmarks = (ImageView) itemView.findViewById(R.id.addFavorite);
+			ButterKnife.bind(this, itemView);
 		}
 	}
 

@@ -13,52 +13,39 @@ import org.greenrobot.greendao.annotation.Unique;
 @Entity
 public class Language {
 
-	@Id(autoincrement = true)
-	private Long id;
+    @Id
+    @Unique
+    private String LangKey;
+    private String LangValue;
 
-	@Unique
-	private String fLangKey;
+    @Generated
+    public Language() {
+    }
 
-	@Unique
-	private String fLangValue;
+    public Language(String LangKey) {
+        this.LangKey = LangKey;
+    }
 
-	@Generated
-	public Language() {
-	}
+    @Generated
+    public Language(String LangKey, String LangValue) {
+        this.LangKey = LangKey;
+        this.LangValue = LangValue;
+    }
 
-	public Language(Long id) {
-		this.id = id;
-	}
+    public String getLangKey() {
+        return LangKey;
+    }
 
-	@Generated
-	public Language(Long id, String fLangKey, String fLangValue) {
-		this.id = id;
-		this.fLangKey = fLangKey;
-		this.fLangValue = fLangValue;
-	}
+    public void setLangKey(String LangKey) {
+        this.LangKey = LangKey;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getLangValue() {
+        return LangValue;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getLangKey() {
-		return fLangKey;
-	}
-
-	public void setLangKey(String fLangKey) {
-		this.fLangKey = fLangKey;
-	}
-
-	public String getLangValue() {
-		return fLangValue;
-	}
-
-	public void setLangValue(String fLangValue) {
-		this.fLangValue = fLangValue;
-	}
+    public void setLangValue(String LangValue) {
+        this.LangValue = LangValue;
+    }
 
 }

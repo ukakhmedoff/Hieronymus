@@ -7,7 +7,5 @@ package ru.snatcher.hieronymus.presenter;
  * @version 1.0
  */
 public interface Presenter {
-
-
 	void onStop();
 }

@@ -3,8 +3,11 @@ package ru.snatcher.hieronymus.other;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import ru.snatcher.hieronymus.BuildConfig;
+import ru.snatcher.hieronymus.other.di.TestComponent;
 
 /**
  * {@link BaseTest}
@@ -12,7 +15,7 @@ import org.robolectric.annotation.Config;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(application = TestApplication.class,
 		constants = BuildConfig.class,
 		sdk = 21)

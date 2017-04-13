@@ -2,7 +2,7 @@ package ru.snatcher.hieronymus.other.di.view;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenterImpl;
+import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 
 /**
@@ -21,9 +21,7 @@ public class ViewDynamicModule {
 	}
 
 	@Provides
-	TranslatorPresenterImpl provideMainPresenter() {
-		return new TranslatorPresenterImpl(fTranslatorFragmentView);
+	TranslatorPresenter provideMainPresenter() {
+		return new TranslatorPresenter(fTranslatorFragmentView);
 	}
-
-
 }
