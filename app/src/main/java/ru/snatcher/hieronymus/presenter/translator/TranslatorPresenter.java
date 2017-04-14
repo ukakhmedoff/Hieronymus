@@ -8,15 +8,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.LanguageDao;
-import ru.snatcher.hieronymus.db.Translate;
-import ru.snatcher.hieronymus.db.TranslateDao;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
 import ru.snatcher.hieronymus.presenter.mapper.TranslateMapper;
-import ru.snatcher.hieronymus.view.fragment.BaseView;
+import ru.snatcher.hieronymus.view.BaseView;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 import rx.Observer;
 import rx.Subscription;
@@ -73,8 +71,8 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		return fModel.getLangKey(pLanguage);
 	}
 
-	public void getLangs(String pKey) {
-		Subscription lvSubscription = fModel.getLangs(pKey).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
+	private void getRemoteLanguages(String pKey, String pUiLang) {
+		Subscription lvSubscription = fModel.getLangs(pKey, pUiLang).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
 
 			@Override
 			public void onCompleted() {
@@ -90,10 +88,10 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 				if (pLanguages != null) {
 					fLanguages = pLanguages;
 					fTranslatorFragmentView.showLanguageList(fLanguages);
-					fTranslatorFragmentView.saveLanguages(fLanguages);
 				} else {
 					fTranslatorFragmentView.showError("Check your Internet connection!");
 				}
+
 			}
 		});
 		addSubscription(lvSubscription);
@@ -129,14 +127,17 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		addSubscription(lvSubscription);
 	}
 
-	public void saveTranslate(final Translate pTranslate, App pApp) {
-		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
-		lvTranslateDao.insert(pTranslate);
+	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
+		fModel.saveLanguages(pLanguages, pApp);
 	}
 
-	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
-		LanguageDao lvLanguageDao = pApp.getDaoSession().getLanguageDao();
-		for (Language lvLanguage : pLanguages) lvLanguageDao.insert(lvLanguage);
+	private void getLocalLanguages(App pApp) {
+		fTranslatorFragmentView.showLanguageList(fModel.getLocalLanguages(pApp));
+	}
+
+	public void getLangs(String pKey, String pUiLang, App pApp) {
+		if (NetworkChangeReceiver.isConnected()) getRemoteLanguages(pKey, pUiLang);
+		else getLocalLanguages(pApp);
 	}
 
 	public void onNetworkConnectionChanged(final boolean isConnected) {

@@ -6,7 +6,7 @@ package ru.snatcher.hieronymus.view;
  * @author Usman Akhmedoff.
  * @version 1.1
  */
-public interface ActivityCallback {
+public interface ActivityCallback extends BaseView {
 
 	/**
 	 * Save selected languages to settings

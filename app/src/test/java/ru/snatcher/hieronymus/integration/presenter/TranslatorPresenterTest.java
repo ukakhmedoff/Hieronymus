@@ -10,10 +10,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.integration.other.IntegrationBaseTest;
 import ru.snatcher.hieronymus.model.Model;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.TestConstants;
@@ -66,7 +66,7 @@ public class TranslatorPresenterTest extends IntegrationBaseTest {
 		fModel = Mockito.mock(Model.class);
 		fTranslatorFragmentView = mock(TranslatorFragmentView.class);
 
-		Mockito.when(fModel.getLangs(TestConstants.TEST_KEY)).thenReturn(Observable.just(fLanguageDTO));
+		Mockito.when(fModel.getLangs(TestConstants.TEST_KEY, "ru")).thenReturn(Observable.just(fLanguageDTO));
 		Mockito.when(fModel.getTranslatedText(TestConstants.TEST_KEY, TestConstants.TEST_TO_TRANSLATE, TestConstants.TEST_LANGS)).thenReturn(Observable.just(fTranslateDTO));
 
 		fTranslatorPresenter = new TranslatorPresenter(fTranslatorFragmentView);

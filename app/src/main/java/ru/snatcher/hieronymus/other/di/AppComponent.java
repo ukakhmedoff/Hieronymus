@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.snatcher.hieronymus.model.ModelImpl;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
+import ru.snatcher.hieronymus.presenter.dashboard.DashboardPresenter;
 import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 
 /**
@@ -22,4 +23,6 @@ public interface AppComponent {
 	void inject(BasePresenter basePresenter);
 
 	void inject(TranslatorPresenter pMainPresenter);
+
+	void inject(DashboardPresenter pDashboardPresenter);
 }

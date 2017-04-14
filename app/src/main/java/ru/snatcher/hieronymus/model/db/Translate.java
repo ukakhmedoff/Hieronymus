@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.db;
+package ru.snatcher.hieronymus.model.db;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

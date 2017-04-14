@@ -6,8 +6,8 @@ import org.greenrobot.greendao.database.Database;
 
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver.ConnectionReceiverListener;
-import ru.snatcher.hieronymus.db.DaoMaster;
-import ru.snatcher.hieronymus.db.DaoSession;
+import ru.snatcher.hieronymus.model.db.DaoMaster;
+import ru.snatcher.hieronymus.model.db.DaoSession;
 import ru.snatcher.hieronymus.other.di.AppComponent;
 import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
 

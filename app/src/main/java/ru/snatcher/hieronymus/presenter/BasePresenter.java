@@ -3,8 +3,9 @@ package ru.snatcher.hieronymus.presenter;
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.model.Model;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
-import ru.snatcher.hieronymus.view.fragment.BaseView;
+import ru.snatcher.hieronymus.view.BaseView;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -33,6 +34,10 @@ public abstract class BasePresenter implements Presenter {
 	}
 
 	public abstract BaseView getView();
+
+	public void saveTranslate(final Translate pTranslate, App pApp) {
+		fModel.saveTranslate(pTranslate, pApp);
+	}
 
 	@Override
 	public void onStop() {

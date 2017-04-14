@@ -2,9 +2,9 @@ package ru.snatcher.hieronymus.view.fragment.translator;
 
 import java.util.List;
 
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
-import ru.snatcher.hieronymus.view.fragment.BaseView;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.view.BaseView;
 
 /**
  * {@link TranslatorFragmentView}
@@ -46,4 +46,6 @@ public interface TranslatorFragmentView extends BaseView {
 	 * Get langs from Presenter
 	 */
 	void getLangs();
+
+	void setEnable(boolean pEnable);
 }

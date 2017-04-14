@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import ru.snatcher.hieronymus.other.BaseTest;
 import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
-import ru.snatcher.hieronymus.view.fragment.BaseView;
+import ru.snatcher.hieronymus.view.BaseView;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 import rx.Subscription;
 import rx.observers.TestSubscriber;

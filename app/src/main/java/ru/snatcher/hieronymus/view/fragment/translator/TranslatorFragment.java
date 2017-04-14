@@ -30,8 +30,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
 import ru.snatcher.hieronymus.other.di.view.DaggerViewComponent;
@@ -53,6 +53,10 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 
 	@BindString(R.string.key)
 	String fApiKey;
+
+	@BindString(R.string.ui_lang)
+	String fUiLang;
+
 	@BindView(R.id.spinner_language_from)
 	Spinner fSpinnerFromLang;
 
@@ -139,7 +143,12 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	}
 
 	public void getLangs() {
-		fTranslatorPresenter.getLangs(fApiKey);
+		fTranslatorPresenter.getLangs(fApiKey, fUiLang, (App) getActivity().getApplication());
+	}
+
+	@Override
+	public void setEnable(final boolean pEnable) {
+		fTextToTranslate.setEnabled(pEnable);
 	}
 
 	/**
@@ -229,6 +238,9 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 		//Выбираем какой-нибудь язык по-умолчанию
 		fSpinnerToLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE));
 		fSpinnerFromLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
+
+		saveLanguages(pLanguages);
+		setEnable(true);
 	}
 
 	@Override

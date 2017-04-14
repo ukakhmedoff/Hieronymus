@@ -12,7 +12,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.model.db.Language;
 import ru.snatcher.hieronymus.integration.other.IntegrationBaseTest;
 import ru.snatcher.hieronymus.other.TestConstants;
 import ru.snatcher.hieronymus.view.MainActivity;

@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_right_recycler_item"
         android:background="@drawable/edit_text_style"
+        android:enabled="false"
         android:gravity="top"
         android:inputType="textCapSentences|textMultiLine"
         android:lines="5"

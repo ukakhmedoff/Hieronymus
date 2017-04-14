@@ -1,9 +1,10 @@
 package ru.snatcher.hieronymus.view.fragment;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import ru.snatcher.hieronymus.presenter.BasePresenter;
+import ru.snatcher.hieronymus.view.BaseView;
 
 /**
  * {@link BaseFragment}

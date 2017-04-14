@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.db;
+package ru.snatcher.hieronymus.model.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;

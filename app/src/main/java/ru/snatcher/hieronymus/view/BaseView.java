@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.view.fragment;
+package ru.snatcher.hieronymus.view;
 
 /**
  * {@link BaseView}

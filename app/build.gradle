@@ -55,17 +55,9 @@ dependencies {
     compile "com.google.dagger:dagger:$daggerLibraryVersion"
     apt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
 
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
     testApt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.0.57-beta'
-    testCompile "org.robolectric:robolectric:3.3.2"
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
 
     androidTestApt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.3-alpha', {
@@ -73,6 +65,16 @@ dependencies {
         exclude group: 'com.android.guava', module: 'guava'
     })
     androidTestCompile "com.android.support:support-annotations:$supportLibraryVersion"
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.57-beta'
+    testCompile 'org.robolectric:robolectric:3.3.2'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
@@ -80,7 +82,6 @@ dependencies {
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestCompile 'com.google.truth:truth:0.32'
-
 }
 
 apply plugin: 'jacoco'

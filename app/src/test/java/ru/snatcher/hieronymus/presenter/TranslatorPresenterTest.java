@@ -9,9 +9,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.model.Model;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.BaseTest;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
- * {@link RepoListViewPresenter}
+ * {@link TranslatorPresenter}
  *
  * @author Usman Akhmedoff.
  * @version 1.0
@@ -68,7 +68,7 @@ public class TranslatorPresenterTest extends BaseTest {
 		fTranslatorPresenter = new TranslatorPresenter(fTranslatorFragmentView);
 		doAnswer(invocation -> Observable.just(fLanguageDTO))
 				.when(model)
-				.getLangs(TestConstants.TEST_KEY);
+				.getLangs(TestConstants.TEST_KEY, "ru");
 
 		doAnswer(invocation -> TestConstants.TEST_KEY)
 				.when(fTranslatorFragmentView)
@@ -94,6 +94,6 @@ public class TranslatorPresenterTest extends BaseTest {
 		fTranslatorPresenter.onCreateView(bundle);
 
 		verify(fTranslatorFragmentView, times(2)).showLanguageList(fLanguages);
-		verify(model).getLangs(TestConstants.TEST_KEY);
+		verify(model).getLangs(TestConstants.TEST_KEY, "ru");
 	}
 }

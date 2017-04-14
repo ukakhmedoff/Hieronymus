@@ -40,7 +40,7 @@ public class ModelTest extends IntegrationBaseTest {
 	public void testGetLanguageList() {
 
 		TestSubscriber<LanguageDTO> testSubscriber = new TestSubscriber<>();
-		model.getLangs(TestConstants.TEST_KEY).subscribe(testSubscriber);
+		model.getLangs(TestConstants.TEST_KEY, "ru").subscribe(testSubscriber);
 
 		testSubscriber.assertNoErrors();
 		testSubscriber.assertValueCount(1);

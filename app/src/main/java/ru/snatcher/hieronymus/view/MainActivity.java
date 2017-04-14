@@ -1,12 +1,12 @@
 package ru.snatcher.hieronymus.view;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
 import android.view.Gravity;
@@ -14,13 +14,14 @@ import android.view.Gravity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.view.fragment.dashboard.DashboardFragment;
+import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragment;
 
 import static ru.snatcher.hieronymus.other.Constants.FRAGMENT_DASHBOARD_TAG;
 import static ru.snatcher.hieronymus.other.Constants.FRAGMENT_SETTINGS_TAG;
 import static ru.snatcher.hieronymus.other.Constants.FRAGMENT_TRANSLATOR_TAG;
 import static ru.snatcher.hieronymus.other.Constants.PAGER_DASHBOARD_FRAGMENT_ID;
+import static ru.snatcher.hieronymus.other.Constants.PAGER_FRAGMENT_TAG;
 import static ru.snatcher.hieronymus.other.Constants.PAGER_SETTINGS_FRAGMENT_ID;
 import static ru.snatcher.hieronymus.other.Constants.PAGER_TRANSLATOR_FRAGMENT_ID;
 import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_APP_STARTED;
@@ -38,7 +39,6 @@ import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_NAME;
  */
 public class MainActivity extends AppCompatActivity implements ActivityCallback {
 
-	private static final String PAGER_FRAGMENT_TAG = "PAGER_FRAGMENT_TAG";
 	@BindView(R.id.navigation)
 	BottomNavigationView fNavigation;
 	private SharedPreferences fSharedPreferences;
@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 		initPreferences();
 		fNavigation.setOnNavigationItemSelectedListener(fOnNavigationItemSelectedListener);
-		fNavigation.setSelected(true);
+
 	}
 
 	private void beginTransaction() {
-		fFragmentTransaction = getFragmentManager().beginTransaction();
+		fFragmentTransaction = getSupportFragmentManager().beginTransaction();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	 * @param pFrom               - The id of the fragment from which we turn
 	 */
 	private void setFragment(final String pPAGER_FRAGMENT_TAG, final int pPagerFragmentId, final int pFrom) {
-		if (pPagerFragmentId == pFrom) return;
+		//if (pPagerFragmentId == pFrom) return;
 		beginTransaction();
 		hidePreviousFragment();
 		setAnimation(pFrom, pPagerFragmentId, getFragment(pPAGER_FRAGMENT_TAG));
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 		else if (pFrom < pPagerFragmentId) lvSlide = new Slide(Gravity.END);
 
 		pFragment.setReenterTransition(lvSlide);
-		pFragment.setReenterTransition(lvSlide);
+
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	 * @param tag - Fragment's tag that we must hide
 	 */
 	private void hideFragment(String tag) {
-		Fragment lvFragment = getFragmentManager().findFragmentByTag(tag);
+		Fragment lvFragment = getSupportFragmentManager().findFragmentByTag(tag);
 		if (lvFragment != null && lvFragment.isVisible()) fFragmentTransaction.hide(lvFragment);
 	}
 
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 			case FRAGMENT_TRANSLATOR_TAG:
 				return new TranslatorFragment();
 			case FRAGMENT_DASHBOARD_TAG:
-				return new DashboardFragment();
+				return new HistoryFragment();
 			case FRAGMENT_SETTINGS_TAG:
 				return new TranslatorFragment();
 			default:
@@ -208,8 +208,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 	@Override
 	public void setSpinnerLanguagesToPreferences(final String pToPreferences, final int pLanguagePosition) {
-		fEditor.putInt(pToPreferences, pLanguagePosition);
-		fEditor.commit();
+		fEditor.putInt(pToPreferences, pLanguagePosition).commit();
 	}
 
 	@Override
@@ -217,4 +216,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 		return fSharedPreferences.getInt(pSpinnerLanguages, 0);
 	}
 
+	@Override
+	public void showError(final String error) {
+
+	}
 }

@@ -2,7 +2,7 @@ package ru.snatcher.hieronymus.presenter.mapper;
 
 import javax.inject.Inject;
 
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.Constants;
 import rx.functions.Func1;
