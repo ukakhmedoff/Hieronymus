@@ -8,8 +8,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
-import ru.snatcher.hieronymus.model.db.Language;
-import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
@@ -56,10 +56,10 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 	}
 
 	public void onCreateView(Bundle pSavedInstanceState) {
-		if (pSavedInstanceState != null) {
+		if (pSavedInstanceState != null)
 			if (pSavedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY) != null)
 				fTranslate = (Translate) pSavedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY);
-		}
+
 		if (isTranslatesNotEmpty()) fTranslatorFragmentView.showTranslate(fTranslate);
 	}
 
@@ -72,7 +72,7 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 	}
 
 	private void getRemoteLanguages(String pKey, String pUiLang) {
-		Subscription lvSubscription = fModel.getLangs(pKey, pUiLang).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
+		Subscription lvSubscription = fModel.getRemoteLangs(pKey, pUiLang).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
 
 			@Override
 			public void onCompleted() {
@@ -118,10 +118,8 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 								if (pTranslate != null) {
 									fTranslate = pTranslate;
 									fTranslatorFragmentView.showTranslate(fTranslate);
-									fTranslatorFragmentView.saveTranslate(fTranslate);
-								} else {
+								} else
 									fTranslatorFragmentView.showError("Что-то пошло не так :(, скорее всего что-то не так с ключом!");
-								}
 							}
 						});
 		addSubscription(lvSubscription);
@@ -142,5 +140,9 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 
 	public void onNetworkConnectionChanged(final boolean isConnected) {
 		if (isConnected) fTranslatorFragmentView.getLangs();
+	}
+
+	void onSaveInstanceState(Bundle pOutState) {
+
 	}
 }

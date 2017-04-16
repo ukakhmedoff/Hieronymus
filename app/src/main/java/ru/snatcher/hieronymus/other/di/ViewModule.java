@@ -2,6 +2,7 @@ package ru.snatcher.hieronymus.other.di;
 
 import dagger.Module;
 import dagger.Provides;
+import ru.snatcher.hieronymus.presenter.dashboard.HistoryPresenter;
 import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 
 /**
@@ -14,7 +15,12 @@ import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 public class ViewModule {
 
 	@Provides
-	TranslatorPresenter provideLanguagePresenterImpl() {
+	TranslatorPresenter provideTranslatorPresenterImpl() {
 		return new TranslatorPresenter();
+	}
+
+	@Provides
+	HistoryPresenter provideHistoryPresenterImpl() {
+		return new HistoryPresenter();
 	}
 }

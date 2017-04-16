@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import ru.snatcher.hieronymus.R;
+import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
 
 /**
  * {@link PagerAdapter}
@@ -24,8 +25,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(final int pPosition) {
-		//return HistoryFragment.newInstance(pPosition);
-		return null;
+		return HistoryFragment.newInstance(pPosition);
 	}
 
 	@Override

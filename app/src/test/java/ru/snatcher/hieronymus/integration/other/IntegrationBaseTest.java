@@ -63,7 +63,7 @@ public class IntegrationBaseTest {
 		mockWebServer.setDispatcher(new Dispatcher() {
 			@Override
 			public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-				if (request.getPath().equals("/getLangs?key=" + TestConstants.TEST_KEY + "&ui=ru")) {
+				if (request.getPath().equals("/getRemoteLangs?key=" + TestConstants.TEST_KEY + "&ui=ru")) {
 					return new MockResponse().setResponseCode(200)
 							.setBody(testUtils.readString("json/langs.json"));
 				} else if (request.getPath().equals("/translate?key=" + TestConstants.TEST_KEY + "&text=" + TestConstants.TEST_TO_TRANSLATE + "&lang=" + TestConstants.TEST_LANGS)) {

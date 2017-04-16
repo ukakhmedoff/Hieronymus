@@ -4,8 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.like.LikeButton;
 
 import java.util.List;
 
@@ -43,8 +44,8 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 		@BindView(R.id.translatedText)
 		TextView fTranslateMain;
 
-		@BindView(R.id.addFavorite)
-		ImageView fAddToBookmarks;
+		@BindView(R.id.addFavourite)
+		LikeButton fAddToBookmarks;
 
 		ViewHolder(final View itemView) {
 			super(itemView);

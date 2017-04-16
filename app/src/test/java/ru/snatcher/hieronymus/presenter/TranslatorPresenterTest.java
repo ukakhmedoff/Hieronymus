@@ -68,7 +68,7 @@ public class TranslatorPresenterTest extends BaseTest {
 		fTranslatorPresenter = new TranslatorPresenter(fTranslatorFragmentView);
 		doAnswer(invocation -> Observable.just(fLanguageDTO))
 				.when(model)
-				.getLangs(TestConstants.TEST_KEY, "ru");
+				.getRemoteLangs(TestConstants.TEST_KEY, "ru");
 
 		doAnswer(invocation -> TestConstants.TEST_KEY)
 				.when(fTranslatorFragmentView)
@@ -94,6 +94,6 @@ public class TranslatorPresenterTest extends BaseTest {
 		fTranslatorPresenter.onCreateView(bundle);
 
 		verify(fTranslatorFragmentView, times(2)).showLanguageList(fLanguages);
-		verify(model).getLangs(TestConstants.TEST_KEY, "ru");
+		verify(model).getRemoteLangs(TestConstants.TEST_KEY, "ru");
 	}
 }

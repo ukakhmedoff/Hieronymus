@@ -2,8 +2,8 @@ package ru.snatcher.hieronymus.model;
 
 import java.util.List;
 
-import ru.snatcher.hieronymus.model.db.Language;
-import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.App;
@@ -18,7 +18,7 @@ import rx.Observable;
  */
 public interface Model {
 
-	Observable<LanguageDTO> getLangs(String pKey, String pUiLang);
+	Observable<LanguageDTO> getRemoteLangs(String pKey, String pUiLang);
 
 	Observable<TranslateDTO> getTranslatedText(String pKey, String pTextToTranslate, String pLangs);
 
@@ -31,4 +31,6 @@ public interface Model {
 	List<Translate> getTranslates(boolean pFavourite, App pApp);
 
 	List<Language> getLocalLanguages(App pApp);
+
+	boolean getTranslateIsFavourite(Translate pTranslate, App pApp);
 }

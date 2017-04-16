@@ -66,7 +66,7 @@ public class TranslatorPresenterTest extends IntegrationBaseTest {
 		fModel = Mockito.mock(Model.class);
 		fTranslatorFragmentView = mock(TranslatorFragmentView.class);
 
-		Mockito.when(fModel.getLangs(TestConstants.TEST_KEY, "ru")).thenReturn(Observable.just(fLanguageDTO));
+		Mockito.when(fModel.getRemoteLangs(TestConstants.TEST_KEY, "ru")).thenReturn(Observable.just(fLanguageDTO));
 		Mockito.when(fModel.getTranslatedText(TestConstants.TEST_KEY, TestConstants.TEST_TO_TRANSLATE, TestConstants.TEST_LANGS)).thenReturn(Observable.just(fTranslateDTO));
 
 		fTranslatorPresenter = new TranslatorPresenter(fTranslatorFragmentView);

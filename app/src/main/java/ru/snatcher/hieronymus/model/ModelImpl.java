@@ -5,10 +5,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ru.snatcher.hieronymus.model.db.Language;
-import ru.snatcher.hieronymus.model.db.LanguageDao;
-import ru.snatcher.hieronymus.model.db.Translate;
-import ru.snatcher.hieronymus.model.db.TranslateDao;
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.db.TranslateDao;
 import ru.snatcher.hieronymus.model.api.ApiTranslateInterface;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
@@ -45,7 +44,7 @@ public class ModelImpl implements Model {
 	}
 
 	@Override
-	public Observable<LanguageDTO> getLangs(String pKey, String pUiLang) {
+	public Observable<LanguageDTO> getRemoteLangs(String pKey, String pUiLang) {
 		return fApiInterface
 				.getLangs(pKey, pUiLang)
 				.compose(applySchedulers());
@@ -65,30 +64,38 @@ public class ModelImpl implements Model {
 
 	@Override
 	public void saveTranslate(final Translate pTranslate, final App pApp) {
-		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
-		if (lvTranslateDao.hasKey(pTranslate)) lvTranslateDao.update(pTranslate);
-		else lvTranslateDao.insert(pTranslate);
+		pApp.getDaoSession().getTranslateDao().insertOrReplace(pTranslate);
 	}
 
 	@Override
 	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
-		LanguageDao lvLanguageDao = pApp.getDaoSession().getLanguageDao();
-		if (lvLanguageDao.hasKey(pLanguages.get(0))) return;
-		for (Language lvLanguage : pLanguages) lvLanguageDao.insert(lvLanguage);
+		for (Language lvLanguage : pLanguages)
+			pApp.getDaoSession().getLanguageDao().insertOrReplace(lvLanguage);
 	}
 
 	@Override
 	public List<Translate> getTranslates(final boolean pFavourite, final App pApp) {
 		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
 
-		return lvTranslateDao.loadAll();
+		if (pFavourite)
+			return lvTranslateDao.queryBuilder().where(TranslateDao.Properties.IsBookmark.eq(true)).orderAsc(TranslateDao.Properties.TranslatedText).list();
+		else return lvTranslateDao.loadAll();
 	}
 
 	@Override
 	public List<Language> getLocalLanguages(final App pApp) {
-		LanguageDao lvLanguageDao = pApp.getDaoSession().getLanguageDao();
+		return pApp.getDaoSession().getLanguageDao().loadAll();
+	}
 
-		return lvLanguageDao.loadAll();
+	@Override
+	public boolean getTranslateIsFavourite(final Translate pTranslate, final App pApp) {
+		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
+
+		Translate lvTranslate = lvTranslateDao.queryBuilder()
+				.where(TranslateDao.Properties.TranslatedText.eq(pTranslate.getTranslatedText())).unique();
+		if (lvTranslate != null)
+			return lvTranslate.getIsBookmark();
+		else return false;
 	}
 
 	@SuppressWarnings("unchecked")

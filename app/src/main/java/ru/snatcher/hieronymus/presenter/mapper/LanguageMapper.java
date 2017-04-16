@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.db.Language;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import rx.Observable;
 import rx.functions.Func1;
@@ -24,9 +24,7 @@ public class LanguageMapper implements Func1<LanguageDTO, List<Language>> {
 
 	@Override
 	public List<Language> call(LanguageDTO pLanguageDTO) {
-		if (pLanguageDTO == null) {
-			return null;
-		}
+		if (pLanguageDTO == null) return null;
 
 		List<Language> lvLanguages = Observable.from(pLanguageDTO.getLangs().entrySet())
 				.map(languages -> new Language(languages.getKey(), languages.getValue()))

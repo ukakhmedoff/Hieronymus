@@ -3,17 +3,19 @@ package ru.snatcher.hieronymus.view.fragment.translator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +32,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.model.db.Language;
-import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
 import ru.snatcher.hieronymus.other.di.view.DaggerViewComponent;
@@ -69,14 +71,27 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	@BindView(R.id.translatedText)
 	TextView fTranslatedText;
 
-	@BindView(R.id.addFavorite)
-	ImageView fAddBookmarks;
+	@BindView(R.id.addFavourite)
+	LikeButton fAddBookmarks;
 
 	Translate fTranslate;
-
 	@Inject
 	TranslatorPresenter fTranslatorPresenter;
+	OnLikeListener fOnLikeListener = new OnLikeListener() {
+		@Override
+		public void liked(LikeButton likeButton) {
+			fAddBookmarks.setLiked(true);
+			fTranslate.setIsBookmark(Constants.TRANSLATE_IS_FAVOURITE);
+			saveTranslate(fTranslate);
+		}
 
+		@Override
+		public void unLiked(LikeButton likeButton) {
+			fAddBookmarks.setLiked(false);
+			fTranslate.setIsBookmark(Constants.TRANSLATE_ISNT_FAVOURITE);
+			saveTranslate(fTranslate);
+		}
+	};
 	private ViewComponent fViewComponent;
 	private View fView;
 
@@ -126,10 +141,8 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 		fView = inflater.inflate(R.layout.fragment_translator, container, false);
 		ButterKnife.bind(this, fView);
 
-		getLangs();
-
 		final CompositeDisposable lvDisposable = new CompositeDisposable();
-
+		fTranslatedText.setMovementMethod(new ScrollingMovementMethod());
 		Disposable inputWatcher = RxTextView.textChanges(fTextToTranslate)
 				.debounce(700, TimeUnit.MILLISECONDS)
 				.subscribeOn(Schedulers.io())
@@ -137,18 +150,21 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 				.subscribe(charSequence -> getTranslate());
 		lvDisposable.add(inputWatcher);
 
+		fAddBookmarks.setOnLikeListener(fOnLikeListener);
+
 		fTranslatorPresenter.onCreateView(savedInstanceState);
 
 		return fView;
 	}
 
-	public void getLangs() {
-		fTranslatorPresenter.getLangs(fApiKey, fUiLang, (App) getActivity().getApplication());
+	@Override
+	public void onStart() {
+		super.onStart();
+		getLangs();
 	}
 
-	@Override
-	public void setEnable(final boolean pEnable) {
-		fTextToTranslate.setEnabled(pEnable);
+	public void getLangs() {
+		fTranslatorPresenter.getLangs(fApiKey, fUiLang, (App) getActivity().getApplication());
 	}
 
 	/**
@@ -217,11 +233,17 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 
 	@Override
 	public void showTranslate(final Translate pTranslate) {
-		fTranslate = pTranslate;
 		fView.findViewById(R.id.include_translated_text).setVisibility(View.VISIBLE);
+
+		fTranslate = pTranslate;
+
+		pTranslate.setIsBookmark(fTranslatorPresenter.getTranslateFavourite(pTranslate, (App) getActivity().getApplication()));
 		fTranslatedText.setText(pTranslate.getTranslatedText());
-		if (pTranslate.getIsBookmark())
-			fAddBookmarks.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite, getActivity().getApplicationContext().getTheme()));
+
+		fAddBookmarks.setLiked(pTranslate.getIsBookmark());
+
+		saveTranslate(pTranslate);
+
 	}
 
 	@Override
@@ -240,7 +262,6 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 		fSpinnerFromLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
 
 		saveLanguages(pLanguages);
-		setEnable(true);
 	}
 
 	@Override
@@ -270,14 +291,6 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 
 		fSpinnerFromLang.setSelection(lvTo);
 		fSpinnerToLang.setSelection(lvFrom);
-	}
-
-	@OnClick(R.id.addFavorite)
-	public void onClickFavourite() {
-		if (fTranslate.getIsBookmark())
-			fTranslate.setIsBookmark(Constants.TRANSLATE_ISNT_FAVOURITE);
-		else fTranslate.setIsBookmark(Constants.TRANSLATE_IS_FAVOURITE);
-		saveTranslate(fTranslate);
 	}
 
 	@Override

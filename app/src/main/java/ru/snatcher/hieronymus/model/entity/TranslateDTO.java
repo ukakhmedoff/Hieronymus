@@ -9,7 +9,6 @@ import java.util.List;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-
 public class TranslateDTO {
 
 	@SerializedName("code")

@@ -2,7 +2,7 @@ package ru.snatcher.hieronymus.view.fragment.dashboard;
 
 import java.util.List;
 
-import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.view.BaseView;
 
 /**

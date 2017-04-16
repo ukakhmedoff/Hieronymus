@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="dashboard_tabs_names">
-        <item>@string/tab_favourite</item>
         <item>@string/tab_history</item>
+        <item>@string/tab_favourite</item>
     </string-array>
 </resources>

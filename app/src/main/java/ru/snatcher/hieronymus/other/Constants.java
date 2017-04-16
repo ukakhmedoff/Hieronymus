@@ -33,9 +33,7 @@ public class Constants {
 
 	public static final int PAGER_TRANSLATOR_FRAGMENT_ID = 1;
 	public static final int PAGER_DASHBOARD_FRAGMENT_ID = 2;
-	public static final int PAGER_SETTINGS_FRAGMENT_ID = 3;
 
 	public static final String FRAGMENT_TRANSLATOR_TAG = "translator";
 	public static final String FRAGMENT_DASHBOARD_TAG = "dashboard";
-	public static final String FRAGMENT_SETTINGS_TAG = "settings";
 }
