@@ -28,8 +28,8 @@
 - [x] MVP 
 - [x] Сохранение переводов и языков
 - [ ] Сохранение состояния приложения
-- [ ] Избранное
-- [ ] Группы
+- [x] Отображение избранного и истории
+- [ ] Анимации
 
 ## Библиотеки
 
@@ -40,3 +40,4 @@
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [Gradle Retrolambda](https://github.com/evant/gradle-retrolambda)
+* [GreenDao](https://github.com/greenrobot/greenDAO)
