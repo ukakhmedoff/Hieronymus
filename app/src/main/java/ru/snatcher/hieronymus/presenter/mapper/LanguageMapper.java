@@ -35,5 +35,4 @@ public class LanguageMapper implements Func1<LanguageDTO, List<Language>> {
 		Collections.sort(lvLanguages, (pLanguage1, pLanguage2) -> pLanguage1.getLangValue().compareTo(pLanguage2.getLangValue()));
 		return lvLanguages;
 	}
-
 }

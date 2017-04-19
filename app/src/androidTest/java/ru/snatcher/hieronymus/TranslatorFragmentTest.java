@@ -2,7 +2,6 @@ package ru.snatcher.hieronymus;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -31,7 +30,7 @@ import static org.hamcrest.core.AllOf.allOf;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-@LargeTest
+@android.support.test.filters.LargeTest
 public class TranslatorFragmentTest {
 
 	@Rule

@@ -53,7 +53,6 @@ public class ApiInterfaceTest extends BaseTest {
 		apiInterface = ApiTranslateModule.getApiInterfaceInstance();
 	}
 
-
 	@Test
 	public void testGetLanguages() throws Exception {
 
@@ -77,7 +76,6 @@ public class ApiInterfaceTest extends BaseTest {
 			assertEquals("HTTP 403 FORBIDDEN", expected.getMessage());
 		}
 	}
-
 
 	@Test
 	public void testGetTranslate() {

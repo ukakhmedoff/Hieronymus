@@ -2,12 +2,8 @@ package ru.snatcher.hieronymus.other;
 
 import android.app.Application;
 
-import org.greenrobot.greendao.database.Database;
-
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver.ConnectionReceiverListener;
-import ru.snatcher.hieronymus.db.DaoMaster;
-import ru.snatcher.hieronymus.db.DaoSession;
 import ru.snatcher.hieronymus.other.di.AppComponent;
 import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
 
@@ -18,7 +14,6 @@ import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
 public class App extends Application {
 	private static AppComponent sfAppComponent;
 	private static App sfInstance;
-	private DaoSession fDaoSession;
 
 	/**
 	 * @return {@link AppComponent}
@@ -40,9 +35,6 @@ public class App extends Application {
 		sfInstance = this;
 		sfAppComponent = buildComponent();
 
-		DaoMaster.DevOpenHelper lvDevOpenHelper = new DaoMaster.DevOpenHelper(this, "app_database");
-		Database lvWritableDb = lvDevOpenHelper.getWritableDb();
-		fDaoSession = new DaoMaster(lvWritableDb).newSession();
 	}
 
 	/**
@@ -50,13 +42,6 @@ public class App extends Application {
 	 */
 	protected AppComponent buildComponent() {
 		return DaggerAppComponent.builder().build();
-	}
-
-	/**
-	 * @return {@link DaoSession} to save DB data
-	 */
-	public DaoSession getDaoSession() {
-		return fDaoSession;
 	}
 
 	/**

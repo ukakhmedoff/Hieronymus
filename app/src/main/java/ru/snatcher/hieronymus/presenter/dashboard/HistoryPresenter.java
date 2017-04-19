@@ -1,5 +1,7 @@
 package ru.snatcher.hieronymus.presenter.dashboard;
 
+import android.content.Context;
+
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.other.App;
@@ -31,7 +33,7 @@ public class HistoryPresenter extends BasePresenter {
 		fHistoryFragment = pHistoryFragment;
 	}
 
-	public void getTranslates(boolean pFavourite, App pApp) {
-		fHistoryFragment.showTranslates(fModel.getTranslates(pFavourite, pApp));
+	public void getTranslates(boolean pFavourite, Context pContext) {
+		fHistoryFragment.showTranslates(fModel.getTranslates(pFavourite, pContext));
 	}
 }

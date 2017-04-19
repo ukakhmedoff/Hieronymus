@@ -43,7 +43,7 @@ public class ModelImplTest extends BaseTest {
 		when(apiInterface.getLangs(TestConstants.TEST_KEY, "ru")).thenReturn(Observable.just(lvLanguageDTO));
 
 		TestSubscriber<LanguageDTO> testSubscriber = new TestSubscriber<>();
-		model.getRemoteLangs(TestConstants.TEST_KEY).subscribe(testSubscriber);
+		model.getRemoteLangs(TestConstants.TEST_KEY, "ru").subscribe(testSubscriber);
 
 		testSubscriber.assertNoErrors();
 		testSubscriber.assertValueCount(1);

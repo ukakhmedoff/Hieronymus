@@ -1,5 +1,6 @@
 package ru.snatcher.hieronymus.presenter.translator;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -67,10 +68,6 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		return fTranslate != null && fLanguages != null && !fLanguages.isEmpty();
 	}
 
-	public String onLanguageSelected(Language pLanguage) {
-		return fModel.getLangKey(pLanguage);
-	}
-
 	private void getRemoteLanguages(String pKey, String pUiLang) {
 		Subscription lvSubscription = fModel.getRemoteLangs(pKey, pUiLang).map(fLanguageMapper).subscribe(new Observer<List<Language>>() {
 
@@ -85,12 +82,10 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 
 			@Override
 			public void onNext(List<Language> pLanguages) {
-				if (pLanguages != null) {
+				if (pLanguages.size() > 0) {
 					fLanguages = pLanguages;
 					fTranslatorFragmentView.showLanguageList(fLanguages);
-				} else {
-					fTranslatorFragmentView.showError("Check your Internet connection!");
-				}
+				} else fTranslatorFragmentView.showError("Check your Internet connection!");
 
 			}
 		});
@@ -125,8 +120,8 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		addSubscription(lvSubscription);
 	}
 
-	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
-		fModel.saveLanguages(pLanguages, pApp);
+	public void saveLanguages(final List<Language> pLanguages, final Context pContext) {
+		fModel.saveLanguages(pLanguages, pContext);
 	}
 
 	private void getLocalLanguages(App pApp) {
@@ -140,9 +135,5 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 
 	public void onNetworkConnectionChanged(final boolean isConnected) {
 		if (isConnected) fTranslatorFragmentView.getLangs();
-	}
-
-	void onSaveInstanceState(Bundle pOutState) {
-
 	}
 }

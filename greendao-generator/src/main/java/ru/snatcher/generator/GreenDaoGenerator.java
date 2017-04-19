@@ -22,8 +22,8 @@ public class GreenDaoGenerator {
 	private static Entity createLanguageEntity(final Schema pSchema) {
 		Entity lvLanguageEntity = pSchema.addEntity("Language");
 
-		lvLanguageEntity.addStringProperty("LangKey").primaryKey();
-		lvLanguageEntity.addStringProperty("LangValue").notNull();
+		lvLanguageEntity.addStringProperty("langKey").primaryKey();
+		lvLanguageEntity.addStringProperty("langValue").notNull();
 
 		return lvLanguageEntity;
 	}
@@ -31,8 +31,8 @@ public class GreenDaoGenerator {
 	private static Entity createTranslateEntity(Schema pSchema) {
 		Entity lvTranslateEntity = pSchema.addEntity("Translate");
 
-		lvTranslateEntity.addStringProperty("Lang").notNull();
-		lvTranslateEntity.addStringProperty("TranslatedText").primaryKey();
+		lvTranslateEntity.addStringProperty("lang").notNull();
+		lvTranslateEntity.addStringProperty("translatedText").primaryKey();
 		lvTranslateEntity.addBooleanProperty("isBookmark");
 
 		return lvTranslateEntity;

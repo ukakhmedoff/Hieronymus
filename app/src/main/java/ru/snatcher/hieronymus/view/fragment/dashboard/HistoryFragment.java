@@ -33,6 +33,8 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	@Inject
 	HistoryPresenter fHistoryPresenter;
 
+	RecyclerViewAdapter fRecyclerViewAdapter;
+
 	public static HistoryFragment newInstance(int pPage) {
 		Bundle args = new Bundle();
 		args.putBoolean(ARG_IS_FAVOURITE, pPage != 0);
@@ -49,13 +51,11 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View lvView = inflater.inflate(R.layout.fragment_history, container, false);
 		ButterKnife.bind(this, lvView);
 
-		getTranslates(getArguments().getBoolean(ARG_IS_FAVOURITE));
+		getTranslates();
 
 		return lvView;
 	}
@@ -67,11 +67,17 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 
 	@Override
 	public void showTranslates(final List<Translate> pTranslates) {
-		fRecyclerView.setAdapter(new RecyclerViewAdapter(pTranslates));
+		fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication());
+		fRecyclerView.setAdapter(fRecyclerViewAdapter);
 	}
 
 	@Override
-	public void getTranslates(final boolean pFavourite) {
-		fHistoryPresenter.getTranslates(pFavourite, (App) getActivity().getApplication());
+	public void getTranslates() {
+		fHistoryPresenter.getTranslates(getArguments().getBoolean(ARG_IS_FAVOURITE), getContext());
+	}
+
+	public void updateData() {
+		getTranslates();
+		fRecyclerViewAdapter.notifyDataSetChanged();
 	}
 }

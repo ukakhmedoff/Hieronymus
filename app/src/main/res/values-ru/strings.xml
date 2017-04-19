@@ -6,4 +6,6 @@
     <string name="tab_history">История</string>
     <string name="tab_favourite">Избранное</string>
     <string name="ui_lang">ru</string>
+    <string name="title_info">Информация</string>
+    <string name="search_translate">Поиск</string>
 </resources>

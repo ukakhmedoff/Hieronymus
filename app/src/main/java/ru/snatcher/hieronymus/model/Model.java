@@ -1,12 +1,13 @@
 package ru.snatcher.hieronymus.model;
 
+import android.content.Context;
+
 import java.util.List;
 
 import ru.snatcher.hieronymus.db.Language;
 import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
-import ru.snatcher.hieronymus.other.App;
 import rx.Observable;
 
 /**
@@ -22,15 +23,13 @@ public interface Model {
 
 	Observable<TranslateDTO> getTranslatedText(String pKey, String pTextToTranslate, String pLangs);
 
-	String getLangKey(Language pLanguage);
+	void saveTranslate(Translate pTranslate, Context pContext);
 
-	void saveTranslate(Translate pTranslate, App pApp);
+	void saveLanguages(List<Language> pLanguages, Context pContext);
 
-	void saveLanguages(List<Language> pLanguages, App pApp);
+	List<Translate> getTranslates(boolean pFavourite, Context pContext);
 
-	List<Translate> getTranslates(boolean pFavourite, App pApp);
+	List<Language> getLocalLanguages(Context pContext);
 
-	List<Language> getLocalLanguages(App pApp);
-
-	boolean getTranslateIsFavourite(Translate pTranslate, App pApp);
+	boolean getTranslateIsFavourite(Translate pTranslate, Context pContext);
 }

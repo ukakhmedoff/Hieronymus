@@ -1,5 +1,7 @@
 package ru.snatcher.hieronymus.model;
 
+import android.content.Context;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +17,8 @@ import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
 import rx.Observable;
 import rx.Scheduler;
+
+import static ru.snatcher.hieronymus.other.DataBaseUtils.getDaoSession;
 
 /**
  * {@link ModelImpl} is implementation for {@link Model}
@@ -58,24 +62,19 @@ public class ModelImpl implements Model {
 	}
 
 	@Override
-	public String getLangKey(Language pLanguage) {
-		return pLanguage.getLangKey();
+	public void saveTranslate(final Translate pTranslate, final Context pContext) {
+		getDaoSession(pContext).getTranslateDao().insertOrReplace(pTranslate);
 	}
 
 	@Override
-	public void saveTranslate(final Translate pTranslate, final App pApp) {
-		pApp.getDaoSession().getTranslateDao().insertOrReplace(pTranslate);
-	}
-
-	@Override
-	public void saveLanguages(final List<Language> pLanguages, final App pApp) {
+	public void saveLanguages(final List<Language> pLanguages, final Context pContext) {
 		for (Language lvLanguage : pLanguages)
-			pApp.getDaoSession().getLanguageDao().insertOrReplace(lvLanguage);
+			getDaoSession(pContext).getLanguageDao().insertOrReplace(lvLanguage);
 	}
 
 	@Override
-	public List<Translate> getTranslates(final boolean pFavourite, final App pApp) {
-		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
+	public List<Translate> getTranslates(final boolean pFavourite, final Context pContext) {
+		TranslateDao lvTranslateDao = getDaoSession(pContext).getTranslateDao();
 
 		if (pFavourite)
 			return lvTranslateDao.queryBuilder().where(TranslateDao.Properties.IsBookmark.eq(true)).orderAsc(TranslateDao.Properties.TranslatedText).list();
@@ -83,13 +82,13 @@ public class ModelImpl implements Model {
 	}
 
 	@Override
-	public List<Language> getLocalLanguages(final App pApp) {
-		return pApp.getDaoSession().getLanguageDao().loadAll();
+	public List<Language> getLocalLanguages(final Context pContext) {
+		return getDaoSession(pContext).getLanguageDao().loadAll();
 	}
 
 	@Override
-	public boolean getTranslateIsFavourite(final Translate pTranslate, final App pApp) {
-		TranslateDao lvTranslateDao = pApp.getDaoSession().getTranslateDao();
+	public boolean getTranslateIsFavourite(final Translate pTranslate, final Context pContext) {
+		TranslateDao lvTranslateDao = getDaoSession(pContext).getTranslateDao();
 
 		Translate lvTranslate = lvTranslateDao.queryBuilder()
 				.where(TranslateDao.Properties.TranslatedText.eq(pTranslate.getTranslatedText())).unique();

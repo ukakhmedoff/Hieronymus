@@ -1,5 +1,7 @@
 package ru.snatcher.hieronymus.presenter;
 
+import android.content.Context;
+
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.db.Translate;
@@ -35,8 +37,8 @@ public abstract class BasePresenter implements Presenter {
 
 	public abstract BaseView getView();
 
-	public void saveTranslate(final Translate pTranslate, App pApp) {
-		fModel.saveTranslate(pTranslate, pApp);
+	public void saveTranslate(final Translate pTranslate, Context pContext) {
+		fModel.saveTranslate(pTranslate, pContext);
 	}
 
 	public boolean getTranslateFavourite(final Translate pTranslate, App pApp) {

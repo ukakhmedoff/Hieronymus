@@ -13,6 +13,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
+import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.other.App;
+import ru.snatcher.hieronymus.presenter.BasePresenter;
 
 /**
  * {@link BaseRecyclerAdapter}
@@ -24,8 +27,14 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 
 	List<T> fTList;
 
-	BaseRecyclerAdapter(List<T> fTList) {
-		this.fTList = fTList;
+	private BasePresenter fPresenter;
+
+	private App fApp;
+
+	BaseRecyclerAdapter(List<T> pTList, final BasePresenter pPresenter, App pApp) {
+		this.fTList = pTList;
+		fPresenter = pPresenter;
+		fApp = pApp;
 	}
 
 	@Override
@@ -41,8 +50,11 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 
 	class ViewHolder extends RecyclerView.ViewHolder {
 
-		@BindView(R.id.translatedText)
-		TextView fTranslateMain;
+		@BindView(R.id.textToTranslate)
+		TextView fTextTranslated;
+
+		@BindView(R.id.langs)
+		TextView fLangs;
 
 		@BindView(R.id.addFavourite)
 		LikeButton fAddToBookmarks;
@@ -53,4 +65,8 @@ abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerA
 		}
 	}
 
+	void saveTranslate(Translate pTranslate) {
+		notifyDataSetChanged();
+		fPresenter.saveTranslate(pTranslate, fApp);
+	}
 }

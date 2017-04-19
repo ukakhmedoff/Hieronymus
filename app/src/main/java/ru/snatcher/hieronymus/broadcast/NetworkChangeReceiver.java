@@ -47,7 +47,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 			connectionReceiverListener.onNetworkConnectionChanged(isConnected);
 	}
 
-
 	public interface ConnectionReceiverListener {
 		void onNetworkConnectionChanged(boolean isConnected);
 	}

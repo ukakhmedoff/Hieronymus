@@ -16,5 +16,5 @@ public interface HistoryFragmentView extends BaseView {
 
 	void showTranslates(List<Translate> pTranslates);
 
-	void getTranslates(boolean pFavourite);
+	void getTranslates();
 }

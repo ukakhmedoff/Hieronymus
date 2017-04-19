@@ -105,9 +105,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	 */
 	private void replaceFragment(String pPAGER_FRAGMENT_TAG) {
 		Fragment fragment = fFragmentManager.findFragmentByTag(pPAGER_FRAGMENT_TAG);
-		if (fragment != null) {
-			fFragmentTransaction.show(fragment);
-		} else {
+		if (fragment != null) fFragmentTransaction.show(fragment);
+		else {
 			fragment = getFragment(pPAGER_FRAGMENT_TAG);
 			fFragmentTransaction.add(R.id.content, fragment, pPAGER_FRAGMENT_TAG);
 		}
@@ -156,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 		pFragment.setReenterTransition(lvSlide);
 		pFragment.setEnterTransition(lvSlide);
-
 	}
 
 	/**
@@ -219,10 +217,5 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	@Override
 	public int getSpinnerLanguagesFromPreferences(final String pSpinnerLanguages) {
 		return fSharedPreferences.getInt(pSpinnerLanguages, 0);
-	}
-
-	@Override
-	public void showError(final String error) {
-
 	}
 }

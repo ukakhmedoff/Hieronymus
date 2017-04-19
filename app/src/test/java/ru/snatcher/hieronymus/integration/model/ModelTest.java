@@ -28,7 +28,7 @@ public class ModelTest extends IntegrationBaseTest {
 	protected ApiTranslateInterface apiInterface;
 
 	@Inject
-	protected Model model;
+	protected Model fModel;
 
 	@Before
 	public void setUp() throws Exception {
@@ -40,7 +40,7 @@ public class ModelTest extends IntegrationBaseTest {
 	public void testGetLanguageList() {
 
 		TestSubscriber<LanguageDTO> testSubscriber = new TestSubscriber<>();
-		model.getRemoteLangs(TestConstants.TEST_KEY, "ru").subscribe(testSubscriber);
+		fModel.getRemoteLangs(TestConstants.TEST_KEY, "ru").subscribe(testSubscriber);
 
 		testSubscriber.assertNoErrors();
 		testSubscriber.assertValueCount(1);
@@ -53,15 +53,14 @@ public class ModelTest extends IntegrationBaseTest {
 	@Test
 	public void testGetTranslate() {
 
-		TestSubscriber<TranslateDTO> testSubscriber = new TestSubscriber<>();
-		model.getTranslatedText(TestConstants.TEST_KEY, TestConstants.TEST_TO_TRANSLATE, TestConstants.TEST_LANGS).subscribe(testSubscriber);
+		TestSubscriber<TranslateDTO> lvTestSubscriber = new TestSubscriber<>();
+		fModel.getTranslatedText(TestConstants.TEST_KEY, TestConstants.TEST_TO_TRANSLATE, TestConstants.TEST_LANGS).subscribe(lvTestSubscriber);
 
-		testSubscriber.assertNoErrors();
-		testSubscriber.assertValueCount(1);
+		lvTestSubscriber.assertNoErrors();
+		lvTestSubscriber.assertValueCount(1);
 
-		TranslateDTO actual = testSubscriber.getOnNextEvents().get(0);
+		TranslateDTO lvTranslateDTO = lvTestSubscriber.getOnNextEvents().get(0);
 
-		assertEquals(1, actual.getText().size());
-
+		assertEquals(1, lvTranslateDTO.getText().size());
 	}
 }

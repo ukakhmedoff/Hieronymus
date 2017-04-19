@@ -18,6 +18,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 	private String[] fTabTitles;
 
+	private HistoryFragment fHistoryFragment;
+
 	public PagerAdapter(Context pContext, final FragmentManager pFragmentManager) {
 		super(pFragmentManager);
 		fTabTitles = pContext.getResources().getStringArray(R.array.dashboard_tabs_names);
@@ -25,7 +27,8 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(final int pPosition) {
-		return HistoryFragment.newInstance(pPosition);
+		fHistoryFragment = HistoryFragment.newInstance(pPosition);
+		return fHistoryFragment;
 	}
 
 	@Override
@@ -37,4 +40,5 @@ public class PagerAdapter extends FragmentPagerAdapter {
 	public CharSequence getPageTitle(int pPosition) {
 		return fTabTitles[pPosition];
 	}
+
 }

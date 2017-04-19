@@ -11,5 +11,8 @@
     <string name="ui_lang">en</string>
 
     <string name="search_translate">Search</string>
-    <string name="api_yandex">Переведено сервисом «Яндекс.Переводчик</string>
+    <string name="api_yandex" translatable="false">Переведено сервисом «Яндекс.Переводчик</string>
+    <string name="title_info">Info</string>
+
+    <string name="info_fragment">Переведено сервисом «Яндекс.Переводчик»</string>
 </resources>

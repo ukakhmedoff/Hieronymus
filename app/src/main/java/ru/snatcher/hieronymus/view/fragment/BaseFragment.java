@@ -14,6 +14,7 @@ import ru.snatcher.hieronymus.view.BaseView;
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
 
+
 	protected abstract BasePresenter getPresenter();
 
 	public void showError(final String error) {

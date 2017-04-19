@@ -68,10 +68,10 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	@BindView(R.id.textToTranslate)
 	EditText fTextToTranslate;
 
-	@BindView(R.id.translatedText)
+	@BindView(R.id.textTranslated)
 	TextView fTranslatedText;
 
-	@BindView(R.id.addFavourite)
+	@BindView(R.id.addFavouriteTranslator)
 	LikeButton fAddBookmarks;
 
 	Translate fTranslate;
@@ -200,9 +200,10 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	 */
 	private String getSpinnerLangKey() {
 
-		return fTranslatorPresenter.onLanguageSelected(fLangs.get(fSpinnerFromLang.getSelectedItemPosition()))
+		//TODO: Check how it works, and can I do this
+		return fLangs.get(fSpinnerFromLang.getSelectedItemPosition()).getLangKey()
 				+ "-"
-				+ fTranslatorPresenter.onLanguageSelected(fLangs.get(fSpinnerToLang.getSelectedItemPosition()));
+				+ fLangs.get(fSpinnerToLang.getSelectedItemPosition()).getLangKey();
 
 	}
 
@@ -266,12 +267,12 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 
 	@Override
 	public void saveTranslate(final Translate pTranslate) {
-		fTranslatorPresenter.saveTranslate(pTranslate, (App) getActivity().getApplication());
+		fTranslatorPresenter.saveTranslate(pTranslate, getContext());
 	}
 
 	@Override
 	public void saveLanguages(final List<Language> pLanguages) {
-		fTranslatorPresenter.saveLanguages(pLanguages, (App) getActivity().getApplication());
+		fTranslatorPresenter.saveLanguages(pLanguages, getContext());
 	}
 
 	@Override
