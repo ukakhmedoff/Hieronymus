@@ -4,4 +4,9 @@
         <item>@string/tab_history</item>
         <item>@string/tab_favourite</item>
     </string-array>
+
+    <string-array name="main_tabs_names">
+        <item>@string/title_translator</item>
+        <item>@string/title_dashboard</item>
+    </string-array>
 </resources>

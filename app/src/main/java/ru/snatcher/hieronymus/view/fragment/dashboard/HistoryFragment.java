@@ -51,6 +51,13 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	}
 
 	@Override
+	public void setUserVisibleHint(final boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+
+		if (fRecyclerViewAdapter != null && isVisibleToUser) getTranslates();
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View lvView = inflater.inflate(R.layout.fragment_history, container, false);
 		ButterKnife.bind(this, lvView);
@@ -61,6 +68,13 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	}
 
 	@Override
+	public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		fRecyclerView.setAdapter(fRecyclerViewAdapter);
+	}
+
+	@Override
 	protected BasePresenter getPresenter() {
 		return fHistoryPresenter;
 	}
@@ -68,7 +82,6 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	@Override
 	public void showTranslates(final List<Translate> pTranslates) {
 		fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication());
-		fRecyclerView.setAdapter(fRecyclerViewAdapter);
 	}
 
 	@Override
@@ -76,8 +89,5 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 		fHistoryPresenter.getTranslates(getArguments().getBoolean(ARG_IS_FAVOURITE), getContext());
 	}
 
-	public void updateData() {
-		getTranslates();
-		fRecyclerViewAdapter.notifyDataSetChanged();
-	}
+
 }

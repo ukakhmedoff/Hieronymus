@@ -46,7 +46,7 @@ public class TranslatorFragmentTest {
 
 	@Test
 	public void testElementsDisplayed() {
-		onView(withId(R.id.translatedText)).check(matches(isDisplayed()));
+		onView(withId(R.id.textTranslated)).check(matches(isDisplayed()));
 		onView(withId(R.id.spinner_language_from)).check(matches(isDisplayed()));
 		onView(withId(R.id.spinner_language_to)).check(matches(isDisplayed()));
 	}
@@ -55,7 +55,7 @@ public class TranslatorFragmentTest {
 	public void testGetTranslate() {
 		apiConfig.setCorrectAnswer();
 
-		onView(withId(R.id.translatedText)).check(EspressoTools.hasItemsCount(1));
+		onView(withId(R.id.textTranslated)).check(EspressoTools.hasItemsCount(1));
 	}
 
 	@Test
@@ -74,6 +74,6 @@ public class TranslatorFragmentTest {
 		onView(allOf(withId(android.support.design.R.id.snackbar_text), withText(TestConstants.TEST_ERROR)))
 				.check(matches(isDisplayed()));
 
-		onView(withId(R.id.translatedText)).check(EspressoTools.hasItemsCount(0));
+		onView(withId(R.id.textTranslated)).check(EspressoTools.hasItemsCount(0));
 	}
 }

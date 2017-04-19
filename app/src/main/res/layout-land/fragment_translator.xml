@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="297dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/textToTranslate"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_text_style"
+            android:gravity="center"
+            android:hint="@string/text_hint"
+            android:inputType="textCapSentences|textMultiLine"
+            android:lines="5"
+            android:padding="@dimen/toolbar_items_margin"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="14sp"/>
+
+        <Spinner
+            android:id="@+id/spinner_language_from"
+            style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/toolbar_items_margin"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent">
+
+        <ImageView
+            android:id="@+id/btnSwap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/include_translated_text"
+            android:layout_below="@+id/include_translated_text"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_swap"/>
+
+        <Spinner
+            android:id="@+id/spinner_language_to"
+            style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/toolbar_items_margin"/>
+
+        <include
+            android:id="@+id/include_translated_text"
+            style="@style/Widget.AppCompat.Spinner"
+            layout="@layout/translated_fragment_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:scrollbars="vertical"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</LinearLayout>

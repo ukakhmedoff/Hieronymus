@@ -167,6 +167,13 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 		fTranslatorPresenter.getLangs(fApiKey, fUiLang, (App) getActivity().getApplication());
 	}
 
+	@Override
+	public void showSelectedItem(final Translate pTranslate) {
+		fTextToTranslate.setText(pTranslate.getTranslatedText());
+
+		fTranslatorPresenter.getTranslatesRemote(fApiKey, pTranslate.getTranslatedText(), pTranslate.getLang());
+	}
+
 	/**
 	 * Get translate from {@link TranslatorPresenter}
 	 */

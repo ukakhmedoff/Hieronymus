@@ -15,7 +15,7 @@ public class Constants {
 	public static final boolean TRANSLATE_ISNT_FAVOURITE = false;
 	public static final boolean TRANSLATE_IS_FAVOURITE = true;
 
-	public static final String PAGER_FRAGMENT_TAG = "PAGER_FRAGMENT_TAG";
+	public static final String PAGER_FRAGMENT_ID = "PAGER_FRAGMENT_ID";
 
 	/**
 	 * {@value BASE_URL} - is base url to get data from API
@@ -31,9 +31,6 @@ public class Constants {
 	public static final String PREFERENCES_LANGUAGE_FROM_TRANSLATE = "language_from_translate";
 	public static final String PREFERENCES_LANGUAGE_TO_TRANSLATE = "language_to_translate";
 
-	public static final int PAGER_TRANSLATOR_FRAGMENT_ID = 1;
-	public static final int PAGER_DASHBOARD_FRAGMENT_ID = 2;
-
-	public static final String FRAGMENT_TRANSLATOR_TAG = "translator";
-	public static final String FRAGMENT_DASHBOARD_TAG = "dashboard";
+	public static final int PAGER_TRANSLATOR_FRAGMENT_ID = 0;
+	public static final int PAGER_DASHBOARD_FRAGMENT_ID = 1;
 }

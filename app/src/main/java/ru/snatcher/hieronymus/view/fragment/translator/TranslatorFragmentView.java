@@ -46,4 +46,6 @@ public interface TranslatorFragmentView extends BaseView {
 	 * Get langs from Presenter
 	 */
 	void getLangs();
+
+	void showSelectedItem(Translate pTranslate);
 }

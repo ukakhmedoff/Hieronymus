@@ -45,6 +45,7 @@ public class TranslatorFragmentTest extends IntegrationBaseTest {
 
 		fTranslatorFragment = spy(new TranslatorFragment());
 		activity = Robolectric.buildActivity(MainActivity.class).create().get();
+
 		fTranslatorFragment.onAttach(activity);
 		doAnswer(invocation -> TestConstants.TEST_KEY)
 				.when(fTranslatorFragment)

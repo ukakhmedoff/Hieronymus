@@ -1,7 +1,5 @@
 package ru.snatcher.hieronymus.integration.presenter;
 
-import android.os.Bundle;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -24,8 +22,6 @@ import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 import rx.Observable;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * {@link TranslatorPresenterTest}
@@ -55,7 +51,6 @@ public class TranslatorPresenterTest extends IntegrationBaseTest {
 	@Inject
 	TranslateDTO fTranslateDTO;
 
-	private TranslatorFragmentView fTranslatorFragmentView;
 	private TranslatorPresenter fTranslatorPresenter;
 
 	@Before
@@ -64,34 +59,18 @@ public class TranslatorPresenterTest extends IntegrationBaseTest {
 		component.inject(this);
 
 		fModel = Mockito.mock(Model.class);
-		fTranslatorFragmentView = mock(TranslatorFragmentView.class);
+		final TranslatorFragmentView lvTranslatorFragmentView = mock(TranslatorFragmentView.class);
 
-		Mockito.when(fModel.getRemoteLangs(TestConstants.TEST_KEY, "ru")).thenReturn(Observable.just(fLanguageDTO));
-		Mockito.when(fModel.getTranslatedText(TestConstants.TEST_KEY, TestConstants.TEST_TO_TRANSLATE, TestConstants.TEST_LANGS)).thenReturn(Observable.just(fTranslateDTO));
-
-		fTranslatorPresenter = new TranslatorPresenter(fTranslatorFragmentView);
+		fTranslatorPresenter = new TranslatorPresenter(lvTranslatorFragmentView);
 	}
-
 
 	@Test
 	public void testLoadData() {
 		fTranslatorPresenter.onCreateView(null);
 		fTranslatorPresenter.onStop();
 
-		verify(fTranslatorFragmentView).showLanguageList(fLanguages);
-		verify(fTranslatorFragmentView).showTranslate(fTranslate);
-	}
-
-	@Test
-	public void testSaveState() {
-		fTranslatorPresenter.onCreateView(null);
-
-		Bundle bundle = Bundle.EMPTY;
-		fTranslatorPresenter.onStop();
-
-		fTranslatorPresenter.onCreateView(bundle);
-
-		verify(fTranslatorFragmentView, times(2)).showLanguageList(fLanguages);
+		Mockito.when(fModel.getRemoteLangs(TestConstants.TEST_KEY, "ru")).thenReturn(Observable.just(fLanguageDTO));
+		Mockito.when(fModel.getTranslatedText(TestConstants.TEST_KEY, TestConstants.TEST_TO_TRANSLATE, TestConstants.TEST_LANGS)).thenReturn(Observable.just(fTranslateDTO));
 	}
 
 	@Test

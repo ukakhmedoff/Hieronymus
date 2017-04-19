@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.view.adapter.PagerAdapter;
+import ru.snatcher.hieronymus.view.adapter.DashboardPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +24,7 @@ public class DashboardFragment extends Fragment {
 	@BindView(R.id.dash_view_pager)
 	ViewPager fViewPager;
 
-	private PagerAdapter fPagerAdapter;
+	private DashboardPagerAdapter fDashboardPagerAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,8 +32,8 @@ public class DashboardFragment extends Fragment {
 		View lvView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 		ButterKnife.bind(this, lvView);
 
-		fPagerAdapter = new PagerAdapter(getActivity(), getFragmentManager());
-		fViewPager.setAdapter(fPagerAdapter);
+		fDashboardPagerAdapter = new DashboardPagerAdapter(getActivity(), getFragmentManager());
+		fViewPager.setAdapter(fDashboardPagerAdapter);
 		fTabLayout.setupWithViewPager(fViewPager);
 
 		return lvView;
@@ -42,6 +42,6 @@ public class DashboardFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		fPagerAdapter.notifyDataSetChanged();
+		fDashboardPagerAdapter.notifyDataSetChanged();
 	}
 }

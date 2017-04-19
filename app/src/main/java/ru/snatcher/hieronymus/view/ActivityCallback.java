@@ -1,5 +1,7 @@
 package ru.snatcher.hieronymus.view;
 
+import ru.snatcher.hieronymus.db.Translate;
+
 /**
  * {@link ActivityCallback}
  *
@@ -23,4 +25,12 @@ public interface ActivityCallback {
 	 * @return language id
 	 */
 	int getSpinnerLanguagesFromPreferences(String pSpinnerLanguages);
+
+
+	/**
+	 * Will called if user clicked item from Dashboard lists
+	 *
+	 * @param pTranslate - item, clicked
+	 */
+	void onTranslatesItemClicked(Translate pTranslate);
 }
