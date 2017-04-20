@@ -2,8 +2,8 @@ package ru.snatcher.hieronymus.other;
 
 import android.app.Application;
 
-import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
-import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver.ConnectionReceiverListener;
+import ru.snatcher.hieronymus.other.broadcast.NetworkChangeReceiver;
+import ru.snatcher.hieronymus.other.broadcast.NetworkChangeReceiver.ConnectionReceiverListener;
 import ru.snatcher.hieronymus.other.di.AppComponent;
 import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
 

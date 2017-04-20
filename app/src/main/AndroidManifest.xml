@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name=".other.App"
+        android:name="ru.snatcher.hieronymus.other.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".broadcast.NetworkChangeReceiver">
+            android:name=".other.broadcast.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>

@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.broadcast;
+package ru.snatcher.hieronymus.other.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

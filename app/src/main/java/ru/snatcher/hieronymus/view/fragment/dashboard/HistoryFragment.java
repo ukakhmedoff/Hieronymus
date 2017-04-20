@@ -81,8 +81,13 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 
 	@Override
 	public void showTranslates(final List<Translate> pTranslates) {
-		fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication());
-		fRecyclerViewAdapter.notifyDataSetChanged();
+		if (fRecyclerViewAdapter == null)
+			fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication());
+		else {
+			fRecyclerViewAdapter.setTranslateList(pTranslates);
+			fRecyclerViewAdapter.notifyDataSetChanged();
+
+		}
 	}
 
 	@Override
@@ -92,6 +97,6 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 
 	@Override
 	public void notifyDataSetChanged() {
-		if (fRecyclerViewAdapter != null) getTranslates();
+		getTranslates();
 	}
 }

@@ -1,6 +1,5 @@
 package ru.snatcher.hieronymus.view;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,15 +8,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
 import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.other.Prefs;
 import ru.snatcher.hieronymus.view.adapter.MainPagerAdapter;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 
 import static ru.snatcher.hieronymus.other.Constants.PAGER_FRAGMENT_ID;
 import static ru.snatcher.hieronymus.other.Constants.PAGER_TRANSLATOR_FRAGMENT_ID;
-import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_APP_STARTED;
-import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE;
-import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE;
-import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_NAME;
 
 /**
  * {@link MainActivity} is {@link AppCompatActivity}
@@ -29,15 +25,12 @@ import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_NAME;
  */
 public class MainActivity extends AppCompatActivity implements ActivityCallback {
 
-
 	@BindView(R.id.content)
 	UnswipeableViewPager fContent;
 
 	@BindView(R.id.navigation)
 	TabLayout fNavigation;
 
-	private SharedPreferences fSharedPreferences;
-	private SharedPreferences.Editor fEditor;
 	MainPagerAdapter fMainPagerAdapter;
 
 	@Override
@@ -46,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 
-		initPreferences();
+		Prefs.initPreferences(this);
 		initTabs();
 
 	}
@@ -55,22 +48,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 		fMainPagerAdapter = new MainPagerAdapter(this, getSupportFragmentManager());
 		fContent.setAdapter(fMainPagerAdapter);
 		fNavigation.setupWithViewPager(fContent);
-	}
-
-	/**
-	 * Initialize {@link SharedPreferences}
-	 * If app isn't started we create a new preferences
-	 */
-	private void initPreferences() {
-		fSharedPreferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
-
-		fEditor = fSharedPreferences.edit();
-
-		if (!fSharedPreferences.getBoolean(PREFERENCES_APP_STARTED, false)) {
-			fEditor.putBoolean(PREFERENCES_APP_STARTED, true);
-			fEditor.putInt(PREFERENCES_LANGUAGE_FROM_TRANSLATE, 63);
-			fEditor.putInt(PREFERENCES_LANGUAGE_TO_TRANSLATE, 3);
-		}
 	}
 
 	@Override
@@ -87,12 +64,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 	@Override
 	public void setSpinnerLanguagesToPreferences(final String pToPreferences, final int pLanguagePosition) {
-		fEditor.putInt(pToPreferences, pLanguagePosition).commit();
+		Prefs.setSpinnerLanguagesToPreferences(this, pToPreferences, pLanguagePosition);
 	}
 
 	@Override
 	public int getSpinnerLanguagesFromPreferences(final String pSpinnerLanguages) {
-		return fSharedPreferences.getInt(pSpinnerLanguages, 0);
+		return Prefs.getSpinnerLanguagesFromPreferences(this, pSpinnerLanguages);
 	}
 
 	@Override

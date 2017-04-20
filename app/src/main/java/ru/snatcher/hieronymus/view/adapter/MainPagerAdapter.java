@@ -1,12 +1,5 @@
 package ru.snatcher.hieronymus.view.adapter;
 
-/**
- * {@link MainPagerAdapter}
- *
- * @author Usman Akhmedoff.
- * @version 1.0
- */
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +11,7 @@ import ru.snatcher.hieronymus.view.fragment.dashboard.DashboardFragment;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragment;
 
 /**
- * {@link DashboardPagerAdapter}
+ * {@link MainPagerAdapter}
  *
  * @author Usman Akhmedoff.
  * @version 1.0
@@ -30,7 +23,6 @@ public class MainPagerAdapter extends BasePagerAdapter {
 		super(pFragmentManager);
 		fTabTitles = pContext.getResources().getStringArray(R.array.main_tabs_names);
 	}
-
 
 	@Override
 	public Fragment getItem(final int pPosition) {

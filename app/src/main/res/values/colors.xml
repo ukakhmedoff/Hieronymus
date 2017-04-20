@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fafafa</color>
-    <color name="colorPrimaryDark">#c7c7c7</color>
+    <color name="colorPrimary">#eeeeee</color>
+    <color name="colorPrimaryDark">#bcbcbc</color>
     <color name="colorAccent">#212121</color>
-    <color name="colorBackground">#ffffff</color>
+    <color name="colorBackground">#fff</color>
     <color name="colorTextFrom">@color/colorAccent</color>
     <color name="colorTextTo">@color/colorAccent</color>
 </resources>

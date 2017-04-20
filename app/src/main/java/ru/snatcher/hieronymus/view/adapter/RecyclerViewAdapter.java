@@ -68,6 +68,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		return new ViewHolder(v);
 	}
 
+	public void setTranslateList(final List<Translate> pTranslateList) {
+		fTranslateList = pTranslateList;
+	}
+
 	@Override
 	public int getItemCount() {
 		return fTranslateList.size();
