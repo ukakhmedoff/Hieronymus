@@ -206,8 +206,6 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	 * @return lang's key from translate - lang's key to translate
 	 */
 	private String getSpinnerLangKey() {
-
-		//TODO: Check how it works, and can I do this
 		return fLangs.get(fSpinnerFromLang.getSelectedItemPosition()).getLangKey()
 				+ "-"
 				+ fLangs.get(fSpinnerToLang.getSelectedItemPosition()).getLangKey();

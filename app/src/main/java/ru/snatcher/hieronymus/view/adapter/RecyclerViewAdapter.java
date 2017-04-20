@@ -61,7 +61,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		saveTranslate(pTranslate);
 	}
 
-
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item, viewGroup, false);
