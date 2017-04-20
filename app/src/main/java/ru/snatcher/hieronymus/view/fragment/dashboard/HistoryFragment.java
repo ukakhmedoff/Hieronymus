@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.presenter.dashboard.HistoryPresenter;
@@ -82,10 +82,16 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	@Override
 	public void showTranslates(final List<Translate> pTranslates) {
 		fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication());
+		fRecyclerViewAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void getTranslates() {
 		fHistoryPresenter.getTranslates(getArguments().getBoolean(ARG_IS_FAVOURITE), getContext());
+	}
+
+	@Override
+	public void notifyDataSetChanged() {
+		if (fRecyclerViewAdapter != null) getTranslates();
 	}
 }

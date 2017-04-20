@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.view.adapter.MainPagerAdapter;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 

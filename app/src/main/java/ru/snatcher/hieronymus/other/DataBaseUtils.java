@@ -4,8 +4,8 @@ import android.content.Context;
 
 import org.greenrobot.greendao.database.Database;
 
-import ru.snatcher.hieronymus.db.DaoMaster;
-import ru.snatcher.hieronymus.db.DaoSession;
+import ru.snatcher.hieronymus.model.db.DaoMaster;
+import ru.snatcher.hieronymus.model.db.DaoSession;
 
 /**
  * {@link DataBaseUtils}

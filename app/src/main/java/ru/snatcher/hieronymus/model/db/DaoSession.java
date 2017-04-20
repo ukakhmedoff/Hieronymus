@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.db;
+package ru.snatcher.hieronymus.model.db;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.AbstractDaoSession;

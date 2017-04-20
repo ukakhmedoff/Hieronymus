@@ -22,7 +22,7 @@
             android:inputType="textCapSentences|textMultiLine"
             android:lines="5"
             android:padding="@dimen/toolbar_items_margin"
-            android:textColor="@color/colorTextPrimary"
+            android:textColor="@color/colorTextFrom"
             android:textSize="14sp"/>
 
         <Spinner
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/toolbar_items_margin"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:gravity="center"/>
 
     </RelativeLayout>
@@ -53,12 +53,12 @@
 
         <Spinner
             android:id="@+id/spinner_language_to"
-            style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+            style="@style/Spinner.Theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/toolbar_items_margin"/>
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
 
         <include
             android:id="@+id/include_translated_text"

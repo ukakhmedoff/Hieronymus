@@ -14,7 +14,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.Constants;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
@@ -42,6 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 		holder.fLangs.setText(lvTranslate.getLang());
 		holder.fTextTranslated.setText(lvTranslate.getTranslatedText());
 		holder.fAddToBookmarks.setLiked(lvTranslate.getIsBookmark());
+
 		holder.fAddToBookmarks.setOnLikeListener(new OnLikeListener() {
 			@Override
 			public void liked(LikeButton likeButton) {
@@ -90,7 +91,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	}
 
 	private void saveTranslate(Translate pTranslate) {
-		notifyDataSetChanged();
 		fPresenter.saveTranslate(pTranslate, fApp);
+		notifyDataSetChanged();
 	}
 }

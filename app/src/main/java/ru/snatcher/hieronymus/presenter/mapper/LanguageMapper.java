@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ru.snatcher.hieronymus.db.Language;
+import ru.snatcher.hieronymus.model.db.Language;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import rx.Observable;
 import rx.functions.Func1;

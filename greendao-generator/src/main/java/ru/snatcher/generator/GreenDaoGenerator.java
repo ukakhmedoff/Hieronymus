@@ -7,7 +7,7 @@ import org.greenrobot.greendao.generator.Schema;
 public class GreenDaoGenerator {
 
 	private static final int VERSION = 1;
-	private static final String PACKAGE_DESTINATION = "ru.snatcher.hieronymus.db";
+	private static final String PACKAGE_DESTINATION = "ru.snatcher.hieronymus.model.db";
 	private static final String DESTINATION_FOLDER = "./app/src/main/java";
 
 	public static void main(String[] args) throws Exception {

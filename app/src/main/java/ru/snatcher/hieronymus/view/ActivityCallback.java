@@ -1,6 +1,6 @@
 package ru.snatcher.hieronymus.view;
 
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Translate;
 
 /**
  * {@link ActivityCallback}

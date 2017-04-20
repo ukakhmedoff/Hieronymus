@@ -23,5 +23,7 @@
         android:layout_alignParentStart="true"
         android:text="@string/api_yandex"
         android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="14sp"
         android:textStyle="bold"/>
 </RelativeLayout>

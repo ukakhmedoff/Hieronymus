@@ -4,8 +4,8 @@ import android.content.Context;
 
 import javax.inject.Inject;
 
-import ru.snatcher.hieronymus.db.Translate;
 import ru.snatcher.hieronymus.model.Model;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.view.BaseView;
 import rx.Subscription;
@@ -48,6 +48,5 @@ public abstract class BasePresenter implements Presenter {
 	@Override
 	public void onStop() {
 		fCompositeSubscription.clear();
-
 	}
 }

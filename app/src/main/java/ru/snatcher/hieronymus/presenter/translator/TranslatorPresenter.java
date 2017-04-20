@@ -9,8 +9,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.broadcast.NetworkChangeReceiver;
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;

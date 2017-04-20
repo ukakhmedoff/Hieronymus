@@ -26,4 +26,5 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 		super.onStop();
 		if (getPresenter() != null) getPresenter().onStop();
 	}
+
 }

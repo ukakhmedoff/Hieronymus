@@ -7,10 +7,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
-import ru.snatcher.hieronymus.db.TranslateDao;
 import ru.snatcher.hieronymus.model.api.ApiTranslateInterface;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
+import ru.snatcher.hieronymus.model.db.TranslateDao;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.App;

@@ -24,24 +24,21 @@ public class DashboardFragment extends Fragment {
 	@BindView(R.id.dash_view_pager)
 	ViewPager fViewPager;
 
-	private DashboardPagerAdapter fDashboardPagerAdapter;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View lvView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 		ButterKnife.bind(this, lvView);
 
-		fDashboardPagerAdapter = new DashboardPagerAdapter(getActivity(), getFragmentManager());
-		fViewPager.setAdapter(fDashboardPagerAdapter);
+		fViewPager.setAdapter(new DashboardPagerAdapter(getActivity(), getFragmentManager()));
 		fTabLayout.setupWithViewPager(fViewPager);
 
 		return lvView;
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		fDashboardPagerAdapter.notifyDataSetChanged();
+	public void setUserVisibleHint(final boolean isVisibleToUser) {
+		if(isVisibleToUser) fViewPager.getAdapter().notifyDataSetChanged();
+		super.setUserVisibleHint(isVisibleToUser);
 	}
 }

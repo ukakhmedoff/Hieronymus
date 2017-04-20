@@ -4,8 +4,8 @@ import android.content.Context;
 
 import java.util.List;
 
-import ru.snatcher.hieronymus.db.Language;
-import ru.snatcher.hieronymus.db.Translate;
+import ru.snatcher.hieronymus.model.db.Language;
+import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import rx.Observable;

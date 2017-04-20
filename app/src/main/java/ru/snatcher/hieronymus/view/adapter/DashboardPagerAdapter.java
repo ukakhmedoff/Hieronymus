@@ -15,6 +15,8 @@ import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
  */
 public class DashboardPagerAdapter extends BasePagerAdapter {
 
+	private HistoryFragment fHistoryFragment;
+
 	public DashboardPagerAdapter(Context pContext, final FragmentManager pFragmentManager) {
 		super(pFragmentManager);
 		fTabTitles = pContext.getResources().getStringArray(R.array.dashboard_tabs_names);
@@ -22,6 +24,14 @@ public class DashboardPagerAdapter extends BasePagerAdapter {
 
 	@Override
 	public Fragment getItem(final int pPosition) {
-		return HistoryFragment.newInstance(pPosition);
+		fHistoryFragment = HistoryFragment.newInstance(pPosition);
+		return fHistoryFragment;
+	}
+
+	@Override
+	public int getItemPosition(final Object object) {
+		fHistoryFragment = (HistoryFragment) object;
+		if (fHistoryFragment != null) fHistoryFragment.notifyDataSetChanged();
+		return super.getItemPosition(object);
 	}
 }
