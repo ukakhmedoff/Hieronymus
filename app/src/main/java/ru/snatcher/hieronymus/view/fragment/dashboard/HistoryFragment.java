@@ -88,6 +88,4 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	public void getTranslates() {
 		fHistoryPresenter.getTranslates(getArguments().getBoolean(ARG_IS_FAVOURITE), getContext());
 	}
-
-
 }

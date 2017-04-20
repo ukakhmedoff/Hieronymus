@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "41698291590",
+    "firebase_url": "https://hieronimys-c2d29.firebaseio.com",
+    "project_id": "hieronimys-c2d29",
+    "storage_bucket": "hieronimys-c2d29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41698291590:android:53131011e335a14b",
+        "android_client_info": {
+          "package_name": "ru.snatcher.hieronymus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41698291590-1q7qhcdtnprt797avjr5lcn1miieohmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.snatcher.hieronymus",
+            "certificate_hash": "8232ffb9e655a745a42ced3f995f757ddd4ebed0"
+          }
+        },
+        {
+          "client_id": "41698291590-r01fq1r2c50mura76epda7pgb05f5rre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZUl1y6pN8saGF7ysgkE8736IgTh9yBVI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41698291590-r01fq1r2c50mura76epda7pgb05f5rre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

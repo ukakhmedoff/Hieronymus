@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 	@BindView(R.id.navigation)
 	TabLayout fNavigation;
+
 	private SharedPreferences fSharedPreferences;
 	private SharedPreferences.Editor fEditor;
 	MainPagerAdapter fMainPagerAdapter;
