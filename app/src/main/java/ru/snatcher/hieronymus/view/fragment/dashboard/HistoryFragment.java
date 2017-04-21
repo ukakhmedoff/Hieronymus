@@ -17,7 +17,8 @@ import ru.snatcher.hieronymus.R;
 import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
-import ru.snatcher.hieronymus.presenter.dashboard.HistoryPresenter;
+import ru.snatcher.hieronymus.presenter.HistoryPresenter;
+import ru.snatcher.hieronymus.view.ActivityCallback;
 import ru.snatcher.hieronymus.view.adapter.RecyclerViewAdapter;
 import ru.snatcher.hieronymus.view.fragment.BaseFragment;
 
@@ -42,6 +43,7 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 		fragment.setArguments(args);
 		return fragment;
 	}
+
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	@Override
 	public void showTranslates(final List<Translate> pTranslates) {
 		if (fRecyclerViewAdapter == null)
-			fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication());
+			fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication(), this);
 		else {
 			fRecyclerViewAdapter.setTranslateList(pTranslates);
 			fRecyclerViewAdapter.notifyDataSetChanged();
@@ -97,5 +99,10 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	@Override
 	public void notifyDataSetChanged() {
 		getTranslates();
+	}
+
+	@Override
+	public void onListItemClicked(final Translate pTranslate) {
+		((ActivityCallback) getActivity()).onTranslatesItemClicked(pTranslate);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.view.BaseView;
+import ru.snatcher.hieronymus.view.adapter.RecyclerViewAdapter;
 
 /**
  * {@link HistoryFragmentView}
@@ -12,11 +13,12 @@ import ru.snatcher.hieronymus.view.BaseView;
  * @version 1.0
  */
 
-public interface HistoryFragmentView extends BaseView {
+public interface HistoryFragmentView extends BaseView, RecyclerViewAdapter.OnListItemClickListener {
 
 	void showTranslates(List<Translate> pTranslates);
 
 	void getTranslates();
 
 	void notifyDataSetChanged();
+
 }

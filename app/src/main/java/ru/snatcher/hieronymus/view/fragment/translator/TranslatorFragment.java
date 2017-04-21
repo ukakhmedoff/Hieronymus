@@ -40,7 +40,7 @@ import ru.snatcher.hieronymus.other.di.view.DaggerViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewComponent;
 import ru.snatcher.hieronymus.other.di.view.ViewDynamicModule;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
+import ru.snatcher.hieronymus.presenter.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.ActivityCallback;
 import ru.snatcher.hieronymus.view.fragment.BaseFragment;
 

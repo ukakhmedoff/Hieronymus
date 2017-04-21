@@ -15,7 +15,7 @@ import ru.snatcher.hieronymus.other.BaseTest;
 import ru.snatcher.hieronymus.other.di.view.DaggerTestViewComponent;
 import ru.snatcher.hieronymus.other.di.view.TestViewComponent;
 import ru.snatcher.hieronymus.other.di.view.TestViewDynamicModule;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
+import ru.snatcher.hieronymus.presenter.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.MainActivity;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragment;
 

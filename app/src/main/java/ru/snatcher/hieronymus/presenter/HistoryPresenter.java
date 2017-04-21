@@ -1,11 +1,10 @@
-package ru.snatcher.hieronymus.presenter.dashboard;
+package ru.snatcher.hieronymus.presenter;
 
 import android.content.Context;
 
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.other.App;
-import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.view.BaseView;
 import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragmentView;
 

@@ -29,11 +29,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	private BasePresenter fPresenter;
 
 	private App fApp;
+	private OnListItemClickListener fOnListItemClickListener;
 
-	public RecyclerViewAdapter(final List<Translate> pTranslateList, BasePresenter pPresenter, App pApp) {
+	public RecyclerViewAdapter(final List<Translate> pTranslateList, BasePresenter pPresenter, App pApp, OnListItemClickListener pOnListItemClickListener) {
 		this.fTranslateList = pTranslateList;
 		fPresenter = pPresenter;
 		fApp = pApp;
+		fOnListItemClickListener = pOnListItemClickListener;
 	}
 
 	@Override
@@ -54,6 +56,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 				setLiked(holder, lvTranslate, Constants.TRANSLATE_ISNT_FAVOURITE);
 			}
 		});
+		holder.itemView.setOnClickListener(v -> fOnListItemClickListener.onListItemClicked(lvTranslate));
 	}
 
 	private void setLiked(final ViewHolder holder, final Translate pTranslate, final boolean pTranslateIsntFavourite) {
@@ -97,5 +100,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	private void saveTranslate(Translate pTranslate) {
 		fPresenter.saveTranslate(pTranslate, fApp);
 		notifyDataSetChanged();
+	}
+
+	public interface OnListItemClickListener {
+		void onListItemClicked(Translate pTranslate);
 	}
 }

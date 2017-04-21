@@ -11,14 +11,9 @@ import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.model.Model;
 import ru.snatcher.hieronymus.model.db.Language;
-import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
-import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.BaseTest;
 import ru.snatcher.hieronymus.other.TestConstants;
-import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
-import ru.snatcher.hieronymus.presenter.mapper.TranslateMapper;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.ActivityCallback;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 import rx.Observable;
@@ -39,20 +34,10 @@ public class TranslatorPresenterTest extends BaseTest {
 	@Inject
 	protected Model model;
 	@Inject
-	TranslateMapper fTranslateMapper;
-	@Inject
-	LanguageMapper fLanguageMapper;
-	@Inject
 	List<Language> fLanguages;
 
 	@Inject
 	LanguageDTO fLanguageDTO;
-
-	@Inject
-	Translate fTranslate;
-
-	@Inject
-	TranslateDTO fTranslateDTO;
 
 	private TranslatorFragmentView fTranslatorFragmentView;
 	private TranslatorPresenter fTranslatorPresenter;

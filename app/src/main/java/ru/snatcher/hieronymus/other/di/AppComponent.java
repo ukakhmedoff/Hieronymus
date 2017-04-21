@@ -5,8 +5,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.snatcher.hieronymus.model.ModelImpl;
 import ru.snatcher.hieronymus.presenter.BasePresenter;
-import ru.snatcher.hieronymus.presenter.dashboard.HistoryPresenter;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
+import ru.snatcher.hieronymus.presenter.HistoryPresenter;
+import ru.snatcher.hieronymus.presenter.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.fragment.dashboard.HistoryFragment;
 
 /**

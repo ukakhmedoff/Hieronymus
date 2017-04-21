@@ -2,8 +2,8 @@ package ru.snatcher.hieronymus.other.di;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.snatcher.hieronymus.presenter.dashboard.HistoryPresenter;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
+import ru.snatcher.hieronymus.presenter.HistoryPresenter;
+import ru.snatcher.hieronymus.presenter.TranslatorPresenter;
 
 /**
  * {@link ViewModule}

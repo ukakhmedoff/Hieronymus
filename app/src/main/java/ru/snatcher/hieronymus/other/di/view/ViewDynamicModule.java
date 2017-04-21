@@ -2,7 +2,7 @@ package ru.snatcher.hieronymus.other.di.view;
 
 import dagger.Module;
 import dagger.Provides;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
+import ru.snatcher.hieronymus.presenter.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 
 /**

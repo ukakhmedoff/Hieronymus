@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hieronymus</string>
+    <string name="app_name">Святой Иероним</string>
     <string name="title_translator">Переводчик</string>
     <string name="title_dashboard">Переводы</string>
     <string name="tab_history">История</string>
     <string name="tab_favourite">Избранное</string>
     <string name="ui_lang">ru</string>
+    <string name="text_hint">Введите текст для перевода</string>
 </resources>

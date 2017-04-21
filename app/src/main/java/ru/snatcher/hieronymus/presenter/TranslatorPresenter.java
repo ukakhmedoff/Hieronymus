@@ -1,4 +1,4 @@
-package ru.snatcher.hieronymus.presenter.translator;
+package ru.snatcher.hieronymus.presenter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import ru.snatcher.hieronymus.model.db.Language;
 import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.other.App;
 import ru.snatcher.hieronymus.other.broadcast.NetworkChangeReceiver;
-import ru.snatcher.hieronymus.presenter.BasePresenter;
 import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
 import ru.snatcher.hieronymus.presenter.mapper.TranslateMapper;
 import ru.snatcher.hieronymus.view.BaseView;

@@ -4,20 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import ru.snatcher.hieronymus.integration.other.IntegrationBaseTest;
 import ru.snatcher.hieronymus.model.Model;
-import ru.snatcher.hieronymus.model.db.Language;
-import ru.snatcher.hieronymus.model.db.Translate;
 import ru.snatcher.hieronymus.model.entity.LanguageDTO;
 import ru.snatcher.hieronymus.model.entity.TranslateDTO;
 import ru.snatcher.hieronymus.other.TestConstants;
-import ru.snatcher.hieronymus.presenter.mapper.LanguageMapper;
-import ru.snatcher.hieronymus.presenter.mapper.TranslateMapper;
-import ru.snatcher.hieronymus.presenter.translator.TranslatorPresenter;
+import ru.snatcher.hieronymus.presenter.TranslatorPresenter;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 import rx.Observable;
 
@@ -32,21 +26,10 @@ import static org.mockito.Mockito.mock;
 public class TranslatorPresenterTest extends IntegrationBaseTest {
 
 	@Inject
-	TranslateMapper fTranslateMapper;
-	@Inject
-	LanguageMapper fLanguageMapper;
-
-	@Inject
 	Model fModel;
 
 	@Inject
-	List<Language> fLanguages;
-
-	@Inject
 	LanguageDTO fLanguageDTO;
-
-	@Inject
-	Translate fTranslate;
 
 	@Inject
 	TranslateDTO fTranslateDTO;
