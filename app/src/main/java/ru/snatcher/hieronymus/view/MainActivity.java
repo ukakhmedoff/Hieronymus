@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	MainPagerAdapter fMainPagerAdapter;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected final void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
@@ -50,29 +50,29 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected final void onSaveInstanceState(Bundle outState) {
 		outState.putInt(PAGER_FRAGMENT_ID, fContent.getCurrentItem());
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
-	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+	protected final void onRestoreInstanceState(final Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		fContent.setCurrentItem(savedInstanceState.getInt(PAGER_FRAGMENT_ID));
 	}
 
 	@Override
-	public void setSpinnerLanguagesToPreferences(final String pToPreferences, final int pLanguagePosition) {
+	public final void setSpinnerLanguagesToPreferences(final String pToPreferences, final int pLanguagePosition) {
 		Utils.setSpinnerLanguagesToPreferences(this, pToPreferences, pLanguagePosition);
 	}
 
 	@Override
-	public int getSpinnerLanguagesFromPreferences(final String pSpinnerLanguages) {
+	public final int getSpinnerLanguagesFromPreferences(final String pSpinnerLanguages) {
 		return Utils.getSpinnerLanguagesFromPreferences(this, pSpinnerLanguages);
 	}
 
 	@Override
-	public void onTranslatesItemClicked(final Translate pTranslate) {
+	public final void onTranslatesItemClicked(final Translate pTranslate) {
 		fContent.setCurrentItem(PAGER_TRANSLATOR_FRAGMENT_ID, true);
 		TranslatorFragmentView lvRegisteredFragment = (TranslatorFragmentView) fMainPagerAdapter
 				.getRegisteredFragment(PAGER_TRANSLATOR_FRAGMENT_ID);

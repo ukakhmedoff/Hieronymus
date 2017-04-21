@@ -10,6 +10,12 @@
         android:background="@color/colorBackground"
         android:gravity="center">
 
+        <View
+            android:id="@+id/btnSwap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <EditText
             android:id="@+id/textToTranslate"
             style="@style/Widget.AppCompat.EditText"
@@ -19,6 +25,7 @@
             android:background="@drawable/edit_text_style"
             android:gravity="center"
             android:hint="@string/text_hint"
+            android:imeOptions="flagNoFullscreen"
             android:inputType="textCapSentences|textMultiLine"
             android:padding="@dimen/toolbar_items_margin"
             android:textColor="@color/colorTextFrom"
@@ -40,15 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent">
-
-        <ImageView
-            android:id="@+id/btnSwap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/include_translated_text"
-            android:layout_below="@+id/include_translated_text"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_swap"/>
 
         <Spinner
             android:id="@+id/spinner_language_to"

@@ -16,12 +16,12 @@ public abstract class BaseFragment extends Fragment implements BaseView {
 
 	protected abstract BasePresenter getPresenter();
 
-	public void showError(final String error) {
+	public final void showError(final String error) {
 		Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
-	public void onStop() {
+	public final void onStop() {
 		super.onStop();
 		if (getPresenter() != null) getPresenter().onStop();
 	}

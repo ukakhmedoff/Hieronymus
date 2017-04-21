@@ -48,32 +48,32 @@ public class ModelImpl implements Model {
 	}
 
 	@Override
-	public Observable<LanguageDTO> getRemoteLangs(String pKey, String pUiLang) {
+	public final Observable<LanguageDTO> getRemoteLangs(String pKey, String pUiLang) {
 		return fApiInterface
 				.getLangs(pKey, pUiLang)
 				.compose(applySchedulers());
 	}
 
 	@Override
-	public Observable<TranslateDTO> getTranslatedText(String pKey, final String pTextToTranslate, final String pLangs) {
+	public final Observable<TranslateDTO> getTranslatedText(String pKey, final String pTextToTranslate, final String pLangs) {
 		return fApiInterface
 				.getTranslatedText(pKey, pTextToTranslate, pLangs)
 				.compose(applySchedulers());
 	}
 
 	@Override
-	public void saveTranslate(final Translate pTranslate, final Context pContext) {
+	public final void saveTranslate(final Translate pTranslate, final Context pContext) {
 		getDaoSession(pContext).getTranslateDao().insertOrReplace(pTranslate);
 	}
 
 	@Override
-	public void saveLanguages(final List<Language> pLanguages, final Context pContext) {
+	public final void saveLanguages(final List<Language> pLanguages, final Context pContext) {
 		for (Language lvLanguage : pLanguages)
 			getDaoSession(pContext).getLanguageDao().insertOrReplace(lvLanguage);
 	}
 
 	@Override
-	public List<Translate> getTranslates(final boolean pFavourite, final Context pContext) {
+	public final List<Translate> getTranslates(final boolean pFavourite, final Context pContext) {
 		TranslateDao lvTranslateDao = getDaoSession(pContext).getTranslateDao();
 
 		if (pFavourite)
@@ -82,12 +82,12 @@ public class ModelImpl implements Model {
 	}
 
 	@Override
-	public List<Language> getLocalLanguages(final Context pContext) {
+	public final List<Language> getLocalLanguages(final Context pContext) {
 		return getDaoSession(pContext).getLanguageDao().loadAll();
 	}
 
 	@Override
-	public boolean getTranslateIsFavourite(final Translate pTranslate, final Context pContext) {
+	public final boolean getTranslateIsFavourite(final Translate pTranslate, final Context pContext) {
 		TranslateDao lvTranslateDao = getDaoSession(pContext).getTranslateDao();
 
 		Translate lvTranslate = lvTranslateDao.queryBuilder()

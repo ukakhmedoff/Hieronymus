@@ -20,7 +20,7 @@ public class LanguageDTO {
 		fLangs = pLangs;
 	}
 
-	public Map<String, String> getLangs() {
+	public final Map<String, String> getLangs() {
 		return fLangs;
 	}
 }

@@ -25,25 +25,25 @@ public class MainPagerAdapter extends BasePagerAdapter {
 	}
 
 	@Override
-	public Fragment getItem(final int pPosition) {
+	public final Fragment getItem(final int pPosition) {
 		if (pPosition == 0) return new TranslatorFragment();
 		else return new DashboardFragment();
 	}
 
 	@Override
-	public Object instantiateItem(ViewGroup pViewGroup, int pPosition) {
+	public final Object instantiateItem(ViewGroup pViewGroup, int pPosition) {
 		Fragment lvFragment = (Fragment) super.instantiateItem(pViewGroup, pPosition);
 		fRegisteredFragments.put(pPosition, lvFragment);
 		return lvFragment;
 	}
 
 	@Override
-	public void destroyItem(ViewGroup pViewGroup, int pPosition, Object pObject) {
+	public final void destroyItem(ViewGroup pViewGroup, int pPosition, Object pObject) {
 		fRegisteredFragments.remove(pPosition);
 		super.destroyItem(pViewGroup, pPosition, pObject);
 	}
 
-	public Fragment getRegisteredFragment(int pPosition) {
+	public final Fragment getRegisteredFragment(int pPosition) {
 		return fRegisteredFragments.get(pPosition);
 	}
 

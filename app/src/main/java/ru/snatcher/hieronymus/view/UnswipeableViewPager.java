@@ -22,12 +22,12 @@ public class UnswipeableViewPager extends ViewPager {
 	}
 
 	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
+	public final boolean onInterceptTouchEvent(MotionEvent ev) {
 		return false;
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
+	public final boolean onTouchEvent(MotionEvent ev) {
 		return false;
 	}
 }

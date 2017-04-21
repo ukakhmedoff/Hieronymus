@@ -46,21 +46,21 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 
 
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
+	public final void onCreate(@Nullable Bundle savedInstanceState) {
 		App.getComponent().inject(this);
 		super.onCreate(savedInstanceState);
 		fHistoryPresenter.onCreate(this);
 	}
 
 	@Override
-	public void setUserVisibleHint(final boolean isVisibleToUser) {
+	public final void setUserVisibleHint(final boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 
 		if (fRecyclerViewAdapter != null && isVisibleToUser) getTranslates();
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View lvView = inflater.inflate(R.layout.fragment_history, container, false);
 		ButterKnife.bind(this, lvView);
 
@@ -70,19 +70,19 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	}
 
 	@Override
-	public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
+	public final void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
 		fRecyclerView.setAdapter(fRecyclerViewAdapter);
 	}
 
 	@Override
-	protected BasePresenter getPresenter() {
+	protected final BasePresenter getPresenter() {
 		return fHistoryPresenter;
 	}
 
 	@Override
-	public void showTranslates(final List<Translate> pTranslates) {
+	public final void showTranslates(final List<Translate> pTranslates) {
 		if (fRecyclerViewAdapter == null)
 			fRecyclerViewAdapter = new RecyclerViewAdapter(pTranslates, fHistoryPresenter, (App) getActivity().getApplication(), this);
 		else {
@@ -92,17 +92,17 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 	}
 
 	@Override
-	public void getTranslates() {
+	public final void getTranslates() {
 		fHistoryPresenter.getTranslates(getArguments().getBoolean(ARG_IS_FAVOURITE), getContext());
 	}
 
 	@Override
-	public void notifyDataSetChanged() {
+	public final void notifyDataSetChanged() {
 		getTranslates();
 	}
 
 	@Override
-	public void onListItemClicked(final Translate pTranslate) {
+	public final void onListItemClicked(final Translate pTranslate) {
 		((ActivityCallback) getActivity()).onTranslatesItemClicked(pTranslate);
 	}
 }

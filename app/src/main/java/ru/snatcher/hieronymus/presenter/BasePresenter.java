@@ -19,7 +19,7 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class BasePresenter implements Presenter {
 
-	protected static final String BUNDLE_TRANSLATE_LIST_KEY = "BUNDLE_TRANSLATE_LIST_KEY";
+	static final String BUNDLE_TRANSLATE_LIST_KEY = "BUNDLE_TRANSLATE_LIST_KEY";
 
 	@Inject
 	protected Model fModel;
@@ -31,22 +31,22 @@ public abstract class BasePresenter implements Presenter {
 		App.getComponent().inject(this);
 	}
 
-	protected void addSubscription(Subscription subscription) {
+	final void addSubscription(Subscription subscription) {
 		fCompositeSubscription.add(subscription);
 	}
 
 	public abstract BaseView getView();
 
-	public void saveTranslate(final Translate pTranslate, Context pContext) {
+	public final void saveTranslate(final Translate pTranslate, Context pContext) {
 		fModel.saveTranslate(pTranslate, pContext);
 	}
 
-	public boolean getTranslateFavourite(final Translate pTranslate, App pApp) {
+	public final boolean getTranslateFavourite(final Translate pTranslate, App pApp) {
 		return fModel.getTranslateIsFavourite(pTranslate, pApp);
 	}
 
 	@Override
-	public void onStop() {
+	public final void onStop() {
 		fCompositeSubscription.clear();
 	}
 }

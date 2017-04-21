@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	}
 
 	@Override
-	public void onBindViewHolder(final ViewHolder holder, final int position) {
+	public final void onBindViewHolder(final ViewHolder holder, final int position) {
 		Translate lvTranslate = fTranslateList.get(position);
 		holder.fLangs.setText(lvTranslate.getLang());
 		holder.fTextTranslated.setText(lvTranslate.getTranslatedText());
@@ -66,21 +66,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 	}
 
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+	public final ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
 		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item, viewGroup, false);
 		return new ViewHolder(v);
 	}
 
-	public void setTranslateList(final List<Translate> pTranslateList) {
+	public final void setTranslateList(final List<Translate> pTranslateList) {
 		fTranslateList = pTranslateList;
 	}
 
 	@Override
-	public int getItemCount() {
+	public final int getItemCount() {
 		return fTranslateList.size();
 	}
 
-	class ViewHolder extends RecyclerView.ViewHolder {
+	final class ViewHolder extends RecyclerView.ViewHolder {
 
 		@BindView(R.id.textToTranslate)
 		TextView fTextTranslated;

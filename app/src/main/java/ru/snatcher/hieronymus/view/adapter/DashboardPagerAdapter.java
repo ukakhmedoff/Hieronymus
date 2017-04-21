@@ -23,13 +23,13 @@ public class DashboardPagerAdapter extends BasePagerAdapter {
 	}
 
 	@Override
-	public Fragment getItem(final int pPosition) {
+	public final Fragment getItem(final int pPosition) {
 		fHistoryFragment = HistoryFragment.newInstance(pPosition);
 		return fHistoryFragment;
 	}
 
 	@Override
-	public int getItemPosition(final Object object) {
+	public final int getItemPosition(final Object object) {
 		fHistoryFragment = (HistoryFragment) object;
 		if (fHistoryFragment != null) fHistoryFragment.notifyDataSetChanged();
 		return super.getItemPosition(object);

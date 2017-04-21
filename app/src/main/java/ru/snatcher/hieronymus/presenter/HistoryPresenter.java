@@ -23,16 +23,16 @@ public class HistoryPresenter extends BasePresenter {
 	}
 
 	@Override
-	public BaseView getView() {
+	public final BaseView getView() {
 		return fHistoryFragment;
 	}
 
-	public void onCreate(HistoryFragmentView pHistoryFragment) {
+	public final void onCreate(HistoryFragmentView pHistoryFragment) {
 		App.getComponent().inject(this);
 		fHistoryFragment = pHistoryFragment;
 	}
 
-	public void getTranslates(boolean pFavourite, Context pContext) {
+	public final void getTranslates(boolean pFavourite, Context pContext) {
 		fHistoryFragment.showTranslates(fModel.getTranslates(pFavourite, pContext));
 	}
 }

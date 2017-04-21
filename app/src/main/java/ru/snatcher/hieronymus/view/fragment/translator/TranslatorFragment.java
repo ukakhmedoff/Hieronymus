@@ -79,7 +79,7 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	private ActivityCallback fActivityCallback;
 
 	@Override
-	public void onAttach(Context pContext) {
+	public final void onAttach(Context pContext) {
 		super.onAttach(pContext);
 		try {
 			fActivityCallback = (ActivityCallback) getActivity();
@@ -90,7 +90,7 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	}
 
 	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
+	public final void onCreate(@Nullable Bundle savedInstanceState) {
 		if (fViewComponent == null) {
 			fViewComponent = DaggerViewComponent.builder()
 					.viewDynamicModule(new ViewDynamicModule(this))
@@ -100,12 +100,12 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 		super.onCreate(savedInstanceState);
 	}
 
-	public void setViewComponent(final ViewComponent pViewComponent) {
+	public final void setViewComponent(final ViewComponent pViewComponent) {
 		fViewComponent = pViewComponent;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		fView = inflater.inflate(R.layout.fragment_translator, container, false);
 		ButterKnife.bind(this, fView);
 
@@ -140,30 +140,30 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	}
 
 	@Override
-	public void onStart() {
+	public final void onStart() {
 		super.onStart();
 		getLangs();
 	}
 
-	public void getLangs() {
+	public final void getLangs() {
 		fTranslatorPresenter.getLangs(fApiKey, getContext().getResources().getString(R.string.ui_lang), (App) getActivity().getApplication());
 	}
 
 	@Override
-	public void showSelectedItem(final Translate pTranslate) {
-		fTextToTranslate.setText(pTranslate.getTranslatedText());
+	public final void showLanguageList(final List<Language> pLanguages) {
+		fLangs.addAll(pLanguages);
 
-		fTranslatorPresenter.getTranslatesRemote(fApiKey, pTranslate.getTranslatedText(), pTranslate.getLang());
-	}
+		fSpinnerToLang.setAdapter(getLanguageArrayAdapter(R.layout.spinner_text_item));
+		fSpinnerFromLang.setAdapter(getLanguageArrayAdapter(android.R.layout.simple_spinner_item));
 
-	/**
-	 * Get translate from {@link TranslatorPresenter}
-	 */
-	private void getTranslate() {
-		String inputText = fTextToTranslate.getText().toString().trim();
-		if (inputText.length() == 0) return;
+		fSpinnerFromLang.setOnItemSelectedListener(getItemSelectedListener(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
+		fSpinnerToLang.setOnItemSelectedListener(getItemSelectedListener(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE));
 
-		fTranslatorPresenter.getTranslatesRemote(fApiKey, inputText, getSpinnerLangKey());
+		//Выбираем какой-нибудь язык по-умолчанию
+		fSpinnerToLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE));
+		fSpinnerFromLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
+
+		saveLanguages(pLanguages);
 	}
 
 	/**
@@ -182,6 +182,23 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		return adapter;
+	}
+
+	@Override
+	public final void showSelectedItem(final Translate pTranslate) {
+		fTextToTranslate.setText(pTranslate.getTranslatedText());
+
+		fTranslatorPresenter.getTranslatesRemote(fApiKey, pTranslate.getTranslatedText(), pTranslate.getLang());
+	}
+
+	/**
+	 * Get translate from {@link TranslatorPresenter}
+	 */
+	private void getTranslate() {
+		String inputText = fTextToTranslate.getText().toString().trim();
+		if (inputText.length() == 0) return;
+
+		fTranslatorPresenter.getTranslatesRemote(fApiKey, inputText, getSpinnerLangKey());
 	}
 
 	/**
@@ -227,7 +244,7 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	 * @param pTranslate - to show
 	 */
 	@Override
-	public void showTranslate(final Translate pTranslate) {
+	public final void showTranslate(final Translate pTranslate) {
 		fView.findViewById(R.id.include_translated_text).setVisibility(View.VISIBLE);
 		fTranslate = pTranslate;
 
@@ -240,34 +257,17 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	}
 
 	@Override
-	public void showLanguageList(final List<Language> pLanguages) {
-		fLangs.addAll(pLanguages);
-
-		fSpinnerToLang.setAdapter(getLanguageArrayAdapter(R.layout.spinner_text_item));
-		fSpinnerFromLang.setAdapter(getLanguageArrayAdapter(android.R.layout.simple_spinner_item));
-
-		fSpinnerFromLang.setOnItemSelectedListener(getItemSelectedListener(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE, fSpinnerFromLang));
-		fSpinnerToLang.setOnItemSelectedListener(getItemSelectedListener(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE, fSpinnerToLang));
-
-		//Выбираем какой-нибудь язык по-умолчанию
-		fSpinnerToLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_TO_TRANSLATE));
-		fSpinnerFromLang.setSelection(getSpinnerSelectedItemFromPreferences(Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE));
-
-		saveLanguages(pLanguages);
-	}
-
-	@Override
-	public void saveTranslate(final Translate pTranslate) {
+	public final void saveTranslate(final Translate pTranslate) {
 		fTranslatorPresenter.saveTranslate(pTranslate, getContext());
 	}
 
 	@Override
-	public void saveLanguages(final List<Language> pLanguages) {
+	public final void saveLanguages(final List<Language> pLanguages) {
 		fTranslatorPresenter.saveLanguages(pLanguages, getContext());
 	}
 
 	@Override
-	public void onResume() {
+	public final void onResume() {
 		super.onResume();
 
 		App.getInstance().setConnectionListener(fTranslatorPresenter);
@@ -277,7 +277,7 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 	 * On click to swap button
 	 */
 	@OnClick(R.id.btnSwap)
-	public void onClickSwap() {
+	public final void onClickSwap() {
 		int lvFrom = fSpinnerFromLang.getSelectedItemPosition();
 		int lvTo = fSpinnerToLang.getSelectedItemPosition();
 
@@ -286,12 +286,12 @@ public class TranslatorFragment extends BaseFragment implements TranslatorFragme
 		fSpinnerToLang.setSelection(lvFrom);
 	}
 
-	public AdapterView.OnItemSelectedListener getItemSelectedListener(String pS, Spinner pSpinner) {
+	public final AdapterView.OnItemSelectedListener getItemSelectedListener(String pS) {
 		return new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 				getTranslate();
-				setSpinnerLanguagesToPreferences(pS, pSpinner.getSelectedItemPosition());
+				setSpinnerLanguagesToPreferences(pS, position);
 			}
 
 			@Override

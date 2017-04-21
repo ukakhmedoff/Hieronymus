@@ -51,11 +51,11 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 	}
 
 	@Override
-	public BaseView getView() {
+	public final BaseView getView() {
 		return fTranslatorFragmentView;
 	}
 
-	public void onCreateView(Bundle pSavedInstanceState) {
+	public final void onCreateView(Bundle pSavedInstanceState) {
 		if (pSavedInstanceState != null)
 			if (pSavedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY) != null)
 				fTranslate = (Translate) pSavedInstanceState.getSerializable(BUNDLE_TRANSLATE_LIST_KEY);
@@ -91,7 +91,7 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		addSubscription(lvSubscription);
 	}
 
-	public void getTranslatesRemote(final String pKey, final String pToTranslateText, String pLangs) {
+	public final void getTranslatesRemote(final String pKey, final String pToTranslateText, String pLangs) {
 		Subscription lvSubscription =
 				fModel
 						.getTranslatedText(pKey, pToTranslateText, pLangs)
@@ -119,7 +119,7 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		addSubscription(lvSubscription);
 	}
 
-	public void saveLanguages(final List<Language> pLanguages, final Context pContext) {
+	public final void saveLanguages(final List<Language> pLanguages, final Context pContext) {
 		fModel.saveLanguages(pLanguages, pContext);
 	}
 
@@ -127,12 +127,12 @@ public class TranslatorPresenter extends BasePresenter implements NetworkChangeR
 		fTranslatorFragmentView.showLanguageList(fModel.getLocalLanguages(pApp));
 	}
 
-	public void getLangs(String pKey, String pUiLang, App pApp) {
+	public final void getLangs(String pKey, String pUiLang, App pApp) {
 		if (NetworkChangeReceiver.isConnected()) getRemoteLanguages(pKey, pUiLang);
 		else getLocalLanguages(pApp);
 	}
 
-	public void onNetworkConnectionChanged(final boolean isConnected) {
+	public final void onNetworkConnectionChanged(final boolean isConnected) {
 		if (isConnected) fTranslatorFragmentView.getLangs();
 	}
 }

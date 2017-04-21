@@ -33,11 +33,11 @@ public class TranslateDTO {
 		this.text = texts;
 	}
 
-	public String getLang() {
+	public final String getLang() {
 		return lang;
 	}
 
-	public List<String> getText() {
+	public final List<String> getText() {
 		return text;
 	}
 }

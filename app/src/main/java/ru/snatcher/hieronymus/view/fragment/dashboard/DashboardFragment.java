@@ -25,7 +25,7 @@ public class DashboardFragment extends Fragment {
 	ViewPager fViewPager;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public final View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View lvView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 		ButterKnife.bind(this, lvView);
@@ -37,7 +37,7 @@ public class DashboardFragment extends Fragment {
 	}
 
 	@Override
-	public void setUserVisibleHint(final boolean isVisibleToUser) {
+	public final void setUserVisibleHint(final boolean isVisibleToUser) {
 		if (isVisibleToUser) fViewPager.getAdapter().notifyDataSetChanged();
 		super.setUserVisibleHint(isVisibleToUser);
 	}

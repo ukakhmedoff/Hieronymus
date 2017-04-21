@@ -6,6 +6,6 @@ package ru.snatcher.hieronymus.presenter;
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-public interface Presenter {
+interface Presenter {
 	void onStop();
 }

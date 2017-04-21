@@ -24,12 +24,12 @@ class BasePagerAdapter extends FragmentPagerAdapter {
 	}
 
 	@Override
-	public int getCount() {
+	public final int getCount() {
 		return fTabTitles.length;
 	}
 
 	@Override
-	public CharSequence getPageTitle(int pPosition) {
+	public final CharSequence getPageTitle(int pPosition) {
 		return fTabTitles[pPosition];
 	}
 }
