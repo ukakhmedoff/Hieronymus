@@ -18,7 +18,7 @@ import ru.snatcher.hieronymus.other.Constants;
 import rx.Observable;
 import rx.Scheduler;
 
-import static ru.snatcher.hieronymus.other.DataBaseUtils.getDaoSession;
+import static ru.snatcher.hieronymus.other.Utils.getDaoSession;
 
 /**
  * {@link ModelImpl} is implementation for {@link Model}

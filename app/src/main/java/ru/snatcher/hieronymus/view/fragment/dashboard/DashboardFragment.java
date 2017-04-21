@@ -38,7 +38,7 @@ public class DashboardFragment extends Fragment {
 
 	@Override
 	public void setUserVisibleHint(final boolean isVisibleToUser) {
-		if(isVisibleToUser) fViewPager.getAdapter().notifyDataSetChanged();
+		if (isVisibleToUser) fViewPager.getAdapter().notifyDataSetChanged();
 		super.setUserVisibleHint(isVisibleToUser);
 	}
 }

@@ -8,7 +8,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.snatcher.hieronymus.R;
 import ru.snatcher.hieronymus.model.db.Translate;
-import ru.snatcher.hieronymus.other.Prefs;
+import ru.snatcher.hieronymus.other.Utils;
 import ru.snatcher.hieronymus.view.adapter.MainPagerAdapter;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragmentView;
 
@@ -39,9 +39,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
 
-		Prefs.initPreferences(this);
+		Utils.initPreferences(this);
 		initTabs();
-
 	}
 
 	private void initTabs() {
@@ -64,12 +63,12 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 
 	@Override
 	public void setSpinnerLanguagesToPreferences(final String pToPreferences, final int pLanguagePosition) {
-		Prefs.setSpinnerLanguagesToPreferences(this, pToPreferences, pLanguagePosition);
+		Utils.setSpinnerLanguagesToPreferences(this, pToPreferences, pLanguagePosition);
 	}
 
 	@Override
 	public int getSpinnerLanguagesFromPreferences(final String pSpinnerLanguages) {
-		return Prefs.getSpinnerLanguagesFromPreferences(this, pSpinnerLanguages);
+		return Utils.getSpinnerLanguagesFromPreferences(this, pSpinnerLanguages);
 	}
 
 	@Override
@@ -79,5 +78,4 @@ public class MainActivity extends AppCompatActivity implements ActivityCallback 
 				.getRegisteredFragment(PAGER_TRANSLATOR_FRAGMENT_ID);
 		lvRegisteredFragment.showSelectedItem(pTranslate);
 	}
-
 }

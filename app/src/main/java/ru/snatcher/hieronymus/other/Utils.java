@@ -3,6 +3,11 @@ package ru.snatcher.hieronymus.other;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.greenrobot.greendao.database.Database;
+
+import ru.snatcher.hieronymus.model.db.DaoMaster;
+import ru.snatcher.hieronymus.model.db.DaoSession;
+
 import static android.content.Context.MODE_PRIVATE;
 import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_APP_STARTED;
 import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_LANGUAGE_FROM_TRANSLATE;
@@ -10,12 +15,23 @@ import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_LANGUAGE_TO_TRA
 import static ru.snatcher.hieronymus.other.Constants.PREFERENCES_NAME;
 
 /**
- * {@link Prefs}
+ * {@link Utils}
  *
  * @author Usman Akhmedoff.
  * @version 1.0
  */
-public class Prefs {
+public class Utils {
+
+	/**
+	 * @param pContext - context for DaoMaster
+	 * @return {@link DaoSession} to save DB data
+	 */
+	public static DaoSession getDaoSession(Context pContext) {
+
+		DaoMaster.DevOpenHelper lvDevOpenHelper = new DaoMaster.DevOpenHelper(pContext, "app_database");
+		Database lvWritableDb = lvDevOpenHelper.getWritableDb();
+		return new DaoMaster(lvWritableDb).newSession();
+	}
 
 	/**
 	 * Initialize {@link SharedPreferences}

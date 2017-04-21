@@ -8,6 +8,5 @@ package ru.snatcher.hieronymus.view;
  */
 
 public interface BaseView {
-
 	void showError(String error);
 }

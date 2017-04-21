@@ -86,7 +86,6 @@ public class HistoryFragment extends BaseFragment implements HistoryFragmentView
 		else {
 			fRecyclerViewAdapter.setTranslateList(pTranslates);
 			fRecyclerViewAdapter.notifyDataSetChanged();
-
 		}
 	}
 
