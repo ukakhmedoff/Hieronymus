@@ -33,10 +33,10 @@ import ru.snatcher.hieronymus.other.TestUtils;
 public class IntegrationBaseTest {
 
 	public IntegrationTestComponent component;
-	public TestUtils testUtils;
+	private TestUtils testUtils;
 
 	@Inject
-	protected MockWebServer mockWebServer;
+	MockWebServer mockWebServer;
 
 	@Before
 	public void setUp() throws Exception {

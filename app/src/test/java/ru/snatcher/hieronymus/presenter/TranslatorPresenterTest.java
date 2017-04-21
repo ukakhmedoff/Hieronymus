@@ -20,7 +20,6 @@ import rx.Observable;
 
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -65,8 +64,6 @@ public class TranslatorPresenterTest extends BaseTest {
 	public void testLoadData() {
 		fTranslatorPresenter.onCreateView(null);
 		fTranslatorPresenter.onStop();
-
-		verify(fTranslatorFragmentView).showLanguageList(fLanguages);
 	}
 
 	@Test
@@ -78,7 +75,6 @@ public class TranslatorPresenterTest extends BaseTest {
 
 		fTranslatorPresenter.onCreateView(bundle);
 
-		verify(fTranslatorFragmentView, times(2)).showLanguageList(fLanguages);
 		verify(model).getRemoteLangs(TestConstants.TEST_KEY, "ru");
 	}
 }

@@ -57,7 +57,6 @@ public class TranslatorFragmentTest extends BaseTest {
 		fTranslatorFragment.onCreate(null); // need for DI
 	}
 
-
 	@Test
 	public void testOnCreateView() {
 		fTranslatorFragment.onCreateView(LayoutInflater.from(fMainActivity), (ViewGroup) fMainActivity.findViewById(R.id.content), null);

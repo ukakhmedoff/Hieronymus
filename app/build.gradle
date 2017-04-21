@@ -50,24 +50,36 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    //UI libraries
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile "com.android.support:support-vector-drawable:$supportLibraryVersion"
     compile "com.android.support:support-v4:$supportLibraryVersion"
     compile "com.android.support:cardview-v7:$supportLibraryVersion"
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.jd-alexander:LikeButton:0.2.0'
+
+    compile "com.jakewharton:butterknife:$butterKnifeLibraryVersion"
+    provided "com.jakewharton:butterknife-compiler:$butterKnifeLibraryVersion"
+
+    //Connection libraries
     compile "com.squareup.retrofit2:converter-gson:$retrofitLibraryVersion"
     compile "com.squareup.retrofit2:retrofit:$retrofitLibraryVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitLibraryVersion"
-    compile "com.jakewharton:butterknife:$butterKnifeLibraryVersion"
-    provided "com.jakewharton:butterknife-compiler:$butterKnifeLibraryVersion"
+
+    //GreenDao ORM
     compile "org.greenrobot:greendao:$greenDaoLibraryVersion"
+
+    //RXJava
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.github.jd-alexander:LikeButton:0.2.0'
+
     compile "com.google.dagger:dagger:$daggerLibraryVersion"
     apt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
+
     testApt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
     androidTestApt "com.google.dagger:dagger-compiler:$daggerLibraryVersion"
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.3-alpha', {
@@ -86,6 +98,7 @@ dependencies {
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestCompile 'com.google.truth:truth:0.32'
+    testCompile 'com.android.support.test:testing-support-lib:0.1'
 }
 apply plugin: 'jacoco'
 

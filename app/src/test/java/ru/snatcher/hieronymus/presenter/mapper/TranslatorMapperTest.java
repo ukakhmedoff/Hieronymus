@@ -37,8 +37,8 @@ public class TranslatorMapperTest extends BaseTest {
 	public void setUp() throws Exception {
 		super.setUp();
 		component.inject(this);
-		fTranslateDTO = testUtils.getGson().fromJson(testUtils.readString("json/langs.json"), TranslateDTO.class);
-		fLanguageDTO = testUtils.getGson().fromJson(testUtils.readString("json/translate.json"), LanguageDTO.class);
+		fTranslateDTO = testUtils.getGson().fromJson(testUtils.readString("json/translate.json"), TranslateDTO.class);
+		fLanguageDTO = testUtils.getGson().fromJson(testUtils.readString("json/langs.json"), LanguageDTO.class);
 
 	}
 

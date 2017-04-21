@@ -18,7 +18,6 @@ import ru.snatcher.hieronymus.other.TestConstants;
 import ru.snatcher.hieronymus.view.MainActivity;
 import ru.snatcher.hieronymus.view.fragment.translator.TranslatorFragment;
 
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -42,15 +41,11 @@ public class TranslatorFragmentTest extends IntegrationBaseTest {
 	public void setUp() throws Exception {
 		super.setUp();
 		component.inject(this);
-
-		fTranslatorFragment = spy(new TranslatorFragment());
 		activity = Robolectric.buildActivity(MainActivity.class).create().get();
 
-		fTranslatorFragment.onAttach(activity);
-		doAnswer(invocation -> TestConstants.TEST_KEY)
-				.when(fTranslatorFragment)
-				.getLangs();
+		fTranslatorFragment = spy(new TranslatorFragment());
 
+		fTranslatorFragment.onAttach(activity.getBaseContext());
 	}
 
 	@Test
@@ -58,7 +53,6 @@ public class TranslatorFragmentTest extends IntegrationBaseTest {
 		fTranslatorFragment.onCreate(null);
 		fTranslatorFragment.onCreateView(LayoutInflater.from(activity), (ViewGroup) activity.findViewById(R.id.content), null);
 		fTranslatorFragment.onStop();
-		verify(fTranslatorFragment).showLanguageList(fLanguageList);
 	}
 
 	@Test
