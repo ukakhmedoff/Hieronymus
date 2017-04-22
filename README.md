@@ -33,7 +33,8 @@
 - [x] Отображение избранного и истории
 - [x] Анимации
 - [x] Оптимизация
-## Библиотеки
+
+## Использованные иблиотеки:
 
 * [ButterKnife](https://github.com/JakeWharton/butterknife)
 * [Dagger 2](https://github.com/google/dagger)
