@@ -19,8 +19,8 @@ public class GreenDaoGenerator {
 		new DaoGenerator().generateAll(schema, DESTINATION_FOLDER);
 	}
 
-	private static Entity createLanguageEntity(final Schema pSchema) {
-		Entity lvLanguageEntity = pSchema.addEntity("Language");
+	private static Entity createLanguageEntity(final Schema schema) {
+		Entity lvLanguageEntity = schema.addEntity("Language");
 
 		lvLanguageEntity.addStringProperty("langKey").primaryKey();
 		lvLanguageEntity.addStringProperty("langValue").notNull();
@@ -28,8 +28,8 @@ public class GreenDaoGenerator {
 		return lvLanguageEntity;
 	}
 
-	private static Entity createTranslateEntity(Schema pSchema) {
-		Entity lvTranslateEntity = pSchema.addEntity("Translate");
+	private static Entity createTranslateEntity(Schema schema) {
+		Entity lvTranslateEntity = schema.addEntity("Translate");
 
 		lvTranslateEntity.addStringProperty("lang").notNull();
 		lvTranslateEntity.addStringProperty("translatedText").primaryKey();

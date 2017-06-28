@@ -12,29 +12,28 @@ import ru.snatcher.hieronymus.other.di.DaggerAppComponent;
  * @version 1.5
  */
 public class App extends Application {
-	private static AppComponent sfAppComponent;
-	private static App sfInstance;
+	private static AppComponent appComponent;
+	private static App instance;
 
 	/**
 	 * @return {@link AppComponent}
 	 */
 	public static AppComponent getComponent() {
-		return sfAppComponent;
+		return appComponent;
 	}
 
 	/**
 	 * @return {@link App} instance
 	 */
 	public static synchronized App getInstance() {
-		return sfInstance;
+		return instance;
 	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		sfInstance = this;
-		sfAppComponent = buildComponent();
-
+		instance = this;
+		appComponent = buildComponent();
 	}
 
 	/**
@@ -45,9 +44,9 @@ public class App extends Application {
 	}
 
 	/**
-	 * @param pListener - setting connection listener
+	 * @param listener - setting connection listener
 	 */
-	public void setConnectionListener(ConnectionReceiverListener pListener) {
-		NetworkChangeReceiver.connectionReceiverListener = pListener;
+	public void setConnectionListener(ConnectionReceiverListener listener) {
+		NetworkChangeReceiver.connectionReceiverListener = listener;
 	}
 }

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Hieronymus.iml" filepath="$PROJECT_DIR$/Hieronymus.iml" />
+      <module fileurl="file://C:\Users\akhme\AndroidStudioProjects\Hieronymus1\Hieronymus.iml" filepath="C:\Users\akhme\AndroidStudioProjects\Hieronymus1\Hieronymus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Hieronymus1.iml" filepath="$PROJECT_DIR$/.idea/Hieronymus1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\akhme\AndroidStudioProjects\Hieronymus1\app\app.iml" filepath="C:\Users\akhme\AndroidStudioProjects\Hieronymus1\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/greendao-generator/greendao-generator.iml" filepath="$PROJECT_DIR$/greendao-generator/greendao-generator.iml" />
+      <module fileurl="file://C:\Users\akhme\AndroidStudioProjects\Hieronymus1\greendao-generator\greendao-generator.iml" filepath="C:\Users\akhme\AndroidStudioProjects\Hieronymus1\greendao-generator\greendao-generator.iml" />
     </modules>
   </component>
 </project>
