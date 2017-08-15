@@ -13,7 +13,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "ru.snatcher.hieronymus.tools.MockTestRunner"
         vectorDrawables.useSupportLibrary = true
-        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
