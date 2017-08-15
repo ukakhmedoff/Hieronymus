@@ -3,14 +3,6 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'ukakhmedoff'
-            keyPassword '9286774388Dd'
-            storeFile file('C:/Users/akhme/Google Диск/android.jks')
-            storePassword '9286774388Dd'
-        }
-    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
